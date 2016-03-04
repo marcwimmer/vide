@@ -18,7 +18,7 @@ cd /tmp/vimmy
 ls -lha /tmp/vimmy
 
 echo copying vim to local folder
-rsync /tmp/vimmy/.vim-my-settings ~/ -arvl
+rsync /tmp/vimmy/.vim-my-settings ~/ -arl
 
 cd ~
 rm -Rf .vim || true
