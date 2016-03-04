@@ -56,4 +56,4 @@ WORKDIR /opt
 RUN cat decompress files.tar.gz > marcvim_installer.sh
 RUN chmod a+x marcvim_installer.sh
 RUN ./marcvim_installer.sh
-CMD cp /opt/marcvim_installer.sh /opt/marcvim; cp files.tar.gz /opt/marcvim; ls -lha /root
+CMD cp /opt/marcvim_installer.sh /opt/marcvim 

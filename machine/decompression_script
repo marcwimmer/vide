@@ -12,6 +12,7 @@ SCRIPTNAME=$(basename $(readlink -nf $0))
 echo "This is we: $DIR/$SCRIPTNAME"
 
 # take the tarfile and pipe it into tar
+rm -Rf /tmp/vimmy || true
 mkdir /tmp/vimmy
 tail -n +$SKIP $DIR/$SCRIPTNAME | tar -xz -C /tmp/vimmy
 cd /tmp/vimmy
@@ -29,7 +30,7 @@ ln -s .vim-mysettings/plugins/vim-mysettings/.vimrc
 echo copying vim to home dir
 cp /tmp/vimmy/vim ~/vim
 
-#rm -Rf /tmp/vimmy
+rm -Rf /tmp/vimmy
 
 echo "Adding cronjob to update vim packages"
 if [ ! $(grep -q vimupdate ~/.bashrc) ]; then
