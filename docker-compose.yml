@@ -1,2 +1,4 @@
 deb:
     build: machine
+    volumes:
+      - ./build:/opt/marcvim

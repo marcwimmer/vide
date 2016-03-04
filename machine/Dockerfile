@@ -45,7 +45,7 @@ RUN mkdir -p /opt/build_prep
 WORKDIR /root
 ADD vimupdate .vimupdate
 RUN rm .vimrc && ln -s .vim/bundle/vim-my-settings/.vimrc 
-RUN tar cf /opt/files.tar .vim .vimrc .vim-mysettings .vimupdate
+RUN tar cf /opt/files.tar .vim-my-settings .vimupdate
 RUN tar --append --file /opt/files.tar -C /usr/bin vim
 
 #tar to gzipped tar
@@ -56,8 +56,4 @@ WORKDIR /opt
 RUN cat decompress files.tar.gz > marcvim_installer.sh
 RUN chmod a+x marcvim_installer.sh
 RUN ./marcvim_installer.sh
-
-RUN ls -lha ~/.vim-mysettings
-
-
-CMD cp /opt/marcvim_installer.sh /opt/marcvim
+CMD cp /opt/marcvim_installer.sh /opt/marcvim; cp files.tar.gz /opt/marcvim; ls -lha /root

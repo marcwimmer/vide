@@ -2,21 +2,21 @@
 echo install vim
 set -xe
 rm ~/.vimrc || true
-rm -Rf ~/.vim ~/.vim-mysettings || true
-mkdir -p ~/.vim-mysettings/plugins
-cd ~/.vim-mysettings/plugins
+rm -Rf ~/.vim ~/.vim-my-settings || true
+mkdir -p ~/.vim-my-settings/plugins
+cd ~/.vim-my-settings/plugins
 git clone --depth 1 https://github.com/marcwimmer/vim-my-settings.git
 ls -lha vim-my-settings/
 cd 
 echo Setting the initial .vimrc
-ln -s .vim-mysettings/plugins/vim-my-settings/.vimrc
-ln -s .vim-mysettings/.vim
+ln -s .vim-my-settings/plugins/vim-my-settings/.vimrc
+ln -s .vim-my-settings/.vim
 
 echo "setting up vundle, see: https://github.com/gmarik/Vundle.vim"
-git clone --depth 1 https://github.com/gmarik/Vundle.vim.git ~/.vim-mysettings/.vim/bundle/Vundle.vim
+git clone --depth 1 https://github.com/gmarik/Vundle.vim.git ~/.vim-my-settings/.vim/bundle/Vundle.vim
 
 echo "install bundles manually from bundles.list"
-BUNDLELIST=~/.vim-mysettings/plugins/vim-my-settings/bundles.list
+BUNDLELIST=~/.vim-my-settings/plugins/vim-my-settings/bundles.list
 ls -lha $BUNDLELIST
 cat $BUNDLELIST
 while read bundle
