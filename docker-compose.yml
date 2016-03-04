@@ -1,0 +1,11 @@
+deb:
+    build: machines/debpackage_creator
+    volumes:
+      - /opt/build_deb
+
+git:
+    build: machines/tarball_creator
+    volumes_from:
+      - deb:ro
+    volumes:
+      - ./build:/opt/build

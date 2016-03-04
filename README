@@ -1,0 +1,10 @@
+Start the machine via docker compose and it outputs a tarball, that contains:
+
+- ~/.vimrc
+- ~/.vim
+- ~/.vim-install-deps
+
+This can be included via
+tar xfz marcvim.tar ~
+
+Execute .vim-install-deps on first run

@@ -1,0 +1,52 @@
+#!/bin/bash
+echo install vim
+set -xe
+rm ~/.vimrc || true
+rm -Rf ~/.vim ~/.vim-mysettings || true
+mkdir -p ~/.vim-mysettings/plugins
+cd ~/.vim-mysettings/plugins
+git clone --depth 1 https://github.com/marcwimmer/vim-my-settings.git
+ls -lha vim-my-settings/
+cd 
+echo Setting the initial .vimrc
+ln -s .vim-mysettings/plugins/vim-my-settings/.vimrc
+ln -s .vim-mysettings/.vim
+
+echo "setting up vundle, see: https://github.com/gmarik/Vundle.vim"
+git clone --depth 1 https://github.com/gmarik/Vundle.vim.git ~/.vim-mysettings/.vim/bundle/Vundle.vim
+
+echo "install bundles manually from bundles.list"
+BUNDLELIST=~/.vim-mysettings/plugins/vim-my-settings/bundles.list
+ls -lha $BUNDLELIST
+cat $BUNDLELIST
+while read bundle
+do
+    echo cloning bundle $bundle
+    if [ -z $bundle ]; then
+        continue
+    fi
+
+    echo $bundle |grep -q "^#" && continue
+    cd ~/.vim/bundle
+    for i in 1 2 3 4 5 6 7 8 9 10;
+    do 
+        git clone --depth 1 --recursive https://github.com/$bundle && break
+        sleep 15
+    done
+done<$BUNDLELIST
+
+# compile you complete me
+if [ -d ~/.vim/bundle/YouCompleteMe ]; then
+    cd ~/.vim/bundle/YouCompleteMe
+    #  tern-complete=javascript support, needs nodejs and npm
+    /usr/bin/python install.py --tern-completer
+fi
+
+vim +PluginInstall +qall
+echo Doing second round
+sleep 5
+vim +PluginInstall +qall
+
+
+echo In future do updates with :PluginUpdate
+echo List your Plugins with :PluginList
