@@ -1,4 +1,2 @@
 deb:
-    build: machines/debpackage_creator
-    volumes:
-      - ./build:/opt/build
+    build: machine

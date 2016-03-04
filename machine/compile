@@ -5,13 +5,13 @@ set -xe
 # compile you complete me
 if [ -d ~/.vim/bundle/YouCompleteMe ]; then
     cd ~/.vim/bundle/YouCompleteMe
-    #  tern-complete=javascript support, needs nodejs and npm
+    # tern-complete=javascript support, needs nodejs and npm
     /usr/bin/python install.py --tern-completer
 fi
 
 vim +PluginInstall +qall
 echo Doing second round
-sleep 5
+sleep 3
 vim +PluginInstall +qall
 
 
