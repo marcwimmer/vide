@@ -24,8 +24,8 @@ rsync /tmp/vimmy/.vim-my-settings ~/ -arl
 cd ~
 rm -Rf .vim || true
 rm -Rf .vimrc || true
-ln -s .vim-mysettings/.vim
-ln -s .vim-mysettings/plugins/vim-mysettings/.vimrc
+ln -s .vim-my-settings/.vim
+ln -s .vim-my-settings/plugins/vim-my-settings/.vimrc
 
 echo copying vim to home dir
 cp /tmp/vimmy/vim ~/vim
