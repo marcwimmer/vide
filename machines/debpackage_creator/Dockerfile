@@ -40,8 +40,12 @@ RUN update-alternatives --install /usr/bin/node node /usr/bin/nodejs 10
 ADD compile compile
 RUN ./compile
 
+
 RUN mkdir -p /opt/build_prep
 WORKDIR /root
+ADD setup-marcvim setup-marcvim
 RUN rm .vimrc && ln -s .vim/bundle/vim-my-settings/.vimrc
-RUN tar cfz /opt/build_prep/marcvim.tar.gz .vim .vimrc .vim-mysettings
+RUN tar cf /opt/build_prep/marcvim.tar.gz .vim .vimrc .vim-mysettings setup-marcvim
+WORKDIR /usr/bin/
+RUN tar --append --file /opt/build_prep/marcvim.tar.gz -C /usr/bin vim
 CMD cp /opt/build_prep/marcvim.tar.gz /opt/build
