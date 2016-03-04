@@ -41,11 +41,23 @@ ADD compile compile
 RUN ./compile
 
 
+# build tar 
 RUN mkdir -p /opt/build_prep
 WORKDIR /root
-ADD setup-marcvim setup-marcvim
-RUN rm .vimrc && ln -s .vim/bundle/vim-my-settings/.vimrc
-RUN tar cf /opt/build_prep/marcvim.tar.gz .vim .vimrc .vim-mysettings setup-marcvim
-WORKDIR /usr/bin/
-RUN tar --append --file /opt/build_prep/marcvim.tar.gz -C /usr/bin vim
-CMD cp /opt/build_prep/marcvim.tar.gz /opt/build
+ADD vimupdate .vimupdate
+RUN rm .vimrc && ln -s .vim/bundle/vim-my-settings/.vimrc 
+RUN tar cf /opt/files.tar .vim .vimrc .vim-mysettings .vimupdate
+RUN tar --append --file /opt/files.tar -C /usr/bin vim
+
+#tar to gzipped tar
+RUN gzip /opt/files.tar
+
+ADD decompression_script /opt/decompress
+WORKDIR /opt
+RUN cat decompress files.tar.gz > marcvim_installer.sh
+RUN chmod a+x marcvim_installer.sh
+RUN ./marcvim_installer.sh
+
+RUN cat ~/.bashrc
+
+CMD cp /opt/marcvim_installer.sh /opt/build

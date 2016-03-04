@@ -1,0 +1,23 @@
+#!/bin/bash
+
+while true; do
+    cd ~
+    HOME=$(pwd)
+    ME=$(whoami)
+    for d in $(ls $HOME); 
+    do
+        cd $HOME/.vim/bundle/$d
+        git pull
+        git submodule update --init --recursive
+        chown $ME:$ME . -R
+    done
+
+    cd /home/odoo/.vim/UltiSnips
+    git add .
+    git commit -am autocommit
+    git pull
+    git push
+    chown odoo:odoo . -R
+
+    sleep 1800
+done
