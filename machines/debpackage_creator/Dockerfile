@@ -41,5 +41,7 @@ ADD compile compile
 RUN ./compile
 
 RUN mkdir -p /opt/build_prep
-RUN tar cfz /opt/build_prep/marcvim.tar.gz /root/.vim /root/.vimrc /usr/bin/vim
+WORKDIR /root
+RUN rm .vimrc && ln -s .vim/bundle/vim-my-settings/.vimrc
+RUN tar cfz /opt/build_prep/marcvim.tar.gz .vim .vimrc .vim-mysettings
 CMD cp /opt/build_prep/marcvim.tar.gz /opt/build
