@@ -2,6 +2,13 @@
 echo install vim
 set -xe
 
+# compile you complete me; needed, otherwise error at plugin install/update
+if [ -d ~/.vim/bundle/YouCompleteMe ]; then
+    cd ~/.vim/bundle/YouCompleteMe
+    # tern-complete=javascript support, needs nodejs and npm
+    /usr/bin/python install.py --tern-completer
+fi
+
 vim +PluginInstall +qall
 echo Doing second round
 sleep 3
