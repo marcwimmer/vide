@@ -36,5 +36,3 @@ do
     done
 done<$BUNDLELIST
 
-# compile
-cd ~/.vim-my-settings/bundle/YouCompleteMe/ && python install.py
