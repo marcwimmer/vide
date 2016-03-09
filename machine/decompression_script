@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
-echo "Extracting file into /tmp"
-echo "Installing for $(whoami)"
+echo "Extracting marcvim into /tmp"
+echo "Installing marcvim for $(whoami)"
 
 # searches for the line number where finish the script and start the tar.gz
 SKIP=`awk '/^__TARFILE_FOLLOWS__/ { print NR + 1; exit 0; }' $0`
@@ -9,14 +9,11 @@ SKIP=`awk '/^__TARFILE_FOLLOWS__/ { print NR + 1; exit 0; }' $0`
 DIR=$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)
 SCRIPTNAME=$(basename $(readlink -nf $0))
 
-echo "This is we: $DIR/$SCRIPTNAME"
-
 # take the tarfile and pipe it into tar
 rm -Rf /tmp/vimmy || true
 mkdir /tmp/vimmy
 tail -n +$SKIP $DIR/$SCRIPTNAME | tar -xz -C /tmp/vimmy
 cd /tmp/vimmy
-ls -lha /tmp/vimmy
 
 echo copying vim to local folder
 rsync /tmp/vimmy/.vim-my-settings ~/ -arl
@@ -38,7 +35,7 @@ if [ ! $(grep -q vimupdate ~/.bashrc) ]; then
 fi
 
 # compile youcompleteme for the platform
-cd ~/.vim-my-settings/bundle/YouCompleteMe/ && python install.py
+cd ~/.vim/bundle/YouCompleteMe/ && python install.py
 
 # Any script here will happen after the tar file extract.
 echo "Finished"

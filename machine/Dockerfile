@@ -12,9 +12,7 @@ RUN ./download
 WORKDIR /root
 
 # build vim
-RUN apt-get install -y libncurses5-dev  \
-    libxpm-dev python-dev \
-    ruby-dev git
+RUN apt-get install -y libncurses5-dev python-dev ruby-dev nodejs npm libpython-dev build-essential cmake ctags
 
 WORKDIR /tmp
 RUN git clone https://github.com/vim/vim.git
@@ -32,7 +30,6 @@ RUN make install
 RUN vim --version
 
 # javascript support ycm
-RUN apt-get install -y nodejs npm libpython-dev build-essential cmake ctags
 RUN update-alternatives --install /usr/bin/node node /usr/bin/nodejs 10
 
 ADD compile compile
