@@ -19,6 +19,7 @@ echo "install bundles manually from bundles.list"
 BUNDLELIST=~/.vim-my-settings/plugins/vim-my-settings/bundles.list
 ls -lha $BUNDLELIST
 cat $BUNDLELIST
+
 while read bundle
 do
     echo cloning bundle $bundle
@@ -35,3 +36,5 @@ do
     done
 done<$BUNDLELIST
 
+# compile
+cd ~/.vim-my-settings/bundle/YouCompleteMe/ && python install.py

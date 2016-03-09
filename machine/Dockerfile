@@ -12,9 +12,8 @@ RUN ./download
 WORKDIR /root
 
 # build vim
-RUN apt-get install -y libncurses5-dev libgnome2-dev libgnomeui-dev \
-    libatk1.0-dev libbonoboui2-dev \
-    libcairo2-dev libx11-dev libxpm-dev libxt-dev python-dev \
+RUN apt-get install -y libncurses5-dev  \
+    libxpm-dev python-dev \
     ruby-dev git
 
 WORKDIR /tmp
