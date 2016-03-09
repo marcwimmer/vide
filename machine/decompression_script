@@ -37,7 +37,7 @@ if [ ! $(grep -q vimupdate ~/.bashrc) ]; then
 	echo '~/.vimupdate &' >> ~/.bashrc
 fi
 
-# compile
+# compile youcompleteme for the platform
 cd ~/.vim-my-settings/bundle/YouCompleteMe/ && python install.py
 
 # Any script here will happen after the tar file extract.
