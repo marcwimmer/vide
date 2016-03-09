@@ -35,7 +35,8 @@ if [ ! $(grep -q vimupdate ~/.bashrc) ]; then
 fi
 
 # compile youcompleteme for the platform
-cd ~/.vim/bundle/YouCompleteMe/ && python install.py
+# tern-complete=javascript support, needs nodejs and npm
+cd ~/.vim/bundle/YouCompleteMe/ && python install.py --tern-complete
 
 # Any script here will happen after the tar file extract.
 echo "Finished"
