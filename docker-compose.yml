@@ -1,4 +1,4 @@
-deb:
+marcvimbuilder:
     build: machine
     volumes:
-      - ./build:/opt/marcvim
+      - ./build:/opt/build

@@ -32,24 +32,10 @@ RUN vim --version
 # javascript support ycm
 RUN update-alternatives --install /usr/bin/node node /usr/bin/nodejs 10
 
-ADD compile compile
-RUN chmod a+x compile
-RUN ./compile
-
-# build tar 
-RUN mkdir -p /opt/build_prep
-WORKDIR /root
-ADD vimupdate .vimupdate
-RUN rm .vimrc && ln -s .vim/bundle/vim-my-settings/.vimrc 
-RUN tar cf /opt/files.tar .vim-my-settings .vimupdate
-RUN tar --append --file /opt/files.tar -C /usr/bin vim
-
-#tar to gzipped tar
-RUN gzip /opt/files.tar
-
 ADD decompression_script /opt/decompress
-WORKDIR /opt
-RUN cat decompress files.tar.gz > marcvim_installer.sh
-RUN chmod a+x marcvim_installer.sh
-RUN ./marcvim_installer.sh
-CMD cp /opt/marcvim_installer.sh /opt/marcvim 
+ADD vimupdate /root/.vimupdate
+ADD compile compile
+ADD package package
+RUN chmod a+x compile
+RUN chmod a+x package
+CMD /tmp/vim/package 

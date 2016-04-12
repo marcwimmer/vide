@@ -36,7 +36,9 @@ fi
 
 # compile youcompleteme for the platform
 # tern-complete=javascript support, needs nodejs and npm
-cd ~/.vim/bundle/YouCompleteMe/ && python install.py --tern-complete
+# cd ~/.vim/bundle/YouCompleteMe/ && python install.py --tern-complete
+echo 'cd ~/.vim/bundle/YouCompleteMe/ && python install.py --tern-complete' > ~/vim-compile-youcompleteme
+chmod a+x ~/vim-compile-youcompleteme
 
 # Any script here will happen after the tar file extract.
 echo "Finished"

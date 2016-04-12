@@ -1,4 +1,4 @@
-Start the machine via docker compose and it outputs a tarball, that contains:
+Start the machine via docker compose (call build.sh) and it outputs a tarball, that contains:
 
 - ~/.vimrc
 - ~/.vim
@@ -8,3 +8,16 @@ This can be included via
 tar xfz marcvim.tar ~
 
 Execute .vim-install-deps on first run
+
+On docker machines add following dependecies
+
+
+RUN apt-get install -y ctags nodejs
+RUN update-alternatives --install /usr/bin/node node /usr/bin/nodejs 10
+RUN npm install -g jshint
+# silver surfer
+USER root
+RUN git clone --branch 0.30.0 https://github.com/ggreer/the_silver_searcher /tmp/ag1
+WORKDIR /tmp/ag1
+RUN ./build.sh
+RUN make install
