@@ -45,5 +45,4 @@ ADD compile compile
 ADD package package
 RUN chmod a+x compile package
 RUN ./package
-CMD ls /tmp -lha
-#CMD cp /tmp/marcvim_installer.sh /build
+CMD cp /tmp/marcvim_installer.sh /build

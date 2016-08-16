@@ -16,9 +16,6 @@ mkdir /tmp/vimmy
 tail -n +$SKIP $DIR/$SCRIPTNAME | tar -xz -C /tmp/vimmy
 cd /tmp/vimmy
 
-echo Installing silver surfer
-cp usr/bin/ag ~/.vim/ag
-
 echo copying vim to local folder
 rm -Rf ~/.vim &>/dev/null || true
 mv /tmp/vimmy/.vim ~/.vim
