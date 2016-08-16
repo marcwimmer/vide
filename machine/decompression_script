@@ -62,6 +62,11 @@ NETRC="$HOME/.netrc"
 if [[ ! -f "$NETRC" ]]; then
     touch $NETRC
 fi
+
+if [[ -z "$GITHUB_USER" ]]; then 
+    echo "Please provide GITHUB_USER and GITHUB_PWD!"
+    exit -1
+fi
 grep -q github.com $NETRC || {
     echo "machine github.com login $GITHUB_USER password $GITHUB_PWD" >> $NETRC
     chmod 600 $NETRC
