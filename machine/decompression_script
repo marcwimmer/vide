@@ -17,6 +17,7 @@ cd /tmp/vimmy
 
 echo copying vim to local folder
 rsync /tmp/vimmy/.vim-my-settings ~/ -arl
+rsync /tmp/vimmy/.vimupdate ~/ -aP && chmod a+x ~/.vimupdate
 
 cd ~
 rm -Rf .vim || true

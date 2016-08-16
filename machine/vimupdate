@@ -1,23 +1,26 @@
 #!/bin/bash
 
-while true; do
-    cd ~
-    HOME=$(pwd)
-    ME=$(whoami)
-    for d in $(ls $HOME); 
-    do
-        cd $HOME/.vim/bundle/$d
-        git pull
-        git submodule update --init --recursive
-        chown $ME:$ME . -R
+function update_repo() {
+    echo "Updating git repo $1"
+    while [[ ! -d "$1" ]]; do
+        sleep 1
     done
+    cd $1 && git clean -f && git pull &
+}
 
-    cd /home/odoo/.vim/UltiSnips
+update_repo /home/odoo/.vim/UltiSnips
+update_repo /home/odoo/.vim/bundle/vim-my-settings
+update_repo /home/odoo/.vim/bundle/vim-openerp-browser
+
+sleep 300
+
+while true; do
+    ME=$(whoami)
+    cd ~/.vim/UltiSnips
     git add .
     git commit -am autocommit
     git pull
     git push
-    chown odoo:odoo . -R
-
-    sleep 1800
+    chown $ME:$ME . -R
+    sleep 120
 done
