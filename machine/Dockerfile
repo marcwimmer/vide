@@ -42,10 +42,5 @@ ADD gitwatch.sh /root/gitwatch.sh
 ADD compile compile
 ADD package package
 RUN chmod a+x compile package
-
-VOLUME /opt/clone
-VOLUME /opt/clone_vimmysettings
-VOLUME /opt/clone_vundle
-VOLUME /opt/clone_UltiSnips
-
-CMD /tmp/vim/package 
+RUN ./package
+CMD mv /tmp/marcvim_installer.sh /opt/build 

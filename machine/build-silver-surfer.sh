@@ -12,3 +12,4 @@ fi
 cd $TMP
 ./build.sh
 make install
+rm -Rf $TMP
