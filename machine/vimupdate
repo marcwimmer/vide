@@ -8,16 +8,12 @@ function update_repo() {
 }
 
 # update repos locally on internet connection;
-if ping -c 1 8.8.8.8 &> /dev/null
-then
-    if [[ ! -d ~/.vim/UltiSnips ]]; then
-        cd ~/.vim
-        git clone https://github.com/marcwimmer/vim-ultisnippets
-    fi
-    update_repo /home/odoo/.vim/UltiSnips
-    update_repo /home/odoo/.vim/bundle/vim-my-settings
-    update_repo /home/odoo/.vim/bundle/vim-openerp-browser
+if [[ ! -d ~/.vim/UltiSnips ]]; then
+    cd ~/.vim
+    git clone https://github.com/marcwimmer/vim-ultisnippets
 fi
-
+update_repo /home/odoo/.vim/UltiSnips
+update_repo /home/odoo/.vim/bundle/vim-my-settings
+update_repo /home/odoo/.vim/bundle/vim-openerp-browser
 
 ~/gitwatch.sh -r origin ~/.vim/UltiSnips
