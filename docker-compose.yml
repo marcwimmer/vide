@@ -3,5 +3,5 @@ services:
     marcvimbuilder:
         build: machine
         volumes:
-          - ./build:/opt/build
+          - ./build:/build
 

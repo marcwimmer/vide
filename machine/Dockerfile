@@ -45,6 +45,5 @@ ADD compile compile
 ADD package package
 RUN chmod a+x compile package
 RUN ./package
-ADD run.sh /run.sh
-RUN chmod a+x /run.sh
-CMD /run.sh
+CMD ls /tmp -lha
+#CMD cp /tmp/marcvim_installer.sh /build

@@ -26,4 +26,3 @@ time gzip /tmp/files.tar
 
 cat /opt/decompression_script /tmp/files.tar.gz > /tmp/marcvim_installer.sh
 chmod a+x /tmp/marcvim_installer.sh
-mv /tmp/marcvim_installer.sh /opt/build 

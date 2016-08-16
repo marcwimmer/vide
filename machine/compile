@@ -2,11 +2,9 @@
 echo compiling YouCompleteMe
 set -xe
 
-if [[ "$NOT_COMPILE_YCM" != "1" ]]; then
-    cd /opt/clone/YouCompleteMe
-    # tern-complete=javascript support, needs nodejs and npm
-    /usr/bin/python install.py --tern-completer
-fi
+cd /opt/clone/YouCompleteMe
+# tern-complete=javascript support, needs nodejs and npm
+/usr/bin/python install.py --tern-completer
 
 echo In future do updates with :PluginUpdate
 echo List your Plugins with :PluginList
