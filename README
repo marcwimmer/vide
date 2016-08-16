@@ -1,23 +1,6 @@
-Start the machine via docker compose (call build.sh) and it outputs a tarball, that contains:
+Run build.sh - in output is a all-in installer, that installs
 
-- ~/.vimrc
-- ~/.vim
-- ~/.vim-install-deps
-
-This can be included via
-tar xfz marcvim.tar ~
-
-Execute .vim-install-deps on first run
-
-On docker machines add following dependecies
-
-
-RUN apt-get install -y ctags nodejs
-RUN update-alternatives --install /usr/bin/node node /usr/bin/nodejs 10
-RUN npm install -g jshint
-# silver surfer
-USER root
-RUN git clone --branch 0.30.0 https://github.com/ggreer/the_silver_searcher /tmp/ag1
-WORKDIR /tmp/ag1
-RUN ./build.sh
-RUN make install
+(from decompression-script)
+- silver surfer
+- sets nodejs 
+- adds background task in bashrc to update ultisnips

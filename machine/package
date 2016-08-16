@@ -1,16 +1,20 @@
+#!/bin/bash
+set -e
+set -x
+
+./download
 ./compile
 
 # build tar 
 mkdir -p /opt/build_prep
 cd /root
 rm .vimrc && ln -s .vim/bundle/vim-my-settings/.vimrc 
-tar cf /opt/files.tar .vim-my-settings .vimupdate
-tar --append --file /opt/files.tar -C /usr/bin vim
+tar cfh /tmp/files.tar .vim-my-settings .vimupdate gitwatch.sh
+tar --append --file /tmp/files.tar -C /usr/bin vim
 
 #tar to gzipped tar
-gzip /opt/files.tar
+gzip /tmp/files.tar
 
-cd /opt
-cat decompress files.tar.gz > marcvim_installer.sh
-chmod a+x marcvim_installer.sh
-mv /opt/marcvim_installer.sh /opt/build 
+cat /opt/decompression_script /tmp/files.tar.gz > /tmp/marcvim_installer.sh
+chmod a+x /tmp/marcvim_installer.sh
+mv /tmp/marcvim_installer.sh /opt/build 

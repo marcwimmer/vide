@@ -1,0 +1,5 @@
+version: '2'
+services:
+    marcvimbuilder:
+        environment:
+          - NOT_COMPILE_YCM=1

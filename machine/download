@@ -20,6 +20,10 @@ BUNDLELIST=~/.vim-my-settings/plugins/vim-my-settings/bundles.list
 ls -lha $BUNDLELIST
 cat $BUNDLELIST
 
+
+# to speed up debugging, clone is done to /opt/clone; from there copied;
+# on rebuild the clone directory is purged
+
 while read bundle
 do
     echo cloning bundle $bundle
@@ -28,11 +32,25 @@ do
     fi
 
     echo $bundle |grep -q "^#" && continue
-    cd ~/.vim/bundle
+    #cd ~/.vim/bundle
+    cd /opt/clone
     for i in 1 2 3 4 5 6 7 8 9 10;
     do 
+        echo $bundle
+        bundledirectory=$(echo "${bundle/\.git/}" | rev | cut -d/ -f1 | rev)
+        if [[ -d "$bundledirectory" ]]; then
+            echo $bundle already exists - going to next bundle
+            break
+        fi
         git clone --depth 1 --recursive https://github.com/$bundle && break
         sleep 15
     done
 done<$BUNDLELIST
+
+# move cloned bundles to destination directory
+rm -Rf ~/.vim/bundle 
+ln -s /opt/clone ~/.vim/bundle
+ls -lha /root
+ls -lha /root/.vim
+ls -lha /root/.vim/bundle
 

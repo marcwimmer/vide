@@ -1,4 +1,8 @@
-marcvimbuilder:
-    build: machine
-    volumes:
-      - ./build:/opt/build
+version: '2'
+services:
+    marcvimbuilder:
+        build: machine
+        volumes:
+          - ./build:/opt/build
+          - ./tmp/clone:/opt/clone
+

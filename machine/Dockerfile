@@ -4,12 +4,7 @@ RUN apt-get install -y htop build-essential rsync git python cmake
 RUN ls -lha /opt
 RUN mkdir /root/.ssh
 RUN echo "StrictHostKeyChecking no" >> /root/.ssh/config
-ADD download /root
-WORKDIR /root
-RUN chmod a+x download
-RUN ./download
 
-WORKDIR /root
 
 # build vim
 RUN apt-get install -y libncurses5-dev python-dev ruby-dev nodejs npm libpython-dev build-essential cmake ctags
@@ -32,10 +27,11 @@ RUN vim --version
 # javascript support ycm
 RUN update-alternatives --install /usr/bin/node node /usr/bin/nodejs 10
 
-ADD decompression_script /opt/decompress
+ADD decompression_script /opt/decompression_script
 ADD vimupdate /root/.vimupdate
+ADD gitwatch.sh /root/gitwatch.sh
+ADD download download
 ADD compile compile
 ADD package package
-RUN chmod a+x compile
-RUN chmod a+x package
+RUN chmod a+x compile package download
 CMD /tmp/vim/package 

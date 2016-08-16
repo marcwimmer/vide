@@ -1,18 +1,12 @@
 #!/bin/bash
-echo install vim
+echo compiling YouCompleteMe
 set -xe
 
-# compile you complete me; needed, otherwise error at plugin install/update
-if [ -d ~/.vim/bundle/YouCompleteMe ]; then
+if [[ "$NOT_COMPILE_YCM" != "1" ]]; then
     cd ~/.vim/bundle/YouCompleteMe
     # tern-complete=javascript support, needs nodejs and npm
     /usr/bin/python install.py --tern-completer
 fi
-
-vim +PluginInstall +qall
-echo Doing second round
-sleep 3
-vim +PluginInstall +qall
 
 echo In future do updates with :PluginUpdate
 echo List your Plugins with :PluginList

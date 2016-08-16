@@ -5,22 +5,20 @@ function update_repo() {
     while [[ ! -d "$1" ]]; do
         sleep 1
     done
-    cd $1 && git clean -f && git pull &
+    cd $1 && git clean -f && git pull
 }
 
-update_repo /home/odoo/.vim/UltiSnips
-update_repo /home/odoo/.vim/bundle/vim-my-settings
-update_repo /home/odoo/.vim/bundle/vim-openerp-browser
+# update repos locally on internet connection;
+if ping -c 1 8.8.8.8 &> /dev/null
+then
+    if [[ ! -d ~/.vim/UltiSnips ]]; then
+        cd ~/.vim
+        git clone https://github.com/marcwimmer/vim-ultisnippets
+    fi
+    update_repo /home/odoo/.vim/UltiSnips
+    update_repo /home/odoo/.vim/bundle/vim-my-settings
+    update_repo /home/odoo/.vim/bundle/vim-openerp-browser
+fi
 
-sleep 300
 
-while true; do
-    ME=$(whoami)
-    cd ~/.vim/UltiSnips
-    git add .
-    git commit -am autocommit
-    git pull
-    git push
-    chown $ME:$ME . -R
-    sleep 120
-done
+~/gitwatch.sh ~/.vim/UltiSnips -p origin

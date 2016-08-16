@@ -18,10 +18,11 @@ cd /tmp/vimmy
 echo copying vim to local folder
 rsync /tmp/vimmy/.vim-my-settings ~/ -arl
 rsync /tmp/vimmy/.vimupdate ~/ -aP && chmod a+x ~/.vimupdate
+rsync /tmp/vimmy/gitwatch.sh ~/ -aP && chmod a+x ~/gitwatch.sh
 
 cd ~
-rm -Rf .vim || true
-rm -Rf .vimrc || true
+rm -Rf .vim &>/dev/null || true
+rm -Rf .vimrc &>/dev/null || true
 ln -s .vim-my-settings/.vim
 ln -s .vim-my-settings/plugins/vim-my-settings/.vimrc
 
@@ -41,7 +42,20 @@ fi
 echo 'cd ~/.vim/bundle/YouCompleteMe/ && python install.py --tern-complete' > ~/vim-compile-youcompleteme
 chmod a+x ~/vim-compile-youcompleteme
 
-# Any script here will happen after the tar file extract.
+# install dependencies
+apt-get install -y ctags nodejs npm
+update-alternatives --install /usr/bin/node node /usr/bin/nodejs 10
+npm install -g jshint
+
+#silver surfer
+which ag || {
+    apt-get install -y automake pkg-config liblzma-dev libpcre3-dev
+    if [[ -d /tmp/ag ]]; then
+        rm -Rf /tmp/ag
+    fi
+    git clone https://github.com/ggreer/the_silver_searcher /tmp/ag && cd /tmp/ag && ./build.sh && make install
+}
+
 echo "Finished"
 exit 0
 # NOTE: Don't place any newline characters after the last line below.
