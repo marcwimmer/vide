@@ -23,7 +23,7 @@ rsync /tmp/vimmy/.vimupdate ~/ -aP && chmod a+x ~/.vimupdate
 rsync /tmp/vimmy/gitwatch.sh ~/ -aP && chmod a+x ~/gitwatch.sh
 
 rm -Rf .vimrc &>/dev/null || true
-ln -s .vim-my-settings/plugins/vim-my-settings/.vimrc
+ln -s .vim-my-settings/plugins/vim-my-settings/.vimrc ~/.vimrc
 
 rm -Rf /tmp/vimmy
 cd ~ # hint nodejs requires cwd
