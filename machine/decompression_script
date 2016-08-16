@@ -1,5 +1,6 @@
 #!/bin/bash
 set -e
+set -x
 echo "Extracting marcvim into /tmp"
 echo "Installing marcvim for $(whoami)"
 
@@ -16,20 +17,16 @@ tail -n +$SKIP $DIR/$SCRIPTNAME | tar -xz -C /tmp/vimmy
 cd /tmp/vimmy
 
 echo copying vim to local folder
-rsync /tmp/vimmy/.vim-my-settings ~/ -arl
+rm -Rf ~/.vim &>/dev/null || true
+mv /tmp/vimmy/.vim ~/.vim
 rsync /tmp/vimmy/.vimupdate ~/ -aP && chmod a+x ~/.vimupdate
 rsync /tmp/vimmy/gitwatch.sh ~/ -aP && chmod a+x ~/gitwatch.sh
 
-cd ~
-rm -Rf .vim &>/dev/null || true
 rm -Rf .vimrc &>/dev/null || true
-ln -s .vim-my-settings/.vim
 ln -s .vim-my-settings/plugins/vim-my-settings/.vimrc
 
-echo copying vim to home dir
-cp /tmp/vimmy/vim ~/vim
-
 rm -Rf /tmp/vimmy
+cd ~ # hint nodejs requires cwd
 
 echo "Adding cronjob to update vim packages"
 if [ ! $(grep -q vimupdate ~/.bashrc) ]; then
@@ -43,9 +40,11 @@ echo 'cd ~/.vim/bundle/YouCompleteMe/ && python install.py --tern-complete' > ~/
 chmod a+x ~/vim-compile-youcompleteme
 
 # install dependencies
-apt-get install -y ctags nodejs npm
-update-alternatives --install /usr/bin/node node /usr/bin/nodejs 10
-npm install -g jshint
+if ping -c 1 8.8.8.8; then
+    apt-get install -y ctags nodejs npm
+    update-alternatives --install /usr/bin/node node /usr/bin/nodejs 10
+    npm install -g jshint
+fi
 
 #silver surfer
 which ag || {
@@ -54,7 +53,7 @@ which ag || {
         if [[ -d /tmp/ag ]]; then
             rm -Rf /tmp/ag
         fi
-        git clone https://github.com/ggreer/the_silver_searcher /tmp/ag && cd /tmp/ag && ./build.sh && make install
+        git clone --depth 1 --branch master https://github.com/ggreer/the_silver_searcher /tmp/ag && cd /tmp/ag && ./build.sh && make install
     fi
 }
 
