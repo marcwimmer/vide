@@ -24,6 +24,7 @@ RUN make VIMRUNTIMEDIR=/usr/share/vim/vim74
 RUN make install
 RUN vim --version
 
+RUN apt-get install -y iputils-ping
 # javascript support ycm
 RUN update-alternatives --install /usr/bin/node node /usr/bin/nodejs 10
 

@@ -6,10 +6,18 @@ set -x
 ./compile
 
 # build tar 
-mkdir -p /opt/build_prep
-cd /root
+mkdir -p ~/.vim-my-settings/.vim
+mkdir -p ~/.vim-my-settings/plugins
+ln -s /opt/clone_vimmysettings/ ~/.vim-my-settings/plugins/vim-my-settings
+ls -lha ~/.vim-my-settings/.vim
+ln -s /opt/clone ~/.vim-my-settings/.vim/bundle/
+exit -1
+ln -s /opt/clon_UltiSnips/ ~/.vim-my-settings/.vim/UltiSnips
+
 rm .vimrc && ln -s .vim/bundle/vim-my-settings/.vimrc 
 tar cfh /tmp/files.tar .vim-my-settings .vimupdate gitwatch.sh
+
+# add vim executable
 tar --append --file /tmp/files.tar -C /usr/bin vim
 
 #tar to gzipped tar
