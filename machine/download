@@ -3,25 +3,19 @@ echo install vim
 set -e
 set +x
 
-if ping -c 1 8.8.8.8; then
-    #git clone --depth 1 https://github.com/marcwimmer/vim-my-settings.git
-    if [[ "$(find /opt/clone_vimmysettings -type f|wc -l)" == "0" ]]; then
-        git clone --depth 1 https://github.com/marcwimmer/vim-my-settings.git /opt/clone_vimmysettings
-    fi
+#git clone --depth 1 https://github.com/marcwimmer/vim-my-settings.git
+if [[ "$(find /opt/clone_vimmysettings -type f|wc -l)" == "0" ]]; then
+    git clone --depth 1 https://github.com/marcwimmer/vim-my-settings.git /opt/clone_vimmysettings
 fi
 
 echo "setting up vundle, see: https://github.com/gmarik/Vundle.vim"
 if [[ "$(find /opt/clone_vundle -type f|wc -l)" == "0" ]]; then
-    if ping -c 1 8.8.8.8; then
-        git clone --depth 1 https://github.com/gmarik/Vundle.vim.git /opt/clone_vundle
-    fi
+    git clone --depth 1 https://github.com/gmarik/Vundle.vim.git /opt/clone_vundle
 fi
 
 echo "Download initial UltiSnips"
 if [[ "$(find /opt/clone_UltiSnips -type f|wc -l)" == "0" ]]; then
-    if ping -c 1 8.8.8.8; then
-        git clone --depth 1 https://github.com/marcwimmer/vim-ultisnippets /opt/clone_UltiSnips
-    fi
+    git clone --depth 1 https://github.com/marcwimmer/vim-ultisnippets /opt/clone_UltiSnips
 fi
 
 echo "install bundles manually from bundles.list"
