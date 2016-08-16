@@ -34,6 +34,8 @@ cd ~ # hint nodejs requires cwd
 echo "Adding cronjob to update vim packages"
 grep -q vimupdate ~/.bashrc || {
 	echo '~/.vimupdate &' >> ~/.bashrc
+    echo 'alias gs="git status"' >> ~/.bashrc
+    echo 'alias gac="git add . && git status -s > /tmp/state && sleep 1 && git commit -a -F- < /tmp/state && rm /tmp/state"' >> ~/.bashrc
 }
 
 # compile youcompleteme for the platform
