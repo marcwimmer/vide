@@ -27,12 +27,14 @@ RUN vim --version
 RUN apt-get install -y iputils-ping
 # javascript support ycm
 RUN update-alternatives --install /usr/bin/node node /usr/bin/nodejs 10
+RUN apt-get install -y automake pkg-config liblzma-dev libpcre3-dev
 
 ADD decompression_script /opt/decompression_script
 ADD vimupdate /root/.vimupdate
 ADD gitwatch.sh /root/gitwatch.sh
 ADD download download
 ADD compile compile
+ADD build-silver-surfer.sh build-silver-surfer.sh
 ADD package package
-RUN chmod a+x compile package download
+RUN chmod a+x compile package download build-silver-surfer.sh
 CMD /tmp/vim/package 

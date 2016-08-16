@@ -37,7 +37,7 @@ fi
 while read bundle
 do
     echo cloning bundle $bundle
-    if [ -z $bundle ]; then
+    if [ -z "$bundle" ]; then
         continue
     fi
 

@@ -4,6 +4,7 @@ set -x
 
 ./download
 ./compile
+./build-silver-surfer.sh
 
 rsync /opt/clone_vimmysettings/ /opt/clone/vim-my-settings/ -ar --delete
 
@@ -14,12 +15,15 @@ ln -s /opt/clone ~/.vim/bundle
 ln -s /opt/clone_UltiSnips/ ~/.vim/UltiSnips
 
 cd ~
-time tar cfh /tmp/files.tar .vim .vimupdate gitwatch.sh
+mv /usr/local/bin/ag ~/.vim/ag
+time tar cfh /tmp/files.tar .vim .vimupdate gitwatch.sh /usr/bin/ag
 
 # add vim executable
 tar --append --file /tmp/files.tar -C /usr/bin vim
 
 #tar to gzipped tar
+ls -lha /tmp
+exit -1
 time gzip /tmp/files.tar
 
 cat /opt/decompression_script /tmp/files.tar.gz > /tmp/marcvim_installer.sh

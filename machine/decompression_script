@@ -16,6 +16,9 @@ mkdir /tmp/vimmy
 tail -n +$SKIP $DIR/$SCRIPTNAME | tar -xz -C /tmp/vimmy
 cd /tmp/vimmy
 
+echo Installing silver surfer
+cp usr/bin/ag ~/.vim/ag
+
 echo copying vim to local folder
 rm -Rf ~/.vim &>/dev/null || true
 mv /tmp/vimmy/.vim ~/.vim
@@ -45,17 +48,6 @@ if ping -c 1 8.8.8.8; then
     update-alternatives --install /usr/bin/node node /usr/bin/nodejs 10
     npm install -g jshint
 fi
-
-#silver surfer
-which ag &>/dev/null || {
-    if ping -c 1 8.8.8.8; then
-        apt-get install -y automake pkg-config liblzma-dev libpcre3-dev
-        if [[ -d /tmp/ag ]]; then
-            rm -Rf /tmp/ag
-        fi
-        git clone --depth 1 --branch master https://github.com/ggreer/the_silver_searcher /tmp/ag && cd /tmp/ag && ./build.sh && make install
-    fi
-}
 
 # netrc for ultisnips
 NETRC="$HOME/.netrc"
