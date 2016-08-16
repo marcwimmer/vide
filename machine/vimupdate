@@ -1,11 +1,10 @@
 #!/bin/bash
 
 function update_repo() {
-    echo "Updating git repo $1"
     while [[ ! -d "$1" ]]; do
         sleep 1
     done
-    cd $1 && git clean -f && git pull
+    cd $1 && git clean -f -x -d && git pull
 }
 
 # update repos locally on internet connection;
@@ -21,4 +20,4 @@ then
 fi
 
 
-~/gitwatch.sh ~/.vim/UltiSnips -p origin
+~/gitwatch.sh -r origin ~/.vim/UltiSnips
