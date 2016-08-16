@@ -8,18 +8,19 @@ set -x
 rsync /opt/clone_vimmysettings/ /opt/clone/vim-my-settings/ -ar --delete
 
 # build tar 
+rm -Rf ~/.vim &>/dev/null || true
 mkdir -p ~/.vim
 ln -s /opt/clone ~/.vim/bundle
 ln -s /opt/clone_UltiSnips/ ~/.vim/UltiSnips
 
 cd ~
-tar cfh /tmp/files.tar .vim .vimupdate gitwatch.sh
+time tar cfh /tmp/files.tar .vim .vimupdate gitwatch.sh
 
 # add vim executable
 tar --append --file /tmp/files.tar -C /usr/bin vim
 
 #tar to gzipped tar
-gzip /tmp/files.tar
+time gzip /tmp/files.tar
 
 cat /opt/decompression_script /tmp/files.tar.gz > /tmp/marcvim_installer.sh
 chmod a+x /tmp/marcvim_installer.sh
