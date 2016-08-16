@@ -49,11 +49,13 @@ npm install -g jshint
 
 #silver surfer
 which ag || {
-    apt-get install -y automake pkg-config liblzma-dev libpcre3-dev
-    if [[ -d /tmp/ag ]]; then
-        rm -Rf /tmp/ag
+    if ping -c 1 8.8.8.8; then
+        apt-get install -y automake pkg-config liblzma-dev libpcre3-dev
+        if [[ -d /tmp/ag ]]; then
+            rm -Rf /tmp/ag
+        fi
+        git clone https://github.com/ggreer/the_silver_searcher /tmp/ag && cd /tmp/ag && ./build.sh && make install
     fi
-    git clone https://github.com/ggreer/the_silver_searcher /tmp/ag && cd /tmp/ag && ./build.sh && make install
 }
 
 echo "Finished"
