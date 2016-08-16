@@ -29,9 +29,9 @@ rm -Rf /tmp/vimmy
 cd ~ # hint nodejs requires cwd
 
 echo "Adding cronjob to update vim packages"
-if [ ! $(grep -q vimupdate ~/.bashrc) ]; then
+grep -q vimupdate ~/.bashrc || {
 	echo '~/.vimupdate &' >> ~/.bashrc
-fi
+}
 
 # compile youcompleteme for the platform
 # tern-complete=javascript support, needs nodejs and npm
