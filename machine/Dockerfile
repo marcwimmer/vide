@@ -30,7 +30,6 @@ RUN update-alternatives --install /usr/bin/node node /usr/bin/nodejs 10
 RUN apt-get install -y automake pkg-config liblzma-dev libpcre3-dev
 ADD build-silver-surfer.sh build-silver-surfer.sh
 RUN rm -Rf /opt/clone_ag/ || true
-RUN rm -Rf /opt/clone/ || true
 RUN chmod a+x ./build-silver-surfer.sh
 RUN ./build-silver-surfer.sh
 

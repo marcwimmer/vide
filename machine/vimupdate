@@ -12,8 +12,7 @@ if [[ ! -d ~/.vim/UltiSnips ]]; then
     cd ~/.vim
     git clone https://github.com/marcwimmer/vim-ultisnippets
 fi
-update_repo /home/odoo/.vim/UltiSnips
-update_repo /home/odoo/.vim/bundle/vim-my-settings
-update_repo /home/odoo/.vim/bundle/vim-openerp-browser
+update_repo ~/.vim/UltiSnips
+update_repo ~/.vim/bundle/vim-my-settings
 
 ~/gitwatch.sh -r origin ~/.vim/UltiSnips
