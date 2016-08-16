@@ -28,16 +28,24 @@ RUN apt-get install -y iputils-ping
 # javascript support ycm
 RUN update-alternatives --install /usr/bin/node node /usr/bin/nodejs 10
 RUN apt-get install -y automake pkg-config liblzma-dev libpcre3-dev
+ADD build-silver-surfer.sh build-silver-surfer.sh
+RUN rm -Rf /opt/clone_ag/ || true
+RUN rm -Rf /opt/clone/ || true
+RUN chmod a+x ./build-silver-surfer.sh && ./build-silver-surfer.sh
+
+ADD download download
+RUN chmod a+x download && ./download
 
 ADD decompression_script /opt/decompression_script
 ADD vimupdate /root/.vimupdate
 ADD gitwatch.sh /root/gitwatch.sh
-ADD download download
 ADD compile compile
-ADD build-silver-surfer.sh build-silver-surfer.sh
 ADD package package
-RUN chmod a+x compile package download build-silver-surfer.sh
+RUN chmod a+x compile package
 
-RUN ./build-silver-surfer.sh
+VOLUME /opt/clone
+VOLUME /opt/clone_vimmysettings
+VOLUME /opt/clone_vundle
+VOLUME /opt/clone_UltiSnips
 
 CMD /tmp/vim/package 

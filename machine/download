@@ -43,6 +43,7 @@ do
 
     echo $bundle |grep -q "^#" && continue
     #cd ~/.vim/bundle
+    mkdir -p /opt/clone
     cd /opt/clone
     for i in 1 2 3 4 5 6 7 8 9 10;
     do 

@@ -2,7 +2,7 @@
 set -e
 set -x
 
-./download
+#./download # done in docker file
 ./compile
 #./build-silver-surfer.sh done in docker
 
