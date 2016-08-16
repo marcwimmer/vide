@@ -35,7 +35,8 @@ RUN chmod a+x ./build-silver-surfer.sh
 RUN ./build-silver-surfer.sh
 
 ADD download download
-RUN chmod a+x download && ./download
+RUN chmod a+x download
+RUN ./download
 
 ADD decompression_script /opt/decompression_script
 ADD vimupdate /root/.vimupdate
