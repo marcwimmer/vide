@@ -4,7 +4,7 @@ set -x
 
 ./download
 ./compile
-./build-silver-surfer.sh
+#./build-silver-surfer.sh done in docker
 
 rsync /opt/clone_vimmysettings/ /opt/clone/vim-my-settings/ -ar --delete
 

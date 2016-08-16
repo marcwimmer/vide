@@ -37,4 +37,7 @@ ADD compile compile
 ADD build-silver-surfer.sh build-silver-surfer.sh
 ADD package package
 RUN chmod a+x compile package download build-silver-surfer.sh
+
+RUN ./build-silver-surfer.sh
+
 CMD /tmp/vim/package 

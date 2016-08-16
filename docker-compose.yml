@@ -1,11 +1,16 @@
 version: '2'
+volumes:
+    bundles:
+    vimmysettings:
+    vundle:
+    ultisnips:
 services:
     marcvimbuilder:
         build: machine
         volumes:
           - ./build:/opt/build
-          - ./tmp/clone:/opt/clone
-          - ./tmp/clone_vimmysettings:/opt/clone_vimmysettings
-          - ./tmp/clone_vundle:/opt/clone_vundle
-          - ./tmp/clone_UltiSnips:/opt/clone_UltiSnips
+          - bundles:/opt/clone
+          - vimmysettings:/opt/clone_vimmysettings
+          - vundle:/opt/clone_vundle
+          - ultisnips:/opt/clone_UltiSnips
 
