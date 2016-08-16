@@ -1,6 +1,6 @@
 #!/bin/bash
 set -e
-set -x
+set +x
 echo "Extracting marcvim into /tmp"
 echo "Installing marcvim for $(whoami)"
 
@@ -22,8 +22,8 @@ mv /tmp/vimmy/.vim ~/.vim
 rsync /tmp/vimmy/.vimupdate ~/ -aP && chmod a+x ~/.vimupdate
 rsync /tmp/vimmy/gitwatch.sh ~/ -aP && chmod a+x ~/gitwatch.sh
 
-rm -Rf .vimrc &>/dev/null || true
-ln -s .vim-my-settings/plugins/vim-my-settings/.vimrc ~/.vimrc
+rm -Rf ~/.vimrc &>/dev/null || true
+ln -s .vim/bundle/vim-my-settings/.vimrc ~/.vimrc
 
 rm -Rf /tmp/vimmy
 cd ~ # hint nodejs requires cwd
@@ -56,6 +56,9 @@ which ag || {
         git clone --depth 1 --branch master https://github.com/ggreer/the_silver_searcher /tmp/ag && cd /tmp/ag && ./build.sh && make install
     fi
 }
+
+echo run vimupdater, which is nexttime started at bashrc
+~/.vimupdate &
 
 echo "Finished"
 exit 0
