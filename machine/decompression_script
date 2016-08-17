@@ -1,6 +1,6 @@
 #!/bin/bash
 set -e
-set +x
+set -x
 echo "Extracting marcvim into /tmp"
 echo "Installing marcvim for $(whoami)"
 
@@ -38,10 +38,33 @@ grep -q vimupdate ~/.bashrc || {
 
 # install dependencies
 if ping -c 1 8.8.8.8; then
-    apt-get install -y ctags nodejs npm inotify-tools
-    update-alternatives --install /usr/bin/node node /usr/bin/nodejs 10
-    npm install -g jshint
+
+    dpkg --get-selections|grep -v deinstall |grep ctags || {
+        apt-get install -y ctags
+    }
+    dpkg --get-selections|grep -v deinstall |grep nodejs || {
+        apt-get install -y nodejs
+    }
+    dpkg --get-selections|grep -v deinstall |grep npm || {
+        apt-get install -y npm
+    }
+    dpkg --get-selections|grep -v deinstall |grep inotify-tools || {
+        apt-get install -y inotify-tools
+    }
 fi
+
+if ping -c 1 8.8.8.8; then
+    if which jshint &>/dev/null; then
+        echo 'jshint already installed'
+    else
+        npm install -g jshint
+    fi
+fi
+
+update-alternatives --display node |grep Current.*best.*version.*usr.bin.nodejs &>/dev/null || {
+    echo /usr/bin/nodejs must be set as node for tern-compile YCM
+    update-alternatives --install /usr/bin/node node /usr/bin/nodejs 10
+}
 
 # netrc for ultisnips
 NETRC="$HOME/.netrc"
@@ -62,6 +85,8 @@ grep -q github.com $NETRC || {
 echo run vimupdater, which is nexttime started at bashrc
 pkill -9 -f vimupdate || true
 ~/.vimupdate &
+
+chown $(whoami) ~/.vim -R
 
 # TODO let it be precompiled......
 # compile youcompleteme for the platform
