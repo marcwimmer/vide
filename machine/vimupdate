@@ -4,7 +4,9 @@ function update_repo() {
     while [[ ! -d "$1" ]]; do
         sleep 1
     done
-    cd $1 && git clean -f -x -d && git pull
+    cd $1
+    git clean -f -x -d &>/dev/null
+    git pull &>/dev/null 
 }
 
 # update repos locally on internet connection;
@@ -15,4 +17,4 @@ fi
 update_repo ~/.vim/UltiSnips
 update_repo ~/.vim/bundle/vim-my-settings
 
-~/gitwatch.sh -r origin ~/.vim/UltiSnips
+~/gitwatch.sh -r origin ~/.vim/UltiSnips &> /dev/null
