@@ -35,11 +35,6 @@ grep -q vimupdate ~/.bashrc || {
     echo 'alias gac="git add . && git status -s > /tmp/state && sleep 1 && git commit -a -F- < /tmp/state && rm /tmp/state"' >> ~/.bashrc
 }
 
-# compile youcompleteme for the platform
-# tern-complete=javascript support, needs nodejs and npm
-# cd ~/.vim/bundle/YouCompleteMe/ && python install.py --tern-complete
-echo 'cd ~/.vim/bundle/YouCompleteMe/ && python install.py --tern-complete' > ~/vim-compile-youcompleteme
-chmod a+x ~/vim-compile-youcompleteme
 
 # install dependencies
 if ping -c 1 8.8.8.8; then
@@ -67,6 +62,17 @@ grep -q github.com $NETRC || {
 echo run vimupdater, which is nexttime started at bashrc
 pkill -9 -f vimupdate || true
 ~/.vimupdate &
+
+# TODO let it be precompiled......
+# compile youcompleteme for the platform
+# tern-complete=javascript support, needs nodejs and npm
+cat <<EOF >> ~/.compile-YCM
+#!/bin/bash
+cd ~/.vim/bundle/YouCompleteMe/ && python install.py --tern-complete
+EOF
+chmod a+x ~/.compile-YCM
+#compile YCM
+~/.compile-YCM
 
 echo "Finished"
 exit 0
