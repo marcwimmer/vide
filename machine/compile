@@ -4,7 +4,9 @@ set -xe
 
 cd /opt/clone/YouCompleteMe
 # tern-complete=javascript support, needs nodejs and npm
-/usr/bin/python install.py --tern-completer
+
+# TODO let it be precompiled......
+#/usr/bin/python install.py --tern-completer
 
 echo In future do updates with :PluginUpdate
 echo List your Plugins with :PluginList
