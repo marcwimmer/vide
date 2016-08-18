@@ -6,4 +6,11 @@ if [[ -z "$1" ]]; then
 fi
 
 docker-compose up marcvimbuilder
-docker-compose run testvim$1 bash
+echo ''
+echo ''
+echo ''
+echo 'Install marcvim from /build/marcvim_installer.sh'
+echo ''
+echo ''
+echo ''
+docker-compose run testvim_$1 bash

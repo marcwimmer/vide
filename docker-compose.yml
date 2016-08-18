@@ -5,17 +5,19 @@ services:
         volumes:
           - ./build:/build
 
-    testvim1604:
+    testvim:
+        env_file: ./testvim/env
+        volumes:
+          - ./build:/build
         build:
           context: ./testvim
+          dockerfile: dummy
+
+    testvim_16.04:
+        extends: testvim
+        build:
           dockerfile: Dockerfile_16.04
-        env_file: ./testvim/env
-        volumes:
-          - ./build:/build
-    testvim1404:
+    testvim_14.04:
+        extends: testvim
         build:
-          context: ./testvim
           dockerfile: Dockerfile_14.04
-        env_file: ./testvim/env
-        volumes:
-          - ./build:/build
