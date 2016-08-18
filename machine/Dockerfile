@@ -23,6 +23,7 @@ RUN ./configure --with-features=huge \
 RUN make VIMRUNTIMEDIR=/usr/share/vim/vim74
 RUN make install
 RUN vim --version
+RUN which vim
 
 RUN apt-get install -y iputils-ping
 # javascript support ycm

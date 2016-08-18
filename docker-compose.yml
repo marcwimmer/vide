@@ -5,10 +5,17 @@ services:
         volumes:
           - ./build:/build
 
-    testvim:
-        build: testvim
-        environment:
-          - GITHUB_USER=marcwimmer
-          - GITHUB_PWD=H3kt0r1980
+    testvim1604:
+        build:
+          context: ./testvim
+          dockerfile: Dockerfile_16.04
+        env_file: ./testvim/env
+        volumes:
+          - ./build:/build
+    testvim1404:
+        build:
+          context: ./testvim
+          dockerfile: Dockerfile_14.04
+        env_file: ./testvim/env
         volumes:
           - ./build:/build

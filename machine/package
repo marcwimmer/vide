@@ -16,6 +16,8 @@ ln -s /opt/clone_UltiSnips/ ~/.vim/UltiSnips
 
 cd ~
 cp /usr/local/bin/ag ~/.vim/ag
+# copy compiled vim; was installed via make install
+cp $(which vim) ~/.vim/vim
 time tar cfh /tmp/files.tar .vim .vimupdate gitwatch.sh 
 
 # add vim executable

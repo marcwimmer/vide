@@ -1,8 +1,10 @@
-FROM ubuntu:14.04
+FROM ubuntu:16.04
 
-RUN apt-get update && apt-get install -y vim
+RUN apt-get update 
 RUN apt-get install -y ctags inotify-tools npm nodejs
 RUN apt-get install -y git
+RUN apt-get install -y iputils-ping
+RUN apt-get install -y vim-nox-py2
 
 RUN npm install -g jshint
 
