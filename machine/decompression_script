@@ -1,6 +1,6 @@
 #!/bin/bash
 set -e
-set -x
+set +x
 echo "Extracting marcvim into /tmp"
 echo "Installing marcvim for $(whoami)"
 
@@ -25,7 +25,6 @@ rsync /tmp/vimmy/gitwatch.sh ~/ -aP && chmod a+x ~/gitwatch.sh
 rm -Rf ~/.vimrc &>/dev/null || true
 ln -s .vim/bundle/vim-my-settings/.vimrc ~/.vimrc
 
-rm -Rf /tmp/vimmy
 cd ~ # hint nodejs requires cwd
 
 echo "Adding cronjob to update vim packages"
@@ -38,7 +37,10 @@ grep -q vimupdate ~/.bashrc || {
 
 # install dependencies
 if ping -c 1 8.8.8.8; then
-
+    dpkg --get-selections|grep -v deinstall |grep git || {
+        echo "Git missing - trying to install"
+        apt-get install -y git
+    }
     dpkg --get-selections|grep -v deinstall |grep ctags || {
         apt-get install -y ctags
     }
@@ -60,11 +62,6 @@ if ping -c 1 8.8.8.8; then
         npm install -g jshint
     fi
 fi
-
-update-alternatives --display node |grep Current.*best.*version.*usr.bin.nodejs &>/dev/null || {
-    echo /usr/bin/nodejs must be set as node for tern-compile YCM
-    update-alternatives --install /usr/bin/node node /usr/bin/nodejs 10
-}
 
 # netrc for ultisnips
 NETRC="$HOME/.netrc"
@@ -88,16 +85,7 @@ pkill -9 -f vimupdate || true
 
 chown $(whoami) ~/.vim -R
 
-# TODO let it be precompiled......
-# compile youcompleteme for the platform
-# tern-complete=javascript support, needs nodejs and npm
-cat <<EOF >> ~/.compile-YCM
-#!/bin/bash
-cd ~/.vim/bundle/YouCompleteMe/ && python install.py --tern-complete
-EOF
-chmod a+x ~/.compile-YCM
-#compile YCM
-~/.compile-YCM
+rm -Rf /tmp/vimmy
 
 echo "Finished"
 exit 0

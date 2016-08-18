@@ -5,3 +5,10 @@ services:
         volumes:
           - ./build:/build
 
+    testvim:
+        build: testvim
+        environment:
+          - GITHUB_USER=marcwimmer
+          - GITHUB_PWD=H3kt0r1980
+        volumes:
+          - ./build:/build
