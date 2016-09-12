@@ -17,4 +17,15 @@ fi
 update_repo ~/.vim/UltiSnips
 update_repo ~/.vim/bundle/vim-my-settings
 
-~/gitwatch.sh -r origin ~/.vim/UltiSnips &> /dev/null
+# too much cpu
+#~/gitwatch.sh -r origin ~/.vim/UltiSnips &> /dev/null
+
+while True;
+do
+    cd ~/.vim/UltiSnips
+    git pull --no-edit
+    git commit --no-edit -am autocommit
+    git add --no-edit .
+    git push --no-edit
+    sleep 60
+done
