@@ -23,9 +23,9 @@ update_repo ~/.vim/bundle/vim-my-settings
 while true;
 do
     cd ~/.vim/UltiSnips
-    git pull --no-edit >> /dev/null
-    git commit --no-edit -am autocommit >> /dev/null
-    git add --no-edit . >> /dev/null
-    git push >> /dev/null
+    git pull --no-edit > /dev/null 2>&1
+    git commit --no-edit -am autocommit > /dev/null 2>&1
+    git add --no-edit . > /dev/null 2>&1
+    git push > /dev/null 2>&1
     sleep 60
 done
