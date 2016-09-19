@@ -1,4 +1,4 @@
-FROM ubuntu:16.04
+FROM ubuntu:14.04
 RUN apt-get update
 RUN apt-get install -y htop build-essential rsync git python cmake
 RUN ls -lha /opt
