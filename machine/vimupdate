@@ -20,7 +20,7 @@ update_repo ~/.vim/bundle/vim-my-settings
 # too much cpu
 #~/gitwatch.sh -r origin ~/.vim/UltiSnips &> /dev/null
 
-while True;
+while true;
 do
     cd ~/.vim/UltiSnips
     git pull --no-edit
