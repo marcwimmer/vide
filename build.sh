@@ -19,5 +19,6 @@ do
 
     cp $DIR/build/marcvim_installer.sh $DIR/build/marcvim_installer_$rev.sh
 
+    rm machine/Dockerfile
 done
 echo New marcvim installer is under build
