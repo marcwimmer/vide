@@ -22,6 +22,7 @@ update_repo ~/.vim/bundle/vim-my-settings
 
 while true;
 do
+    mkdir -p ~/.vim/UltiSnips
     cd ~/.vim/UltiSnips
     git pull --no-edit > /dev/null 2>&1
     git commit --no-edit -am autocommit > /dev/null 2>&1
