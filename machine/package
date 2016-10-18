@@ -21,6 +21,10 @@ time tar cfh /tmp/files.tar .vim .vimupdate gitwatch.sh
 # add vim executable
 tar --append --file /tmp/files.tar -C /usr/bin vim
 
+# add vim packages
+tar cfz /tmp/vim.share -C /tmp/vim runtime
+tar --append --file /tmp/files.tar -C /tmp vim.share
+
 #tar to gzipped tar
 time gzip /tmp/files.tar
 

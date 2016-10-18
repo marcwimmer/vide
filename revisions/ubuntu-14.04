@@ -31,7 +31,6 @@ RUN ./configure --with-features=huge \
 #            /*--enable-luainterp \*/
 #            /*--enable-gui=gtk2 --enable-cscope --prefix=/usr*/
 
-RUN make VIMRUNTIMEDIR=/usr/share/vim/vim80
 RUN make install
 RUN vim --version
 

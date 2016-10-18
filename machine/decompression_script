@@ -25,6 +25,15 @@ rsync /tmp/vimmy/gitwatch.sh ~/ -aP && chmod a+x ~/gitwatch.sh
 rm -Rf ~/.vimrc &>/dev/null || true
 ln -s .vim/bundle/vim-my-settings/.vimrc ~/.vimrc
 
+# install vim executable and vim.share
+cp /tmp/vimmy/vim /usr/local/bin/vim
+mkdir /tmp/vim.share
+cd /tmp/vim.share
+tar xfz /tmp/vimmy/vim.share
+
+#TODO caution: if vim version changes
+rsync /tmp/vim.share/runtime/ /usr/share/vim/vim80/ -ar
+
 rm -Rf /tmp/vimmy
 cd ~ # hint nodejs requires cwd
 
