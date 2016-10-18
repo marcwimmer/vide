@@ -20,7 +20,7 @@ RUN ./configure --with-features=huge \
 		    --enable-perlinterp \
 		    --enable-luainterp \
 		    --enable-cscope --prefix=/usr
-RUN make VIMRUNTIMEDIR=/usr/share/vim/vim74
+RUN make VIMRUNTIMEDIR=/usr/share/vim/vim80
 RUN make install
 RUN vim --version
 
