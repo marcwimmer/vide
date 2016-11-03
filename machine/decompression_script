@@ -38,12 +38,19 @@ rsync /tmp/vim.share/runtime/ /usr/share/vim/vim80/ -ar
 rm -Rf /tmp/vimmy
 cd ~ # hint nodejs requires cwd
 
-echo "Adding cronjob to update vim packages"
-grep -q vimupdate ~/.bashrc || {
-	echo 'pkill -9 -f vimupdate ; ~/.vimupdate &' >> ~/.bashrc
-    echo 'alias gs="git status"' >> ~/.bashrc
-    echo 'alias gac="git add . && git status -s > /tmp/state && git commit -a -F /tmp/state && rm /tmp/state"' >> ~/.bashrc
-}
+#echo "Adding cronjob to update vim packages"
+#grep -q vimupdate ~/.bashrc || {
+#	echo 'pkill -9 -f vimupdate ; ~/.vimupdate &' >> ~/.bashrc
+#    echo 'alias gs="git status"' >> ~/.bashrc
+#    echo 'alias gac="git add . && git status -s > /tmp/state && git commit -a -F /tmp/state && rm /tmp/state"' >> ~/.bashrc
+#}
+echo "Suggestion: to automatically update vim snippets add this to your .bashrc"
+echo ''
+echo 'pkill -9 -f vimupdate ; ~/.vimupdate &'
+echo 'alias gs="git status"' 
+echo 'alias gac="git add . && git status -s > /tmp/state && git commit -a -F /tmp/state && rm /tmp/state"' 
+echo ''
+echo ''
 
 
 # install dependencies
