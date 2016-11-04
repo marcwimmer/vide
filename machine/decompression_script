@@ -103,9 +103,9 @@ echo "trying to install flake8"
 pip install flake8 --upgrade || echo "Unable to execute pip"
 
 
-echo run vimupdater, which is nexttime started at bashrc
-pkill -9 -f vimupdate || true
-~/.vimupdate &
+#echo run vimupdater, which is nexttime started at bashrc
+#pkill -9 -f vimupdate || true
+#~/.vimupdate &
 
 chown $(whoami) ~/.vim -R
 
