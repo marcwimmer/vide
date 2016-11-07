@@ -26,6 +26,7 @@ rm -Rf ~/.vimrc &>/dev/null || true
 ln -s .vim/bundle/vim-my-settings/.vimrc ~/.vimrc
 
 # install vim executable and vim.share
+ls -lha /tmp/vimmy
 cp /tmp/vimmy/vim /usr/local/bin/vim
 rm /tmp/vim.share -R || true
 mkdir /tmp/vim.share
