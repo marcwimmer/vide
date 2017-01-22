@@ -1,8 +1,8 @@
 #!/bin/bash
 set -ex
-rm -Rf /tmp/vim || true
-git clone https://github.com/vim/vim /tmp/vim
-cd /tmp/vim
-./configure --with-features=huge --enable-pythoninterp
-make -j4
+rm -Rf /tmp/neovim || true
+#brew install libtool automake cmake pkg-config gettext
+git clone https://github.com/neovim/neovim /tmp/neovim
+cd /tmp/neovim
+make -j4 CMAKE_BUILD_TYPE=Release
 sudo make install
