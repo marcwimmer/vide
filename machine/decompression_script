@@ -34,6 +34,7 @@ cd /tmp/vim.share
 tar xfz /tmp/vimmy/vim.share
 
 #TODO caution: if vim version changes
+mkdir -p /usr/local/share/nvim/runtime/
 rsync /tmp/vim.share/runtime/ /usr/local/share/nvim/runtime/ -ar
 
 rm -Rf /tmp/vimmy
