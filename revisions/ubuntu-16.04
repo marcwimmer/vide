@@ -16,6 +16,7 @@ WORKDIR /tmp/vim
 RUN make
 RUN make install
 RUN nvim --version
+RUN cd /tmp/vim && mv nvim vim
 
 RUN apt-get install -y iputils-ping
 # javascript support ycm
