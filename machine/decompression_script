@@ -72,8 +72,12 @@ if ping -c 1 8.8.8.8; then
     }
 
     {
+        pip install neovim || echo "Unable to pip install neovim"
+    }
+
+    {
         echo "trying to install flake8"
-        pip install flake8 || echo "Unable to execute pip install flake8"
+        pip install flake8 || echo "Unable to pip install flake8"
     }
 
     {
