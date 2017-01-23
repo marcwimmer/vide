@@ -84,21 +84,6 @@ update-alternatives --display node |grep Current.*best.*version.*usr.bin.nodejs 
     update-alternatives --install /usr/bin/node node /usr/bin/nodejs 10
 }
 
-# netrc for ultisnips
-NETRC="$HOME/.netrc"
-if [[ ! -f "$NETRC" ]]; then
-    touch $NETRC
-fi
-
-if [[ -z "$GITHUB_USER" ]]; then 
-    echo "Please provide GITHUB_USER and GITHUB_PWD!"
-    exit -1
-fi
-grep -q github.com $NETRC || {
-    echo "machine github.com login $GITHUB_USER password $GITHUB_PWD" >> $NETRC
-    chmod 600 $NETRC
-}
-
 # flake 8
 echo "trying to install flake8"
 pip install flake8 --upgrade || echo "Unable to execute pip"
