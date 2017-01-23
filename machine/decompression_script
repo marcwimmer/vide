@@ -97,6 +97,12 @@ update-alternatives --display node |grep Current.*best.*version.*usr.bin.nodejs 
 
 # link neovim to old vim
 mkdir -p ~/.config/nvim
+if [[ -d ~/.config/nvim ]]; then
+    cd ~/.config
+    rm nvim.bak -Rf || true
+    mv nvim nvim.bak
+fi
+rm -Rf ~/.config/nvim || true
 ln -s ~/.vim ~/.config/nvim || echo 'Error linking ~/.vim to ~/.config/nvim'
 ln -s ~/.vimrc ~/.config/nvim/init.vim || echo 'Error linking ~/.vimrc to ~/.config/nvim/init.vim'
 
