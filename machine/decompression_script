@@ -70,14 +70,19 @@ if ping -c 1 8.8.8.8; then
     dpkg --get-selections|grep -v deinstall |grep inotify-tools || {
         apt-get install -y inotify-tools
     }
-fi
 
-if ping -c 1 8.8.8.8; then
-    if which jshint &>/dev/null; then
-        echo 'jshint already installed'
-    else
-        npm install -g jshint
-    fi
+    {
+        echo "trying to install flake8"
+        pip install flake8 || echo "Unable to execute pip install flake8"
+    }
+
+    {
+        if which jshint &>/dev/null; then
+            echo 'jshint already installed'
+        else
+            npm install -g jshint
+        fi
+    }
 fi
 
 update-alternatives --display node |grep Current.*best.*version.*usr.bin.nodejs &>/dev/null || {
@@ -85,14 +90,12 @@ update-alternatives --display node |grep Current.*best.*version.*usr.bin.nodejs 
     update-alternatives --install /usr/bin/node node /usr/bin/nodejs 10
 }
 
-# flake 8
-echo "trying to install flake8"
-pip install flake8 --upgrade || echo "Unable to execute pip"
 
+# link neovim to old vim
+mkdir -p ~/.config/neovim
+ln -s ~/.vim ~/.config/neovim || echo 'Error linking ~/.vim to ~/.config/neovim'
+ln -s ~/.vimrc ~/.config/neovim/init.vim || echo 'Error linking ~/.vimrc to ~/.config/neovim/init.vim'
 
-#echo run vimupdater, which is nexttime started at bashrc
-#pkill -9 -f vimupdate || true
-#~/.vimupdate &
 
 chown $(whoami) ~/.vim -R
 
