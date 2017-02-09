@@ -12,6 +12,7 @@ RUN apt-get install -y libncurses5-dev python-dev ruby-dev nodejs npm libpython-
 
 WORKDIR /tmp
 RUN git clone https://github.com/neovim/neovim vim
+RUN cd /tmp/vim && git checkout __NEOVIMREVISION__
 WORKDIR /tmp/vim
 RUN make CMAKE_BUILD_TYPE=RelWithDebInfo
 RUN make install
