@@ -12,7 +12,7 @@ for rev in $(ls $DIR/revisions);
 do
     echo building $rev
     cp $DIR/revisions/$rev machine/Dockerfile
-    sed -i '' "s|__NEOVIMREVISION__|$NEOVIMREVISION|g" machine/Dockerfile
+    sed -i "s|__NEOVIMREVISION__|$NEOVIMREVISION|g" machine/Dockerfile
 
     rm tmp/clone/* -Rf || true
     docker-compose kill
