@@ -8,7 +8,7 @@ echo "Proide 'no-cache' to rebuild"
 NEOVIMREVISION=$(cat $DIR/NEOVIMREVISION)
 echo "Building NEOVIM $NEOVIMREVISION"
 
-for rev in $(ls $DIR/revisions);
+for rev in $(ls $DIR/revisions|grep 16);
 do
     echo building $rev
     cp $DIR/revisions/$rev machine/Dockerfile

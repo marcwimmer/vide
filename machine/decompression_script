@@ -20,7 +20,6 @@ echo copying vim to local folder
 rm -Rf ~/.vim &>/dev/null || true
 mv /tmp/vimmy/.vim ~/.vim
 rsync /tmp/vimmy/.vimupdate ~/ -aP && chmod a+x ~/.vimupdate
-rsync /tmp/vimmy/gitwatch.sh ~/ -aP && chmod a+x ~/gitwatch.sh
 
 rm -Rf ~/.vimrc &>/dev/null || true
 ln -s .vim/bundle/vim-my-settings/.vimrc ~/.vimrc

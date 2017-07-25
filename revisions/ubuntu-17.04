@@ -11,32 +11,29 @@ RUN apt-get install -y libncurses5-dev python-dev ruby-dev nodejs npm libpython-
 
 
 WORKDIR /tmp
-RUN git clone https://github.com/neovim/neovim vim
-RUN cd /tmp/vim && git checkout __NEOVIMREVISION__
+RUN git clone https://github.com/neovim/neovim vim && \
+cd /tmp/vim && git checkout __NEOVIMREVISION__
 WORKDIR /tmp/vim
-RUN make CMAKE_BUILD_TYPE=RelWithDebInfo
-RUN make install
-RUN nvim --version
-RUN cp /usr/local/bin/nvim /usr/bin/vim
+RUN make CMAKE_BUILD_TYPE=RelWithDebInfo && \
+make install && \
+nvim --version && \
+cp /usr/local/bin/nvim /usr/bin/vim
 
-RUN apt-get install -y iputils-ping
-# javascript support ycm
-RUN update-alternatives --install /usr/bin/node node /usr/bin/nodejs 10
-RUN apt-get install -y automake pkg-config liblzma-dev libpcre3-dev
+RUN update-alternatives --install /usr/bin/node node /usr/bin/nodejs 10 && \
+apt-get install -y automake pkg-config liblzma-dev libpcre3-dev
 ADD build-silver-surfer.sh build-silver-surfer.sh
-RUN rm -Rf /opt/clone_ag/ || true
-RUN chmod a+x ./build-silver-surfer.sh
-RUN ./build-silver-surfer.sh
+RUN rm -Rf /opt/clone_ag/ || true && \
+chmod a+x ./build-silver-surfer.sh && \
+./build-silver-surfer.sh
 
 ADD download download
-RUN chmod a+x download
-RUN ./download
+RUN chmod a+x download && \
+./download && \
+ls -lha /opt && \
+exit -1
 
 ADD decompression_script /opt/decompression_script
-ADD vimupdate /root/.vimupdate
-ADD gitwatch.sh /root/gitwatch.sh
-ADD compile compile
+ADD compile /compile
 ADD package package
-RUN chmod a+x compile package
-RUN ./package
+RUN chmod a+x compile package && ./package
 CMD cp /tmp/marcvim_installer.sh /build

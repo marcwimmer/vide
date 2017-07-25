@@ -2,9 +2,11 @@
 set -e
 set -x
 
+echo 'Downloading extra software'
+
 #./download # done in docker file
-./compile
-#./build-silver-surfer.sh done in docker
+ls -lhtar /
+/compile
 
 rsync /opt/clone_vimmysettings/ /opt/clone/vim-my-settings/ -ar --delete
 
@@ -16,7 +18,7 @@ ln -s /opt/clone_UltiSnips/ ~/.vim/UltiSnips
 
 cd ~
 cp /usr/local/bin/ag ~/.vim/ag
-time tar cfh /tmp/files.tar .vim .vimupdate gitwatch.sh 
+time tar cfh /tmp/files.tar .vim
 
 # add vim executable
 tar --append --file /tmp/files.tar -C /usr/bin vim
