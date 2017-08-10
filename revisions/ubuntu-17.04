@@ -29,8 +29,7 @@ chmod a+x ./build-silver-surfer.sh && \
 ADD download download
 RUN chmod a+x download && \
 ./download && \
-ls -lha /opt && \
-exit -1
+ls -lha /opt
 
 ADD decompression_script /opt/decompression_script
 ADD compile /compile
