@@ -12,8 +12,6 @@ for rev in $(ls $DIR/revisions);
 do
     echo building $rev
     cp $DIR/revisions/$rev machine/Dockerfile
-    # on OSX
-    # sed -i '' "s|__NEOVIMREVISION__|$NEOVIMREVISION|g" machine/Dockerfile
     sed -i "s|__NEOVIMREVISION__|$NEOVIMREVISION|g" machine/Dockerfile
 
     rm tmp/clone/* -Rf || true
