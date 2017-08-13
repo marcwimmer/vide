@@ -3,7 +3,7 @@ set -ex
 
 DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
-echo "Proide 'no-cache' to rebuild"
+echo "Provide 'no-cache' to rebuild"
 
 NEOVIMREVISION=$(cat $DIR/NEOVIMREVISION)
 echo "Building NEOVIM $NEOVIMREVISION"
