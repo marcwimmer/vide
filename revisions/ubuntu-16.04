@@ -21,16 +21,16 @@ ADD build-silver-surfer.sh build-silver-surfer.sh
 RUN update-alternatives --install /usr/bin/node node /usr/bin/nodejs 10 && \
 apt-get install -y automake pkg-config liblzma-dev libpcre3-dev && \ 
 rm -Rf /opt/clone_ag/ || true && \
-chmod a+x ./build-silver-surfer.sh && \
-./build-silver-surfer.sh
+chmod a+x ./build-silver-surfer.sh
+RUN ./build-silver-surfer.sh
 
 ADD download download
-RUN chmod a+x download && \
-./download
+RUN chmod a+x download
+RUN ./download
 
 ADD decompression_script /opt/decompression_script
 ADD compile /compile
 ADD package package
-RUN chmod a+x /compile package && \
-./package
+RUN chmod a+x /compile package
+RUN ./package
 CMD cp /tmp/marcvim_installer.sh /build
