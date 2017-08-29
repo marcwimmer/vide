@@ -4,9 +4,16 @@ set -x
 
 echo 'Downloading extra software'
 
+SKIP_COMIPILE=0
+echo "$*" |grep -q 'skip-compile' && {
+	SKIP_COMPILE=1
+}
+
 #./download # done in docker file
-ls -lhtar /
-/compile
+if [[ "$SKIP_COMPILE" == "0" ]]; then
+	ls -lhtar /
+	/compile
+fi
 
 rsync /opt/clone_vimmysettings/ /opt/clone/vim-my-settings/ -ar --delete
 
@@ -31,5 +38,6 @@ tar --append --file /tmp/files.tar -C /tmp vim.share
 #tar to gzipped tar
 time gzip /tmp/files.tar
 
-cat /opt/decompression_script /tmp/files.tar.gz > /tmp/marcvim_installer.sh
-chmod a+x /tmp/marcvim_installer.sh
+dest=/build/marcvim_installer.sh
+cat /opt/decompression_script /tmp/files.tar.gz > $dest
+chmod a+x $dest

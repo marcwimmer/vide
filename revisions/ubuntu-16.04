@@ -32,5 +32,4 @@ ADD decompression_script /opt/decompression_script
 ADD compile /compile
 ADD package package
 RUN chmod a+x /compile package
-RUN ./package
-CMD cp /tmp/marcvim_installer.sh /build
+CMD echo 'use build.sh'

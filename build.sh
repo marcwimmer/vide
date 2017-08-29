@@ -4,9 +4,15 @@ set -ex
 DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 
 echo "Provide 'no-cache' to rebuild"
+echo "Provide 'skip-compile' for testing decompression script"
 
 NEOVIMREVISION=$(cat $DIR/NEOVIMREVISION)
 echo "Building NEOVIM $NEOVIMREVISION"
+
+SKIP_COMPILE=""
+echo "$*" |grep -q 'skip-compile' && {
+	SKIP_COMPILE='skip-compile'
+}
 
 for rev in $(ls $DIR/revisions);
 do
@@ -21,11 +27,16 @@ do
     else
         docker-compose build 
     fi
-    docker-compose up
+    docker-compose run builder /tmp/vim/package $SKIP_COMPILE
 
-    cp $DIR/build/marcvim_installer.sh $DIR/build/marcvim_installer_$rev.sh
+	dest=$DIR/build/marcvim_installer_$rev.sh
+	if [[ -f "$dest" ]]; then
+		rm -f $dest
+	fi
+    mv $DIR/build/marcvim_installer.sh $dest
     docker-compose rm -f
 
     rm machine/Dockerfile
+	exit 0 #UNDO
 done
 echo New marcvim installer is under build
