@@ -1,8 +1,17 @@
 #!/bin/bash
 set -e
 set -x
+
+if [ "$EUID" -ne 0 ]; then
+	echo "Please run as root like:"
+	echo "sudo $0"
+	exit
+fi
+
 echo "Extracting marcvim into /tmp"
 echo "Installing marcvim for $(whoami)"
+
+
 
 # searches for the line number where finish the script and start the tar.gz
 SKIP=`awk '/^__TARFILE_FOLLOWS__/ { print NR + 1; exit 0; }' $0`
@@ -95,7 +104,6 @@ update-alternatives --display node |grep Current.*best.*version.*usr.bin.nodejs 
 
 
 # link neovim to old vim
-mkdir -p ~/.config/nvim
 if [[ -d ~/.config/nvim ]]; then
     cd ~/.config
     rm nvim.bak -Rf || true
