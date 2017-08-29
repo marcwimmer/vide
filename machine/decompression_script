@@ -113,6 +113,7 @@ rm -Rf ~/.config/nvim || true
 ln -s ~/.vim ~/.config/nvim || echo 'Error linking ~/.vim to ~/.config/nvim'
 ln -s ~/.vimrc ~/.config/nvim/init.vim || echo 'Error linking ~/.vimrc to ~/.config/nvim/init.vim'
 
+cp ~/.vim/ag /usr/local/bin
 
 chown $(whoami) ~/.vim -R
 
