@@ -1,8 +1,17 @@
 #!/bin/bash
 set -e
 set -x
+
+if [ "$EUID" -ne 0 ]; then
+	echo "Please run as root like:"
+	echo "sudo $0"
+	exit
+fi
+
 echo "Extracting marcvim into /tmp"
 echo "Installing marcvim for $(whoami)"
+
+
 
 # searches for the line number where finish the script and start the tar.gz
 SKIP=`awk '/^__TARFILE_FOLLOWS__/ { print NR + 1; exit 0; }' $0`
@@ -20,7 +29,6 @@ echo copying vim to local folder
 rm -Rf ~/.vim &>/dev/null || true
 mv /tmp/vimmy/.vim ~/.vim
 rsync /tmp/vimmy/.vimupdate ~/ -aP && chmod a+x ~/.vimupdate
-rsync /tmp/vimmy/gitwatch.sh ~/ -aP && chmod a+x ~/gitwatch.sh
 
 rm -Rf ~/.vimrc &>/dev/null || true
 ln -s .vim/bundle/vim-my-settings/.vimrc ~/.vimrc
@@ -56,8 +64,12 @@ echo ''
 
 
 # install dependencies
-if ping -c 1 8.8.8.8; then
+read -p "Shall i install dependencies: ctags, nodejs, npm, pip, pip neovim, pip flake8? [Y/n]" install
+if [[ -z "$install" || "$install" == "y" || "$install" == "Y" ]]; then
 
+    dpkg --get-selections|grep -v deinstall |grep python-pip || {
+        apt-get install -y python-pip
+    }
     dpkg --get-selections|grep -v deinstall |grep ctags || {
         apt-get install -y ctags
     }
@@ -67,10 +79,6 @@ if ping -c 1 8.8.8.8; then
     dpkg --get-selections|grep -v deinstall |grep npm || {
         apt-get install -y npm
     }
-    dpkg --get-selections|grep -v deinstall |grep inotify-tools || {
-        apt-get install -y inotify-tools
-    }
-
     {
         pip install neovim || echo "Unable to pip install neovim"
     }
@@ -89,23 +97,27 @@ if ping -c 1 8.8.8.8; then
     }
 fi
 
-update-alternatives --display node |grep Current.*best.*version.*usr.bin.nodejs &>/dev/null || {
-    echo /usr/bin/nodejs must be set as node for tern-compile YCM
-    update-alternatives --install /usr/bin/node node /usr/bin/nodejs 10
-}
+read -p "Shall i set node to /usr/bin/node ? [Y/n]" install
+if [[ -z "$install" || "$install" == "y" || "$install" == "Y" ]]; then
+	update-alternatives --display node |grep Current.*best.*version.*usr.bin.nodejs &>/dev/null || {
+		echo /usr/bin/nodejs must be set as node for tern-compile YCM
+		update-alternatives --install /usr/bin/node node /usr/bin/nodejs 10
+	}
+fi
 
 
 # link neovim to old vim
-mkdir -p ~/.config/nvim
 if [[ -d ~/.config/nvim ]]; then
     cd ~/.config
     rm nvim.bak -Rf || true
     mv nvim nvim.bak
 fi
+mkdir -p ~/.config
 rm -Rf ~/.config/nvim || true
 ln -s ~/.vim ~/.config/nvim || echo 'Error linking ~/.vim to ~/.config/nvim'
 ln -s ~/.vimrc ~/.config/nvim/init.vim || echo 'Error linking ~/.vimrc to ~/.config/nvim/init.vim'
 
+cp ~/.vim/ag /usr/local/bin
 
 chown $(whoami) ~/.vim -R
 

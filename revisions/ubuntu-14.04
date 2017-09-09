@@ -32,10 +32,7 @@ RUN chmod a+x download
 RUN ./download
 
 ADD decompression_script /opt/decompression_script
-ADD vimupdate /root/.vimupdate
-ADD gitwatch.sh /root/gitwatch.sh
-ADD compile compile
+ADD compile /compile
 ADD package package
-RUN chmod a+x compile package
-RUN ./package
-CMD cp /tmp/marcvim_installer.sh /build
+RUN chmod a+x /compile package
+CMD echo 'use build.sh'

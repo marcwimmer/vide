@@ -1,7 +1,7 @@
 #!/bin/bash
 echo install vim
 set -e
-set +x
+set -x
 
 #git clone --depth 1 https://github.com/marcwimmer/vim-my-settings.git
 if [[ "$(find /opt/clone_vimmysettings -type f|wc -l)" == "0" ]]; then
