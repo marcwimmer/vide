@@ -2,10 +2,3 @@ Run build.sh - in output is a all-in installer, that installs
 
 (from decompression-script)
 - silver surfer
-- sets nodejs 
-- adds background task in bashrc to update ultisnips
-  --> started in .bashrc by executing 
-        
-        ~/.vimupdate &
-
-  uses inotifywait to immediatley upload changed files
