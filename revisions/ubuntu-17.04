@@ -23,11 +23,12 @@ RUN update-alternatives --install /usr/bin/node node /usr/bin/nodejs 10 && \
 apt-get install -y automake pkg-config liblzma-dev libpcre3-dev
 ADD build-silver-surfer.sh build-silver-surfer.sh
 RUN rm -Rf /opt/clone_ag/ || true && \
-chmod a+x ./build-silver-surfer.sh && \
-./build-silver-surfer.sh
+chmod a+x ./build-silver-surfer.sh
+RUN ./build-silver-surfer.sh
 
 ADD download download
-RUN chmod a+x download && \
+RUN chmod a+x download
+RUN \
 ./download && \
 ls -lha /opt
 
