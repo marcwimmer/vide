@@ -37,6 +37,5 @@ do
     docker-compose rm -f
 
     rm machine/Dockerfile
-	exit 0 #UNDO
 done
 echo New marcvim installer is under build
