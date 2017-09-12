@@ -4,4 +4,4 @@ cd $DIR
 git checkout -f master
 git clean -xdff
 git pull
-./build.sh
+./build.sh NO-CACHE
