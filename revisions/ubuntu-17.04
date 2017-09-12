@@ -35,5 +35,5 @@ ls -lha /opt
 ADD decompression_script /opt/decompression_script
 ADD compile /compile
 ADD package package
-RUN chmod a+x compile package
+RUN chmod a+x /compile package
 CMD echo 'use build.sh'
