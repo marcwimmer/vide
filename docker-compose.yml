@@ -4,7 +4,7 @@ services:
         build: .
         volumes:
           - ./UltiSnips:/home/vide/.vim/UltiSnips
-          - ./vim-my-settings:/home/vide/.vim/vim-my-settings
+          - ./vim-my-settings:/home/vide/.vim/bundle/vim-my-settings
           - ./cache:/home/vide/.cache
         command: /start.sh
         environment:
