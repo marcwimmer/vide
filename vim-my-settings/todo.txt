@@ -1,0 +1,13 @@
+TODO python indent - wenn man z.B. hier enter drueckt, ist er eins zu weit rechts
+  x = [x<CR> for x in x]
+
+  wird
+
+  x = [
+        x for x in x]
+
+--------------------------------------------------------------------------------
+
+python
+completion auch fuer strings erlauben; dann koennten die felder in openerp besser
+geschrieben werden
