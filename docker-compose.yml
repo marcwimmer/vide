@@ -1,9 +1,10 @@
 version: '2'
 services:
-    builder:
-        build: machine
+    vide:
+        build: .
         volumes:
-          - ~/.vim/UltiSnips:/home/vide/.vim/UltiSnips
+          - ./UltiSnips:/home/vide/.vim/UltiSnips
+          - ./vim-my-settings:/home/vide/.vim/vim-my-settings
         command: /start.sh
         environment:
             - ODOO_HOME
