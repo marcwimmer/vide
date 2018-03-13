@@ -2,6 +2,8 @@
 set nocompatible "we are using vim, not vi!
 filetype off
 
+
+set rtp+=~
 set rtp+=~/.vim/bundle/Vundle.vim
 
 " set the runtime path to include Vundle and initialize

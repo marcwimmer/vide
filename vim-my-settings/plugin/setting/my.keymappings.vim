@@ -3,7 +3,6 @@ let mapleader=","
 " leave insert mode by typing jk - really cool
 inoremap jk <esc>
 " Paste Command Shortcut
-set nopaste "otherwise inoremap jk does not work
 :set pastetoggle=<F7>
 
 " Otherwise stupid ex-mode

@@ -6,6 +6,7 @@ services:
           - ./UltiSnips:/home/vide/.vim/UltiSnips
           - ./vim-my-settings:/home/vide/.vim/bundle/vim-my-settings
           - ./cache:/home/vide/.cache
+          - ./files/vimrc:/home/vide/.config/nvim/init.vim
         command: /start.sh
         environment:
             - ODOO_HOME
