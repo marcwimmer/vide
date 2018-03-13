@@ -8,4 +8,4 @@ docker-compose run \
 	--workdir="$CURRENT_DIR" \
 	--volume="$HOME:$HOME" \
 	--volume="$CURRENT_DIR:$CURRENT_DIR" \
-	vide bash # /start.sh "$@"
+	vide /start.sh "$@"
