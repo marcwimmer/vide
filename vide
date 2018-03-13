@@ -8,4 +8,4 @@ docker-compose run \
 	--workdir="$CURRENT_DIR" \
 	--volume="$HOME:$HOME" \
 	--volume="$CURRENT_DIR:$CURRENT_DIR" \
-	builder /start.sh "$@"
+	builder bash # /start.sh "$@"
