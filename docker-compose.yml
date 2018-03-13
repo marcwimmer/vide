@@ -5,6 +5,7 @@ services:
         volumes:
           - ./UltiSnips:/home/vide/.vim/UltiSnips
           - ./vim-my-settings:/home/vide/.vim/vim-my-settings
+          - ./cache:/home/vide/.cache
         command: /start.sh
         environment:
             - ODOO_HOME
