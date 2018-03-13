@@ -3,4 +3,7 @@ services:
     builder:
         build: machine
         volumes:
-          - ./build:/build
+          - ~/.vim/UltiSnips:/home/vide/.vim/UltiSnips
+        command: /start.sh
+        environment:
+            - ODOO_HOME

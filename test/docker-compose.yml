@@ -1,6 +1,0 @@
-version: '2'
-services:
-    vim:
-        build: .
-        volumes:
-            - ../build:/root/build

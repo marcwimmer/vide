@@ -1,4 +1,2 @@
-Run build.sh - in output is a all-in installer, that installs
+#!/bin/bash
 
-(from decompression-script)
-- silver surfer
