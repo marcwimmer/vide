@@ -421,7 +421,7 @@ snippet bus "bus notification"
 var bus = require('bus.bus').bus;   //is global, only on bus
 
 //remark
-bus.is_master
+bus.is_odoo_focused()  // NICHT is_master
 
 //hier noch die phone nummer einbauen?
 bus.add_channel([session.db, 'phonebox.blocked', session.uid].join());

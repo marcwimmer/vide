@@ -1,8 +1,15 @@
 #!/bin/bash
+set -e
 
-if [[ -n "LOCAL_UID" ]]; then
+HOME=/home/vide
+
+if [[ -n "$LOCAL_UID" ]]; then
 	sed -i "s/vide:x:1000:1000/vide:x:$LOCAL_UID:$LOCAL_UID/g" /etc/passwd
-	chown "$LOCAL_UID" /home/vide/.cache -R
+	chown "$LOCAL_UID" $HOME/.cache -R
+        mkdir -p $HOME/.local
+	chown "$LOCAL_UID" $HOME/.local -R
+        touch $HOME/yankring_history_v2.txt
+        chown "$LOCAL_UID" $HOME/yankring_history_v2.txt
 fi
 
 

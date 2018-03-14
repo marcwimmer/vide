@@ -3,3 +3,4 @@ tmp/*
 tmp.copy/*
 machine/Dockerfile
 cache
+.DS_Store
