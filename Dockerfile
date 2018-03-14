@@ -58,4 +58,8 @@ ADD files/start.sh /start.sh
 RUN chmod a+x /start.sh
 
 WORKDIR /home/vide
-USER vide
+USER root
+RUN apt install -y gosu
+ADD files/entrypoint.sh /usr/bin/entrypoint.sh
+RUN chmod a+x /usr/bin/entrypoint.sh
+ENTRYPOINT /usr/bin/entrypoint.sh "$@"

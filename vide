@@ -9,4 +9,5 @@ docker-compose run \
 	--workdir="$CURRENT_DIR" \
 	--volume="$HOME:$HOME" \
 	--volume="$CURRENT_DIR:$CURRENT_DIR" \
+	-e LOCAL_UID="$(id -u "$(whoami)")" \
 	vide /start.sh "$@"

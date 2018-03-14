@@ -1,12 +1,11 @@
-version: '2'
+version: '3.3'
 services:
     vide:
         build: .
         volumes:
           - ./UltiSnips:/home/vide/.vim/UltiSnips
           - ./vim-my-settings:/home/vide/.vim/bundle/vim-my-settings
-          - ./cache:/home/vide/.cache
+          - ~/.config/vide/cache:/home/vide/.cache
           - ./files/vimrc:/home/vide/.config/nvim/init.vim
-        command: /start.sh
         environment:
             - ODOO_HOME

@@ -1,5 +1,5 @@
 #!/bin/bash
 #docker-compose build
 DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
-rm /usr/local/bin/vide
+rm /usr/local/bin/vide 2>/dev/null 1>&2 || true
 ln -s "$DIR/vide" /usr/local/bin/vide
