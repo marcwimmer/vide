@@ -61,4 +61,5 @@ WORKDIR /home/vide
 USER root
 ADD files/entrypoint.sh /usr/bin/entrypoint.sh
 RUN chmod a+x /usr/bin/entrypoint.sh
-ENTRYPOINT /usr/bin/entrypoint.sh "$@"
+ENTRYPOINT ["/usr/bin/entrypoint.sh"]
+CMD []
