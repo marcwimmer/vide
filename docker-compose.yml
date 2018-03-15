@@ -8,5 +8,6 @@ services:
           - ~/.config/vide/cache:/home/vide/.cache
           - ./files/vimrc:/home/vide/.config/nvim/init.vim
             # - ~/development/vim-openerp-browser:/home/vide/.vim/bundle/vim-openerp-browser
+          - ~/development/vim-run-file:/home/vide/.vim/bundle/vim-run-file
         environment:
             - ODOO_HOME
