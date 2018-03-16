@@ -1,7 +1,8 @@
 FROM ubuntu:16.04
 RUN apt-get update
 RUN apt-get install -y htop build-essential rsync git python cmake libncurses5-dev python-dev ruby-dev nodejs npm libpython-dev build-essential cmake ctags apt libtool libtool-bin autoconf automake cmake g++ pkg-config unzip wget pkg-config liblzma-dev libpcre3-dev silversearcher-ag python-pip curl golang-go python-lxml libxml2-utils gosu
-RUN pip install unidecode pudb
+RUN pip install unidecode pudb flake8
+RUN npm install -g jshint
 
 # ssh setup
 RUN mkdir /root/.ssh
