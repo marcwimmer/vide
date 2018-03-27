@@ -2375,3 +2375,12 @@ class ModelExtended(models.Model):
 
         return super(ModelExtended, self)._register_hook(cr)
 endsnippet
+
+snippet build_model
+@classmethod
+def _build_model(cls, pool, cr):
+	model = super(User, cls)._build_model(pool, cr)
+	ModelCls = type(model)
+	ModelCls.SELF_WRITEABLE_FIELDS += ['sipaccount_originate_id']
+	return model
+endsnippet
