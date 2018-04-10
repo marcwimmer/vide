@@ -2376,6 +2376,63 @@ class ModelExtended(models.Model):
         return super(ModelExtended, self)._register_hook(cr)
 endsnippet
 
+snippet monkeypatch "V11 use register_hook and def.origin to call inherited; very elegant"
+
+# use add magic fields for fields that are used in views like attachment_ids
+origin = {
+    '_add_magic_fields': models.BaseModel._add_magic_fields
+}
+
+def _add_magic_fields(self):
+    origin['_add_magic_fields'](self)
+    #dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe()))) # script directory
+    module_name = get_resource_from_path(dir)[0]
+    self.env.cr.execute("select state from ir_module_module where name =%s", (module_name,))
+    state = self.env.cr.fetchone()
+    if state:
+        state = state[0]
+
+    if state != 'installed':
+        return
+
+	if 'doc_count' not in self._fields:
+		self._add_field('field_name', fields2.Integer(compute=_get_attachments, string="Count Documents"))
+
+
+models.BaseModel._add_magic_fields = _add_magic_fields
+
+def make_$1():
+
+	@api.model
+	def $1(self, name='', args=None, operator='ilike', limit=100):
+		res = $1.origin(self, name=name, args=args, operator=operator, limit=limit)
+		return res
+	return $1
+
+class ModelExtended(models.Model):
+    _inherit = 'ir.model'
+
+    @api.model_cr
+    def _register_hook(self:
+
+        if not self:
+		    self = self.search([])
+        for model in self:
+            m = self.env.get(model.model, False)
+			if not m:
+				continue
+			m._patch_method('$1', make_$1())
+
+			# add a field
+			# for fields in views use _add_magic_fields
+			#if 'doc_count' not in m._fields:
+			#	m._add_field('doc_count', fields2.Integer(compute=_get_attachments, string="Count Documents"))
+			#m._setup_fields(False)
+			#m._setup_complete()
+
+        return super(ModelExtended, self)._register_hook()
+endsnippet
+
 snippet build_model
 @classmethod
 def _build_model(cls, pool, cr):
