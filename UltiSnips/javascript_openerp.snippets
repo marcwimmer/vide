@@ -298,6 +298,21 @@ var data = require('web.data');
 var CompoundDomain = data.CompoundDomain;
 endsnippet
 
+snippet require "typical requires 11"
+var core = require('web.core');
+var _t = core._t;
+var Widget = require('web.Widget');
+var qweb = require("web.core").qweb;
+var Model = require('web.DataModel');
+var webclient = require('web.web_client');
+var Session = require('web.Session'); 
+var session = require('web.session'); 
+var WebClient = require('web.WebClient');
+var data = require('web.data');
+
+var CompoundDomain = data.CompoundDomain;
+endsnippet
+
 snippet do_action "9.0"
 var webclient = require('web.web_client');  // instantiated web.WebClient
 var options = {

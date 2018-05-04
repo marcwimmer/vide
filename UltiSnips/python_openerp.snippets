@@ -1,7 +1,10 @@
 extends python
 
-snippet selection_value
+snippet translate_selection "<V9"
 dict(self.pool.get(${1:model}).fields_get(cr, uid, allfields=[${2:field}], context=context)[$2]['selection']).get(${3:value}, $3)
+endsnippet
+snippet translate_selection ">=V9"
+dict(self.fields_get([${1:field}])[$1]['selection']).get(${2:value}, ${3:default_value})
 endsnippet
 
 snippet superuser
@@ -239,6 +242,20 @@ def write(self, vals):
 @api.multi
 def unlink(self):
 	result = super($1, self).unlink()
+	return result
+endsnippet
+
+snippet crud "V11"
+def create(self, vals):
+	result = super().create(vals)
+	return result
+
+def write(self, vals):
+	result = super().write(vals)
+	return result
+
+def unlink(self):
+	result = super().unlink()
 	return result
 endsnippet
 
@@ -487,27 +504,14 @@ snippet window_close "Close Window"
 {'type': 'ir.actions.act_window_close'}
 endsnippet 
 
-snippet open_window "Open Window - minimal"
-return {
-	'view_type': 'form',
-	'view_mode': 'form',
-	'res_model': ${3:model},
-	${4:'res_id': $5,},
-	${6:'domain': [('id', 'in', $7)],}
-	'view_id': False,
-	'views': [(False, 'form'), (False, 'tree')],
-	'type': 'ir.actions.act_window',
-	'target': 'current',
-}
-endsnippet
-
 snippet open_window "Open Window with options as comments"
 return {
 	'view_type': 'form',
-	'res_model': ${3:model},
-	'res_id': ${6:id},
-	'view_id': False,
-	'views': [(False, 'form'), (False, 'tree')],
+	'res_model': self._name,
+	#'res_id': ,
+	#'domain': [],
+	#'views': [(False, 'form'), (False, 'tree')],
+	#'views': [(False, 'tree'), (False, 'form')],
 	'type': 'ir.actions.act_window',
 	'flags': {'form': {
 		'action_buttons': True,
@@ -524,29 +528,6 @@ return {
 		'clear_breadcrumbs': True,
 	},
 	'target': '${7:current}',
-}
-endsnippet
-
-snippet open_window "Open Window, explicit views"
-models_data = self.pool['ir.model.data']
-dummy, form_view = models_data.get_object_reference(cr, uid, '${1:module}', '${2:id_form}')
-dummy, tree_view = models_data.get_object_reference(cr, uid, '$1', '${3:id_tree}')
-return {
-	'name': _('${4:cool_name}'),
-	'view_type': 'form',
-	'view_mode': 'tree, form',
-	'res_model': '${5:model}',
-	#'domain': [('type', '=', 'opportunity')],
-	'res_id': long(${6:id}),
-	'view_id': False,
-	'views': [
-		(form_view or False, 'form'),
-		(tree_view or False, 'tree'),
-		(False, 'calendar'), 
-		(False, 'graph')
-	],
-	'type': 'ir.actions.act_window',
-	'flags': {'form': {'action_buttons':True}},
 }
 endsnippet
 
@@ -1701,20 +1682,6 @@ snippet needaction "Inherit"
 _inherit = ['ir.needaction_mixin']
 endsnippet
 
-snippet translate_selection
-
-def translate(x, context):
-	x = list(x)
-	x[1] = _(x[1])
-	obj_irt = self.pool["ir.translation"]
-	x[1] = obj_irt._get_source(cr, 1, "stock.move,state", 'selection', context['lang'], x[1])
-	x = tuple(x)
-	return x
-
-states = [translate(x, context) for x in self.pool["stock.move"]
-			._all_columns['state'].column.selection]
-endsnippet
-
 snippet has_group
 self.pool['res.users'].has_group(cr, uid, '${1:group_xml_id}')
 endsnippet
@@ -1818,16 +1785,6 @@ snippet setup_fields
 def _setup_fields(self, *args, **kwargs):
 	super(${1:klass}, self)._setup_fields(*args, **kwargs)
 	self._fields['....'].required = False
-endsnippet
-
-snippet "magic_fields_to_basemodel V9"
-
-@api.model
-def _add_magic_fields(self):
-	self._add_field(${1:field_name}, fields.Integer({2:...}))
-	return old_add_magic_fields(self)
-old_add_magic_fields = models.BaseModel._add_magic_fields
-models.BaseModel._add_magic_fields = _add_magic_fields
 endsnippet
 
 snippet property
@@ -2055,12 +2012,10 @@ snippet migration
 """
 
 
-from openerp.modules.registry import RegistryManager
+from odoo import api, SUPERUSER_ID
 
 def migrate(cr, version):
-    registry = RegistryManager.get(cr.dbname)
-    from openerp.addons.account.models.chart_template import migrate_tags_on_taxes
-    migrate_tags_on_taxes(cr, registry)
+    env = api.Environment(cr, SUPERUSER_ID, {})
 
 
 endsnippet
@@ -2216,7 +2171,7 @@ from openerp.models import BaseModel
 endsnippet
 
 snippet recompute
-self.env.add_todo(self._fields['${1: field}'], self)
+self._recompute_todo(self._fields['${1: field}'])
 self.recompute()
 endsnippet
 
@@ -2379,27 +2334,6 @@ endsnippet
 snippet monkeypatch "V11 use register_hook and def.origin to call inherited; very elegant"
 
 # use add magic fields for fields that are used in views like attachment_ids
-origin = {
-    '_add_magic_fields': models.BaseModel._add_magic_fields
-}
-
-def _add_magic_fields(self):
-    origin['_add_magic_fields'](self)
-    #dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe()))) # script directory
-    module_name = get_resource_from_path(dir)[0]
-    self.env.cr.execute("select state from ir_module_module where name =%s", (module_name,))
-    state = self.env.cr.fetchone()
-    if state:
-        state = state[0]
-
-    if state != 'installed':
-        return
-
-	if 'doc_count' not in self._fields:
-		self._add_field('field_name', fields2.Integer(compute=_get_attachments, string="Count Documents"))
-
-
-models.BaseModel._add_magic_fields = _add_magic_fields
 
 def make_$1():
 
@@ -2408,6 +2342,22 @@ def make_$1():
 		res = $1.origin(self, name=name, args=args, operator=operator, limit=limit)
 		return res
 	return $1
+
+
+METHODEN HINZUFUEGEN evtl. so und ueberschreiben
+class Base(models.AbstractModel):
+
+    _inherit = 'base'
+
+    @api.model
+    def suspend_security(self):
+        return self.sudo(user=BaseSuspendSecurityUid(self.env.uid))
+
+	def _add_magic_fields(self):
+		super()._add_magic_fields()
+		if 'doc_count' not in self._fields:
+			self._add_field('field_name', fields2.Integer(compute=_get_attachments, string="Count Documents"))
+
 
 class ModelExtended(models.Model):
     _inherit = 'ir.model'
@@ -2418,17 +2368,10 @@ class ModelExtended(models.Model):
         if not self:
 		    self = self.search([])
         for model in self:
-            m = self.env.get(model.model, False)
-			if not m:
+            m = self.env.get(model.model, None)
+			if m is None:
 				continue
 			m._patch_method('$1', make_$1())
-
-			# add a field
-			# for fields in views use _add_magic_fields
-			#if 'doc_count' not in m._fields:
-			#	m._add_field('doc_count', fields2.Integer(compute=_get_attachments, string="Count Documents"))
-			#m._setup_fields(False)
-			#m._setup_complete()
 
         return super(ModelExtended, self)._register_hook()
 endsnippet
@@ -2441,3 +2384,33 @@ def _build_model(cls, pool, cr):
 	ModelCls.SELF_WRITEABLE_FIELDS += ['sipaccount_originate_id']
 	return model
 endsnippet
+
+snippet check_if_comment_on_wall
+if self.subtype_id != self.env.ref('mail.mt_note') and \
+endsnippet
+
+snippet mail_activity
+self.env['mail.activity'].create({
+	'summary': {1:heading},
+	'note': {2:your_text},
+	'activity_type_id': False,
+	'activity_category': 'default',
+	'date_deadline': fields.Datetime.now(),
+	'res_model_id': self.env['ir.model']._get('{3:model}').model,
+	'res_id': {4:res_id},
+	'user_id': self.env.user.id,
+})
+endsnippet
+
+snippet ot
+odoo_trace()
+endsnippet
+
+snippet invalidate_cache
+self.invalidate_cache(fnames=[${1:'field1', 'field2'}], ids=None)
+endsnippet
+
+snippet stock.quant "stock.quant v11"
+available_quantity = self.env['stock.quant']._get_available_quantity(self.product_id, self.location_id)
+endsnippet
+
