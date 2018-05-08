@@ -1437,32 +1437,32 @@ def message_post(self, cr, uid, thread_id, context=None, **kwargs):
 	return super(calendar_event, self).message_post(cr, uid, thread_id, context=context, **kwargs)
 endsnippet
 
-snippet message_post "Comment to wall"
-self.message_post(cr, uid, [id], type='comment', body='${0}')
-oder
-# nicht verifiziert
-self.message_post(subtype="mail.mt_comment', body='${0}')
-endsnippet
+snippet message_post "Message Post Cases"
+"""
+     - ``mail_create_nosubscribe``: at create or message_post, do not subscribe
+       uid to the record thread
+     - ``mail_create_nolog``: at create, do not log the automatic '<Document>
+       created' message
+     - ``mail_notrack``: at create and write, do not perform the value tracking
+       creating messages
+     - ``tracking_disable``: at create and write, perform no MailThread features
+       (auto subscription, tracking, post, ...)
+     - ``mail_save_message_last_post``: at message_post, update message_last_post
+       datetime field
+     - ``mail_auto_delete``: auto delete mail notifications; True by default
+       (technical hack for templates)
+     - ``mail_notify_force_send``: if less than 50 email notifications to send,
+       send them directly instead of using the queue; True by default
+     - ``mail_notify_user_signature``: add the current user signature in
+       email notifications; True by default
+"""
+self.message_post(subtype_id=self.env.ref("mail.mt_note'), body='${0}')
+self.with_context(mail_message_post(subtype_id=self.env.ref("mail.mt_note'), body='${0}')
 
-snippet message_post "Message to default followers"
+# message_post "Message to default followers"
 self.message_post(cr, uid, [id], body='${0}', ${1:subtype='${2:xmlid}'}, )
-endsnippet
-
-snippet message_post "Message to certain partners (partner_ids ist in **kwargs in message_post enthalten)"
+# message_post "Message to certain partners (partner_ids ist in **kwargs in message_post enthalten)"
 self.message_post(cr, uid, [id], body='${0}', ${1:subtype='${2:xmlid}'}, partner_ids=[(6,0, partner_ids)])
-endsnippet
-
-snippet message_post "V9 visible on discussions"
-self.message_post(body, message_type='notification', subtype='Discussion').needaction_partner_ids = [[6, 0, [partner_id]]]
-endsnippet
-
-snippet message_post "V9 post to discussion board"
-self.env.ref('default_channels.master_data').message_post(
-	body=txt,
-	content_subtype='html',
-	message_type='comment',
-	subtype='mail.mt_comment',
-)
 endsnippet
 
 snippet field_states

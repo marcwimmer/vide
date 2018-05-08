@@ -48,35 +48,6 @@ snippet koa
 ko.observableArray()${0}
 endsnippet
 
-snippet act "Call Action from Javascript"
-this.$(".oe_write_full").click(function (event) {
-    event.stopPropagation();
-    var action = {
-        type: 'ir.actions.act_window',
-        res_model: 'mail.compose.message',
-        action_from: 'mail.ThreadComposeMessage',
-        views: [[false, 'form'], [false, 'list'], [false, 'tree']],
-        target: 'new',
-        context: {
-        },
-    };
-    session.client.action_manager.do_action(action);
-});
-endsnippet
-
-snippet act "do_action V7" 
-this.do_action({
-	type: 'ir.actions.act_window',
-	res_model: ${1:model},
-	res_id: ${2:id/ids},,
-	views: [[false, 'form', [false, 'list'], [false, 'tree']],
-	target: 'new',
-	domain: [['ref', '!=', false]],
-	context: {
-	}
-});
-endsnippet
-
 snippet model
 var m = new instance.web.Model("${1:res.users}");
 endsnippet
@@ -336,6 +307,7 @@ webclient.action_manager.do_action({
 	},
 	flags: {'form': {'action_buttons': true}},
 }, options);
+
 endsnippet
 
 snippet topmenu "systray topmenu"
