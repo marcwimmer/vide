@@ -48,35 +48,6 @@ snippet koa
 ko.observableArray()${0}
 endsnippet
 
-snippet act "Call Action from Javascript"
-this.$(".oe_write_full").click(function (event) {
-    event.stopPropagation();
-    var action = {
-        type: 'ir.actions.act_window',
-        res_model: 'mail.compose.message',
-        action_from: 'mail.ThreadComposeMessage',
-        views: [[false, 'form'], [false, 'list'], [false, 'tree']],
-        target: 'new',
-        context: {
-        },
-    };
-    session.client.action_manager.do_action(action);
-});
-endsnippet
-
-snippet act "do_action V7" 
-this.do_action({
-	type: 'ir.actions.act_window',
-	res_model: ${1:model},
-	res_id: ${2:id/ids},,
-	views: [[false, 'form', [false, 'list'], [false, 'tree']],
-	target: 'new',
-	domain: [['ref', '!=', false]],
-	context: {
-	}
-});
-endsnippet
-
 snippet model
 var m = new instance.web.Model("${1:res.users}");
 endsnippet
@@ -298,6 +269,21 @@ var data = require('web.data');
 var CompoundDomain = data.CompoundDomain;
 endsnippet
 
+snippet require "typical requires 11"
+var core = require('web.core');
+var _t = core._t;
+var Widget = require('web.Widget');
+var qweb = require("web.core").qweb;
+var Model = require('web.DataModel');
+var webclient = require('web.web_client');
+var Session = require('web.Session'); 
+var session = require('web.session'); 
+var WebClient = require('web.WebClient');
+var data = require('web.data');
+
+var CompoundDomain = data.CompoundDomain;
+endsnippet
+
 snippet do_action "9.0"
 var webclient = require('web.web_client');  // instantiated web.WebClient
 var options = {
@@ -321,6 +307,7 @@ webclient.action_manager.do_action({
 	},
 	flags: {'form': {'action_buttons': true}},
 }, options);
+
 endsnippet
 
 snippet topmenu "systray topmenu"

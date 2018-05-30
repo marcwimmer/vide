@@ -10,6 +10,7 @@ map <leader>gi :OdooGotoInheritedViewSplit<cr>
 map <leader>gI :OdooGotoInheritedViewTab<cr>
 map <leader>umf :OdooUpdateModuleFile<cr>:e!<cr>
 map <leader>um :OdooUpdateModule<cr>
+map <leader>uM :OdooUpdateModuleFull<cr>
 map <leader>rt :OdooRunTest<cr>
 map <leader>rT :OdooRunLastTest<cr>
 map <leader>or :OdooQuickRestart<cr>

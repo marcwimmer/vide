@@ -107,7 +107,7 @@ snippet form "new form"
 	<field name="name">$1 form</field>
 	<field name="model">${1:model}</field>
 	<field name="arch" type="xml">
-		<form string="$2" version="7.0">
+		<form string="$2">
 			<header></header>
 			<sheet>
 				<div class="oe_title">
@@ -125,10 +125,19 @@ snippet form "new form"
 endsnippet
 
 
-snippet wall "append after sheet"
+snippet wall "append after sheet < V11"
 <!-- append after <sheet /> and inherit from mail.thread -->
 <div class="oe_chatter">
     <field name="message_follower_ids" widget="mail_followers"/>
+    <field name="message_ids" widget="mail_thread"/>
+</div>
+endsnippet
+
+snippet wall "append after sheet V11"
+<!-- append after <sheet /> and inherit from mail.thread -->
+<div class="oe_chatter">
+    <field name="message_follower_ids" widget="mail_followers"/>
+	<fiel name="activity_ids" widget="mail_activity" />
     <field name="message_ids" widget="mail_thread"/>
 </div>
 endsnippet
@@ -408,6 +417,9 @@ snippet act "client action"
     <field name="tag">$3</field>
     <!-- field name="params" eval="{'widget_id': ref('base.facebook_widget')}" /-->
     <field name="params" eval="{}" />
+	<field name="context">{}</field>
+	<field name="res_model">res.partner</field>
+	<field name="target">fullscreen|new|current|main</field>
 </record>
 ${4:<menuitem action="$1_client_action" id="$5" ${6:parent="$7"} />}
 ${7:
@@ -748,6 +760,16 @@ snippet qweb "inherit template"
 </t>
 endsnippet
 
+snippet qweb "qweb report structure"
+<t t-name="sale.report_saleorder">
+    <t t-call="report.html_container">
+        <t t-foreach="docs" t-as="doc">
+            <t t-call="sale.report_saleorder_document" t-lang="doc.partner_id.lang"/>
+        </t>
+    </t>
+</t>
+endsnippet
+
 snippet freplace
 <field name="${1:name}" position="replace">
 ${0}
@@ -875,14 +897,30 @@ snippet ir.value "client_print_multi - prints report on multiple instances"
 </record>
 endsnippet
 
-snippet subtype "Subtype"
+snippet subtype "Subtype <V11"
 <record id="${1:message_id}" model="mail.message.subtype">
     <field name="res_model">${2:model}</field>
     <field name="name">${3:subject}</field>
     <field name="description">${4:body}</field>
 	<field name="default" eval="True"></field>
+	<field name="internal" eval="False"></field>
 	<field name="hidden" eval="True"></field>
 </record>
+endsnippet
+
+snippet subtype "Subtype V11"
+<record id="${1:message_id}" model="mail.message.subtype">
+    <field name="res_model">${2:model}</field>
+    <field name="name">${3:technical_description}</field>
+    <field name="description">$3</field>
+	<field name="default" eval="True"></field>
+	<field name="internal" eval="False"></field>
+	<field name="hidden" eval="True"></field>
+</record>
+<template id="$1_template">
+
+</template>
+self.message_post_with_view("$1_template", values={'self': '...', 'param1': 'v1'}, subtype_id="$1")
 endsnippet
 
 snippet sec "Add Group to menuitem"
@@ -1213,7 +1251,8 @@ snippet button_box "button box with button, that executes action"
 <button class="oe_stat_button" type="action" name="sale.act_res_partner_2_sale_order" 
 	attrs="{'invisible': [('customer', '=', False)]}"
 	icon="fa-usd">
-	<field string="Sales" name="sale_order_count" widget="statinfo"/>
+	<span class="o_stat_value"><field string="Sales" name="sale_order_count" widget="statinfo"/></span>
+	<span class="o_stat_text"> Products</span>
 </button>     
 endsnippet
 
@@ -1252,5 +1291,15 @@ snippet channel
   <field name="name">Master-Data</field>
   <field name="group_public_id" ref="base.group_user"/>
   <field name="group_ids" eval="[[4, ref('base.group_user')]]"/>
+</record>
+endsnippet
+
+snippet ir.filter
+<record id="filter_invoice_country" model="ir.filters">
+	<field name="name">By Country</field>
+	<field name="model_id">account.invoice.report</field>
+	<field name="domain">[]</field>
+	<field name="user_id" eval="False"/>
+	<field name="context">{'group_by': ['date:month', 'country_id']}</field>
 </record>
 endsnippet

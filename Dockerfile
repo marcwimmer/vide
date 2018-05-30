@@ -50,6 +50,7 @@ ADD files/vimrc /home/vide/.config/nvim/init.vim
 RUN nvim +PlugInstall +qall
 
 RUN cd YouCompleteMe && \
+git submodule update --init --recursive && \
 /usr/bin/python install.py # --tern-completer
 
 
