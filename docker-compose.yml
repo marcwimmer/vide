@@ -5,9 +5,11 @@ services:
         volumes:
           - ./UltiSnips:/home/vide/.vim/UltiSnips
           - ./vim-my-settings:/home/vide/.vim/bundle/vim-my-settings
+          - ./installed_plugins/vim-openerp-browser:/home/vide/.vim/bundle/vim-openerp-browser
           - ~/.config/vide/cache:/home/vide/.cache
           - ./files/vimrc:/home/vide/.config/nvim/init.vim
             # - ~/development/vim-openerp-browser:/home/vide/.vim/bundle/vim-openerp-browser
             #- ~/development/vim-run-file:/home/vide/.vim/bundle/vim-run-file
         environment:
             - ODOO_HOME
+            - GIT_DISCOVERY_ACROSS_FILESYSTEM=1

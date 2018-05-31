@@ -3,6 +3,7 @@ set t_Co=256
 
 " can be dark/light for papercolor
 set background=dark
+" set background=light
 " :silent! colorscheme lucius
 :silent! colorscheme PaperColor
 
