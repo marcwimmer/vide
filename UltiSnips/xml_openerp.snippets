@@ -954,7 +954,7 @@ endsnippet
 
 snippet assets "Frontend"
 <!-- Front-end assets: custom css -->
-<template id="assets_frontend" inherit_id="website.assets_frontend" name="${2:MyIrgendwas}" xml:space="preserve">
+<template id="assets_frontend" inherit_id="website.assets_frontend" name="${2:MyIrgendwas}">
 	<xpath expr="." position="inside">
 		<link rel='stylesheet' href='/${1:module}/static/src/css/styles.css'/>
 		<script type="text/javascript" src="/${1:module}/static/src/js/treeview.js"/>
@@ -963,7 +963,7 @@ snippet assets "Frontend"
 endsnippet
 
 snippet assets "Backend"
-<template id="assets_backend" inherit_id="web.assets_backend" name="$1 Assets" xml:space="preserve">
+<template id="assets_backend" inherit_id="web.assets_backend" name="$1 Assets">
 	<xpath expr="." position="inside">
 		<link rel="stylesheet" href="/$1/static/src/css/styles.less"/>
 		<script type="text/javascript" src="/${1:module}/static/src/js/treeview.js"/>
