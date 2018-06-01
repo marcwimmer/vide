@@ -521,7 +521,7 @@ snippet report "qweb-pdf"
 # -*- coding: utf-8 -*-
 
 import time
-from openerp import api, fields, models
+from odoo import api, fields, models
 
 class $6(models.AbstractModel):
     _name = 'report.$4'
@@ -542,9 +542,9 @@ class $6(models.AbstractModel):
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 <template id="$4" xml:space="preserve">
-    <t t-call="report.html_container">
+    <t t-call="web.html_container">
         <t t-foreach="docs" t-as="o">
-            <t t-call="report.external_layout">
+            <t t-call="web.external_layout">
                 <div class="page">
                     <h2>Report title</h2>
                     <p>This object's name is <span t-field="o.name"/></p>
