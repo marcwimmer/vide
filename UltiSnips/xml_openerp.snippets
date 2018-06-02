@@ -267,7 +267,7 @@ snippet filter "Many2Field with filter options (dont know how this is in openerp
 endsnippet
 
 snippet filter "GroupBy filter for grouping"
-<filter string="${1:string}" context="{'group_by': '${2:fieldname}'}"/>
+<filter string="${1:string}" context="{'group_by': '${2:fieldname}:day|year|month'}"/>
 endsnippet
 
 snippet filter "Group - for grouping for example group by"
@@ -518,8 +518,6 @@ snippet report "qweb-pdf"
 	}
 />
 
-# -*- coding: utf-8 -*-
-
 import time
 from odoo import api, fields, models
 
@@ -529,15 +527,19 @@ class $6(models.AbstractModel):
     def _get_account_move_lines(self, partner_ids):
         return None
 
-    @api.multi
-    def render_html(self, data):
-        docargs = {
+    @api.model
+    def get_report_values(self, docids, data=None):
+        #if not data.get('form'):
+        #    raise UserError(_("Form content is missing, this report cannot be printed."))
+
+        holidays_report = self.env['ir.actions.report']._get_report_from_name('hr_holidays.report_holidayssummary')
+        holidays = self.env['hr.holidays'].browse(self.ids)
+        return {
             'doc_ids': self.ids,
-            'doc_model': 'res.partner',
-            'docs': self.env['res.partner'].browse(self.ids),
-            'Date': fields.date.today(),
+            'doc_model': holidays_report.model,
+            'docs': holidays,
+			...any data...
         }
-        return self.env['report'].render('$4', values=docargs)
 
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
@@ -1301,5 +1303,13 @@ snippet ir.filter
 	<field name="domain">[]</field>
 	<field name="user_id" eval="False"/>
 	<field name="context">{'group_by': ['date:month', 'country_id']}</field>
+</record>
+endsnippet
+
+snippet act "URL Action"
+<record id="$1" model="ir.actions.act_url">
+  <field name="name">R2</field>
+  <field name="target">self</field>
+  <field name="url">/web</field>
 </record>
 endsnippet
