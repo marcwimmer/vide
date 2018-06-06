@@ -20,8 +20,8 @@ else
     fi
 fi
 
-set -x
-echo "$CURRENT_DIR"
+CURRENT_DIR=$(realpath "$CURRENT_DIR")
+
 APPENDIX=""
 case "$CURRENT_DIR" in
     /etc)
