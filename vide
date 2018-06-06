@@ -4,10 +4,17 @@ DIR=$( cd "$( dirname $(realpath "${BASH_SOURCE[0]}") )" && pwd )
 DIR=$(realpath "$DIR")
 cd "$DIR"
 
+APPENDIX=""
+case "$CURRENT_DIR" in
+    /etc|/sys|/proc|/tmp|/root)
+        APPENDIX="_"
+        ;;
+esac
+
 docker-compose run \
 	--rm \
-	--workdir="$CURRENT_DIR" \
+	--workdir="${CURRENT_DIR}${APPENDIX}" \
 	--volume="$HOME:$HOME" \
-	--volume="$CURRENT_DIR:$CURRENT_DIR" \
+	--volume="$CURRENT_DIR:${CURRENT_DIR}${APPENDIX}" \
 	-e LOCAL_UID="$(id -u "$(whoami)")" \
 	vide /start.sh "$@"
