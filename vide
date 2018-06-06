@@ -1,13 +1,32 @@
 #!/bin/bash
-CURRENT_DIR="$(pwd)"
 DIR=$( cd "$( dirname $(realpath "${BASH_SOURCE[0]}") )" && pwd )
 DIR=$(realpath "$DIR")
 cd "$DIR"
 
+if [[ -n "$2" ]]; then
+    echo "Only 1 parameter supported"
+    exit 1
+fi
+
+FILE="$1"
+
+if [[ -z "$1" ]]; then
+    CURRENT_DIR="$(pwd)"
+else
+    if [[ -d "$1" ]]; then
+        CURRENT_DIR="$1"
+    else
+        CURRENT_DIR="$( dirname "$1" )"
+    fi
+fi
+
+set -x
+echo "$CURRENT_DIR"
 APPENDIX=""
 case "$CURRENT_DIR" in
-    /etc|/sys|/proc|/tmp|/root)
+    /etc)
         APPENDIX="_"
+        FILE=${FILE/\/etc/\/etc${APPENDIX}}
         ;;
 esac
 
@@ -17,4 +36,4 @@ docker-compose run \
 	--volume="$HOME:$HOME" \
 	--volume="$CURRENT_DIR:${CURRENT_DIR}${APPENDIX}" \
 	-e LOCAL_UID="$(id -u "$(whoami)")" \
-	vide /start.sh "$@"
+	vide /start.sh "$FILE"
