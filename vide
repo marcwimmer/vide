@@ -1,7 +1,8 @@
 #!/bin/bash
+set -x
+PWD="$(pwd)"
 DIR=$( cd "$( dirname $(realpath "${BASH_SOURCE[0]}") )" && pwd )
 DIR=$(realpath "$DIR")
-cd "$DIR"
 
 if [[ -n "$2" ]]; then
     echo "Only 1 parameter supported"
@@ -10,13 +11,14 @@ fi
 
 FILE="$1"
 
-if [[ -z "$1" ]]; then
-    CURRENT_DIR="$(pwd)"
+if [[ -z "$FILE" ]]; then
+    CURRENT_DIR="$PWD"
 else
-    if [[ -d "$1" ]]; then
-        CURRENT_DIR="$1"
+    FILE=$(realpath "$FILE")
+    if [[ -d "$FILE" ]]; then
+        CURRENT_DIR="$FILE"
     else
-        CURRENT_DIR="$( dirname "$1" )"
+        CURRENT_DIR="$( dirname "$FILE" )"
     fi
 fi
 
@@ -30,6 +32,7 @@ case "$CURRENT_DIR" in
         ;;
 esac
 
+cd "$DIR"
 docker-compose run \
 	--rm \
 	--workdir="${CURRENT_DIR}${APPENDIX}" \
