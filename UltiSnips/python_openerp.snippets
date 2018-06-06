@@ -2383,3 +2383,14 @@ snippet stock.quant "stock.quant v11"
 available_quantity = self.env['stock.quant']._get_available_quantity(self.product_id, self.location_id)
 endsnippet
 
+
+snippet cr_after
+threaded_print = threading.Thread(target=self._print, args=())
+        
+db_registry = registry(dbname)
+with api.Environment.manage(), db_registry.cursor() as cr:
+	env = api.Environment(cr, SUPERUSER_ID, _context)
+	env['mail.mail'].browse(email_ids).send()
+def _print():
+self._cr.after('commit', threaded_print.start)
+endsnippet
