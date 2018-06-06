@@ -54,7 +54,7 @@ USER vide
 WORKDIR /home/vide
 RUN git clone https://github.com/junegunn/fzf fzf
 WORKDIR /home/vide/fzf
-RUN make install
+RUN make CMAKE_BUILD_TYPE=Release install
 USER root
 RUN cp bin/fzf /usr/local/bin
 
