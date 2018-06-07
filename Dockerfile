@@ -1,6 +1,41 @@
 FROM ubuntu:18.04
 RUN apt-get update
-RUN apt-get install -y htop build-essential rsync git python cmake libncurses5-dev python-dev ruby-dev nodejs npm libpython-dev build-essential cmake ctags apt libtool libtool-bin autoconf automake cmake g++ pkg-config unzip wget pkg-config liblzma-dev libpcre3-dev silversearcher-ag python-pip curl golang-go python-lxml libxml2-utils gosu
+RUN apt-get install -y \
+    build-essential \
+    rsync \
+    git \
+    python \
+    cmake \
+    libncurses5-dev \
+    python-dev \
+    ruby-dev \
+    nodejs \
+    npm \
+    libpython-dev \
+    build-essential \
+    cmake \
+    ctags \
+    apt \
+    libtool \
+    libtool-bin \
+    autoconf \
+    automake \
+    cmake \
+    g++ \
+    pkg-config \
+    unzip \
+    wget \
+    pkg-config \
+    liblzma-dev \
+    libpcre3-dev \
+    silversearcher-ag \
+    python-pip \
+    curl \
+    golang-go \
+    python-lxml \
+    libxml2-utils \
+    gosu \
+    gettext
 RUN pip install unidecode pudb flake8
 RUN npm install -g jshint
 
@@ -19,7 +54,7 @@ USER vide
 WORKDIR /home/vide
 RUN git clone https://github.com/junegunn/fzf fzf
 WORKDIR /home/vide/fzf
-RUN make install
+RUN make CMAKE_BUILD_TYPE=Release install
 USER root
 RUN cp bin/fzf /usr/local/bin
 
