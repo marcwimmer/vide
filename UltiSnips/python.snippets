@@ -353,25 +353,29 @@ endsnippet
 
 snippet subprocess_read_pipe
 
-process = subprocess.Popen(exe, stdout=subprocess.PIPE, stderr=subprocess.PIPE, bufsize=1)
+proc = subprocess.Popen(['/tmp/test.sh'], shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, bufsize=1)
+out = proc.stdout
+err = proc.stderr
 
-def readit(pipe, q):
+def reader(pipe, q):
     try:
         with pipe:
-            for line in iter(pipe.readline, b''):
+            for line in iter(pipe.readline, ''):
                 q.put((pipe, line))
     finally:
         q.put(None)
 
+
 q = Queue()
-Thread(target=readit, args=(process.stdout, q)).start()
-Thread(target=readit, args=(process.stderr, q)).start()
+Thread(target=reader, args=[proc.stdout, q]).start()
+Thread(target=reader, args=[proc.stderr, q]).start()
+for source, line in iter(q.get, None):
+    if source == err:
+        logger.error(line)
+    else:
+        logger.info(line)
 
-content = ""
-
-for _ in range(2):
-    for source, line in iter(q.get, None):
-        content += line + u'\n'
+proc.wait()
 
 endsnippet
 
