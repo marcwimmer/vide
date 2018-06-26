@@ -1,42 +1,57 @@
-#!/bin/bash
-set +x
-PWD="$(pwd)"
-DIR=$( cd "$( dirname $(realpath "${BASH_SOURCE[0]}") )" && pwd )
-DIR=$(realpath "$DIR")
+#!/usr/local/bin/python
+import os
+import sys
+import inspect
+import subprocess
 
-if [[ -n "$2" ]]; then
-    echo "Only 1 parameter supported"
-    exit 1
-fi
+parameters = sys.argv[1:]
+args = [x for x in parameters if x.startswith('-')]
+parameters = [x for x in parameters if not x.startswith('-')]
 
-FILE="$1"
+SUDO = ['-sudo' in args]
 
-if [[ -z "$FILE" ]]; then
-    CURRENT_DIR="$PWD"
-else
-    FILE=$(realpath "$FILE")
-    if [[ -d "$FILE" ]]; then
-        CURRENT_DIR="$FILE"
-    else
-        CURRENT_DIR="$( dirname "$FILE" )"
-    fi
-fi
+filepath = inspect.getfile(inspect.currentframe())
+dir = os.path.dirname(os.path.join(os.path.dirname(filepath), os.path.realpath(filepath)))
+cwd = os.getcwd()
 
-CURRENT_DIR=$(realpath "$CURRENT_DIR")
+if len(parameters) > 1:
+    print("Only 1 parameter supported")
+    sys.exit(0)
 
-APPENDIX=""
-case "$CURRENT_DIR" in
-    /etc)
-        APPENDIX="_"
-        FILE=${FILE/\/etc/\/etc${APPENDIX}}
-        ;;
-esac
+FILE = parameters[0] if parameters else ""
 
-cd "$DIR"
-docker-compose run \
-	--rm \
-	--workdir="${CURRENT_DIR}${APPENDIX}" \
-	--volume="$HOME:$HOME" \
-	--volume="$CURRENT_DIR:${CURRENT_DIR}${APPENDIX}" \
-	-e LOCAL_UID="$(id -u "$(whoami)")" \
-	vide /start.sh "$FILE"
+if not FILE:
+    CURRENTD_DIR = cwd
+else:
+    # converts relative path to absolute path
+    FILE = os.path.join(os.path.dirname(FILE), os.path.realpath(FILE))
+    if os.path.isdir(FILE):
+        CURRENT_DIR = FILE
+    else:
+        CURRENT_DIR = os.path.dirname(FILE)
+
+CURRENT_DIR = os.path.join(os.path.dirname(CURRENT_DIR), os.path.realpath(CURRENT_DIR))
+
+APPENDIX = ""
+for folder in [
+        '/etc',
+        '/var',
+        '/run',
+        '/tmp'
+]:
+    if CURRENT_DIR.startswith(folder) and not CURRENT_DIR.startswith(folder + "/"):
+        APPENDIX = "_"
+        FILE = folder + APPENDIX + '/' + FILE[len(folder):]
+
+subprocess.Popen([
+    'docker-compose',
+    'run',
+    '--rm',
+    '--workdir={}'.format(CURRENT_DIR),
+    os.path.expandvars('--volume=$HOME:$HOME'),
+    '--volume={CURRENT_DIR}:{CURRENT_DIR}{APPENDIX}'.format(**locals()),
+    '-e LOCAL_UID={}'.format(os.getuid() if not SUDO else 0),
+    'vide',
+    '/start.sh',
+    FILE
+], cwd=dir).wait()
