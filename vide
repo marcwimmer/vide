@@ -1,4 +1,4 @@
-#!/usr/local/bin/python
+#!/usr/bin/env python
 import os
 import sys
 import inspect
@@ -21,7 +21,7 @@ if len(parameters) > 1:
 FILE = parameters[0] if parameters else ""
 
 if not FILE:
-    CURRENTD_DIR = cwd
+    CURRENT_DIR = cwd
 else:
     # converts relative path to absolute path
     FILE = os.path.join(os.path.dirname(FILE), os.path.realpath(FILE))
