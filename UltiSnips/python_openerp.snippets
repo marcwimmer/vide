@@ -1086,6 +1086,12 @@ def default_get(self, fields):
 	return res
 endsnippet
 
+snippet default_get "V11"
+def default_get(self, fields):
+	res = super().default_get(fields)
+	return res
+endsnippet
+
 snippet track "track_visibility"
 track_visibility="${1:onchange}${2:always}"
 endsnippet
@@ -2298,6 +2304,20 @@ class ModelExtended(models.Model):
 			#m._setup_complete(cr, SUPERUSER_ID)
 
         return super(ModelExtended, self)._register_hook(cr)
+endsnippet
+
+snippet monkey_patch "patch instead of override method of class (computed fields e.g.)"
+def make_$1():
+
+	@api.model
+	def $1(self):
+		res = $1.origin(self)
+		return res
+	return $1
+
+    def _register_hook(self, cr):
+		super($class, self)._register_hook(cr)
+		m._patch_method('$1', make_$1())
 endsnippet
 
 snippet monkeypatch "V11 use register_hook and def.origin to call inherited; very elegant"
