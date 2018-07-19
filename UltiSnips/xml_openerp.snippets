@@ -510,8 +510,7 @@ snippet report "qweb-pdf"
 	model="$2"
 	string="$3"
 	report_type="qweb-pdf"
-	name="${7:module}.${4:name_without_report}"
-	file="$4"
+	name="${7:module}.${4:name_of_view_id}"
 	${5:
 	attachment_use="True"
 	attachment="(object.state in ('open','paid')) and ('INV'+(object.number or '').replace('/','')+'.pdf')"
@@ -543,7 +542,7 @@ class $6(models.AbstractModel):
 
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-<template id="$4" xml:space="preserve">
+<template id="$4">
     <t t-call="web.html_container">
         <t t-foreach="docs" t-as="o">
             <t t-call="web.external_layout">
@@ -995,6 +994,21 @@ snippet email_template "record"
 	<field name="subject">${4}</field>
 	<field name="body_html">${5}</field>
 </record> 
+endsnippet
+
+snippet email_template "record qweb (needs email_template_qweb)"
+    <record model="mail.template" id="default_template">
+      <field name="model_id" ref="base.model_res_partner"/>
+      <field name="name">Invoice Warning per Partner</field>
+      <field name="email_to">${ctx['email_to']}</field>
+      <field name="subject">
+          ${ctx.get('level', False) and ctx['level'].name or ''} f&#xFC;r Kundennummer ${object.property_account_receivable_id.code}
+      </field>
+      <field name="user_signature" eval="True"/>
+      <field name="body_type">qweb</field>
+      <field name="body_view_id" ref="warning_mail_template" />
+      <field name="body_html"></field>
+  </record>
 endsnippet
 
 snippet email_template "div-table from odoo 8 on"

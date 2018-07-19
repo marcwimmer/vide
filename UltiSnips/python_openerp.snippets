@@ -521,6 +521,10 @@ snippet report "Code to open a report programmatically V9"
 result_binary, format = self.env['ir.actions.report.xml'].render_report(instance.ids, '${1:name_without_report}', data={})
 endsnippet
 
+snippet report "Code to open a report programmatically V11"
+result_binary, format = self.env['ir.actions.report'].render(instance.ids, data={})
+endsnippet
+
 snippet report "Code to return a report as an action"
 data = {'ids': context.get('active_ids', [])}
 res = self.read(cr, uid, ids, context=context)
@@ -2303,7 +2307,7 @@ class ModelExtended(models.Model):
 			#m._setup_fields(cr, SUPERUSER_ID, False)
 			#m._setup_complete(cr, SUPERUSER_ID)
 
-        return super(ModelExtended, self)._register_hook(cr)
+        return super(ModelExtended, self)._register_hook(cr, ids=ids)
 endsnippet
 
 snippet monkey_patch "patch instead of override method of class (computed fields e.g.)"
@@ -2413,4 +2417,12 @@ with api.Environment.manage(), db_registry.cursor() as cr:
 	env['mail.mail'].browse(email_ids).send()
 def _print():
 self._cr.after('commit', threaded_print.start)
+endsnippet
+
+snippet fields "One2many with domain at res_id res_model"
+activity_ids = fields.One2many(
+	'mail.activity', 'res_id', 'Activities',
+	auto_join=True,
+	groups="base.group_user",
+	domain=lambda self: [('res_model', '=', self._name)])
 endsnippet
