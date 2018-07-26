@@ -2,6 +2,7 @@ marcwimmer/vim-my-settings
 VundleVim/Vundle.vim
 
 #bundles to load:
+airblade/vim-gitgutter
 NLKNguyen/papercolor-theme
 tmhedberg/matchit
 scrooloose/nerdcommenter
