@@ -1,5 +1,44 @@
 extends python
 
+snippet unittest "V11"
+#CHECKLIST
+
+#
+# 1. tabelle ir_module muss demo=true bei dem modul haben (mit contint sichergestellt)
+# 2. import in tests muss direkt sein, ohne glob (sonst members nicht erkannt)
+#
+#
+# -*- coding: utf-8 -*-
+import arrow
+import os
+import pprint
+import logging
+import time
+import uuid
+from datetime import datetime, timedelta
+from unittest import skipIf
+from odoo import api
+from odoo import fields
+from odoo.addons.unit_test_complex import tests
+from odoo.tests import common
+from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT
+from odoo.tools import DEFAULT_SERVER_DATE_FORMAT
+from odoo.exceptions import UserError, RedirectWarning, ValidationError, AccessError
+
+class $1(${4:tests.ComplexTestWithNewCompanyAndStocks}):
+
+    def setUp(self):
+        super($1, self).setUp()
+        self.makeDefaultCustomersSuppliers()
+        self.makeDefaultProducts()
+
+    @skipIf(os.getenv("ODOO_TESTS", "0") == "0", "")
+    def test_$2(self):
+        """ $3  """
+        env = api.Environment(self.env.cr, self.capa_manager_marketing.id, {})
+        self.assertTrue(latest_line.after_confirmed)
+endsnippet
+
 snippet translate_selection "<V9"
 dict(self.pool.get(${1:model}).fields_get(cr, uid, allfields=[${2:field}], context=context)[$2]['selection']).get(${3:value}, $3)
 endsnippet
@@ -2254,7 +2293,7 @@ def get_complete_pdf(self, *params, **kwparams):
 	])
 endsnippet
 
-snippet monkeypatch "use register_hook and def.origin to call inherited; very elegant"
+snippet monkeypatch "<=V10"
 
 # use add magic fields for fields that are used in views like attachment_ids
 origin = {
@@ -2324,7 +2363,7 @@ def make_$1():
 		m._patch_method('$1', make_$1())
 endsnippet
 
-snippet monkeypatch "V11 use register_hook and def.origin to call inherited; very elegant"
+snippet monkeypatch "V11"
 
 # use add magic fields for fields that are used in views like attachment_ids
 
@@ -2356,7 +2395,7 @@ class ModelExtended(models.Model):
     _inherit = 'ir.model'
 
     @api.model_cr
-    def _register_hook(self:
+    def _register_hook(self):
 
         if not self:
 		    self = self.search([])
@@ -2366,7 +2405,7 @@ class ModelExtended(models.Model):
 				continue
 			m._patch_method('$1', make_$1())
 
-        return super(ModelExtended, self)._register_hook()
+        return super()._register_hook()
 endsnippet
 
 snippet build_model

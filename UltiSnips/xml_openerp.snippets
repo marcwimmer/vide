@@ -36,7 +36,7 @@ endsnippet
 #================================================
 #CRON JOBS
 #================================================
-snippet cronjob "xml definition every 5 minutes V7"
+snippet cronjob "<=V10"
 <record id="${1:ir_cronjobname_action}" model="ir.cron">
 	<field name="name">${2:ANY_NICE_NAME}</field>
 	<field name="interval_number">${3:5}</field>
@@ -57,7 +57,7 @@ snippet cronjob "V11 (not yet tested)"
 	<field name="interval_type">${4:minutes}</field>
 	<field name="model_id" ref="$5" />
 	<field name="state">code</field>
-	<field name="code">model.${6:method}</field>
+	<field name="code">model.${6:method}()</field>
 	<field name="nextcall" eval="'2000-01-01 20:15:00'" />
 </record>
 endsnippet

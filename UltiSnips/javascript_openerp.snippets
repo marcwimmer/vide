@@ -48,10 +48,6 @@ snippet koa
 ko.observableArray()${0}
 endsnippet
 
-snippet model
-var m = new instance.web.Model("${1:res.users}");
-endsnippet
-
 snippet form
 //shows a form in a popup window of the given entity
 var model = '${1:model}';
@@ -86,75 +82,70 @@ snippet handled "8.0/9.0"
 });
 endsnippet
 
-snippet call "instantiate model"
-(new instance.web.Model(${1:model})).call('${2:read}', [${3:id}, [${4:fields}]], {}).done(function(result) {
-
-});
-endsnippet
-
-snippet call "use model"
-${1:model}.call('${2:read}', [${3:id}, [${4:fields}]], {}).done(function(result) {
-
-});
-endsnippet
-
-snippet widget
-
-module.${2:AnynameOfWidget} = instance.web.Widget.extend({
-    template: '${3:templatename}',
-
-    init: function() {
-        this._super.apply(this, arguments);
-    },
-    start: function() {
-        var self = this;
-        var result = this._super.apply(this, arguments);
-        //bind click events
-		return result;
-    },
-});
-instance.web.form.widgets.add('${4:widget-name}', 'instance.modulename.$2');
-
-endsnippet
-
 snippet user_menu "Adds a button to top right user menu"
 
-instance.web.UserMenu.include({
-    do_update: function() {
-        var self = this;
-        this._super.apply(this, arguments);
-        this.update_promise.done(function() {
-            if (self.shortcuts) {
-                self.shortcuts.trigger('load');
-            } else {
-                self.shortcuts = new instance.web_shortcuts.Shortcuts(self);
-                self.shortcuts.appendTo(instance.webclient.$el.find('.oe_systray'));
-            }
-        });
-    },
-});
-endsnippet
+odoo.define("phonebox.start_call", function(require) { 
 
-snippet mod
-openerp.${1:module_name} = function (openerp) {
-    var module = openerp.$1;
-    var instance = openerp;
-    var _t = openerp.web._t;
-    var QWeb = openerp.web.qweb;
-};
+	var systray = require('web.SystrayMenu');
+	var Widget = require('web.Widget');
+	var core = require('web.core');
+	var qweb = core.qweb;
+	var OperatorDialog = require('phonebox.operators.dialog');
+	var _t = core._t;
+	var session = require('web.session');
+    var rpc = require('web.rpc');
 
-endsnippet
+	var StartCall = Widget.extend({
+		template: 'phonebox.internal-call-button-in-systray',
+		events: {
+			'click a': 'clicked',
+		},
+		init: function() {
+			this._super.apply(this, arguments);
+		},
+		on_dnd_update: function(dnd) {
+			this.set('dnd', dnd);
+			this.update_display();
+		},
+		update_display: function() {
+			if (this.dnd) {
+				this.$el.css('color', blue);
+			}
+			else {
+				this.$el.css('color', yellow);
+			}
+		},
+		clicked: function() {
+			if (this.$dlg) {
+				return;
+			}
+			var self = this;
 
-snippet clientaction
-openerp.web.client_actions.add('${1:tag_name_in_client_action_definition}', 'openerp.$2.${3:widget}');
-module.$3 = openerp.web.Widget.extend({
-	template: "$4",
-	init: function() {
-		this._super.apply(this, arguments);
-	},
-	start: function() {
-		var self = this;
-	},
+			this.$dlg = new OperatorDialog(this);
+			this.$dlg.showModal().done($.proxy(function(operator) {
+				if (!operator) {
+					return;
+				}
+				rpc.query({
+                    route: "/phonebox/call",
+                    params: {
+                        number: operator.number
+                    }
+                }).done(function() {
+					self.$dlg = null;
+				}).fail(function(fail, ev) {
+					alert("failed");
+					ev.preventDefault();
+					self.$dlg = null;
+				});
+			}, this)).fail($.proxy(function() {
+				this.$dlg = null;
+			}, this));
+		},
+	});
+
+	systray.Items.push(StartCall);
+
 });
 endsnippet
 
