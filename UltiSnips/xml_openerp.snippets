@@ -504,16 +504,17 @@ endsnippet
 #Report QWeb
 #================================================
 snippet report "qweb-pdf"
+<!-- url to debug: http://host/report/pdf/$7.$4/<id> -->
 <!-- QWeb Reports -->
 <report 
 	id="$1"
 	model="$2"
 	string="$3"
 	report_type="qweb-pdf"
-	name="${7:module}.${4:name_of_view_id}"
+	file="${7:module}.${4:name_of_view_id}"
+	name="$7.$4"
 	${5:
-	attachment_use="True"
-	attachment="(object.state in ('open','paid')) and ('INV'+(object.number or '').replace('/','')+'.pdf')"
+	print_report_name="(object.state in ('open','paid')) and ('INV'+(object.number or '').replace('/','')+'.pdf')"
 	}
 />
 
@@ -545,7 +546,7 @@ class $6(models.AbstractModel):
 <template id="$4">
     <t t-call="web.html_container">
         <t t-foreach="docs" t-as="o">
-            <t t-call="web.external_layout">
+            <t t-call="web.external_layout or web.html_container">
                 <div class="page">
                     <h2>Report title</h2>
                     <p>This object's name is <span t-field="o.name"/></p>
@@ -554,6 +555,7 @@ class $6(models.AbstractModel):
         </t>
     </t>
 </template>
+
 </odoo>
 endsnippet
 
@@ -1326,4 +1328,12 @@ snippet act "URL Action"
   <field name="target">self</field>
   <field name="url">/web</field>
 </record>
+endsnippet
+
+snippet qweb "format date V11"
+<t t-esc="${1:expression}" t-options="{'widget': 'date'}"/>
+endsnippet
+
+snippet qweb "format monetary V11"
+<t t-esc="${1:expression}" t-options="{'widget': 'monetary', 'display_currency': ${2:field_currency}}"/>
 endsnippet

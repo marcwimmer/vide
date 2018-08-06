@@ -561,7 +561,7 @@ result_binary, format = self.env['ir.actions.report.xml'].render_report(instance
 endsnippet
 
 snippet report "Code to open a report programmatically V11"
-result_binary, format = self.env['ir.actions.report'].render(instance.ids, data={})
+result_binary, format = self.env.ref("$1").render(${2:instance or instance.ids}, data={})
 endsnippet
 
 snippet report "Code to return a report as an action"
@@ -583,6 +583,10 @@ return self.env['report'].get_action(${1:instance_of_your_object}, '${2:report_n
 #with ids:
 context = dict(dict(self.env.context) or {}, active_ids=ids)
 return self.pool['report'].get_action(self.env.cr, self.env.user.id, instance.ids, 'report_name', context=context)
+endsnippet
+
+snippet report "Code to return a report as an action V11"
+return self.env.ref("$1").report_action(${2:instances or instance.ids})
 endsnippet
 
 snippet wiz "Code to open next window of a wizard"
@@ -687,7 +691,7 @@ report_sxw.report_sxw(
 )
 endsnippet
 
-snippet report "qweb-pdf"
+snippet report "Parser Class qweb-pdf V9"
 # -*- coding: utf-8 -*-
 
 from openerp import api, fields, models
