@@ -8,26 +8,19 @@ parameters = sys.argv[1:]
 args = list(parameters)
 files = [x for x in parameters if not x.startswith('-')]
 
-SUDO = ['-sudo' in args]
+SUDO = '-sudo' in args
 if SUDO:
     args = filter(lambda a: a != '-sudo', args)
 
+import pudb;pudb.set_trace()
 filepath = inspect.getfile(inspect.currentframe())
 dir = os.path.dirname(os.path.join(os.path.dirname(filepath), os.path.realpath(filepath)))
 cwd = os.getcwd()
 
 FILE = parameters[0] if len(parameters) == 1 else ""
 
-if not FILE:
-    CURRENT_DIR = cwd
-else:
-    # converts relative path to absolute path
-    FILE = os.path.join(os.path.dirname(FILE), os.path.realpath(FILE))
-    if os.path.isdir(FILE):
-        CURRENT_DIR = FILE
-    else:
-        CURRENT_DIR = os.path.dirname(FILE)
-
+CURRENT_DIR = cwd
+# converts relative path to absolute path
 CURRENT_DIR = os.path.join(os.path.dirname(CURRENT_DIR), os.path.realpath(CURRENT_DIR))
 
 APPENDIX = ""
@@ -42,15 +35,20 @@ for folder in [
         FILE = folder + APPENDIX + '/' + FILE[len(folder):]
 
 vimargs = args
-
-subprocess.Popen([
+env = os.environ.copy()
+cmdline = [
     'docker-compose',
     'run',
     '--rm',
-    '--workdir={}'.format(CURRENT_DIR),
-    os.path.expandvars('--volume=$HOME:$HOME'),
-    '--volume={CURRENT_DIR}:{CURRENT_DIR}{APPENDIX}'.format(**locals()),
-    '-e LOCAL_UID={}'.format(os.getuid() if not SUDO else 0),
     'vide',
     '/start.sh',
-] + vimargs, cwd=dir).wait()
+] + vimargs
+
+env.update({
+    'LOCAL_UID': str(os.getuid() if not SUDO else 0),
+    'HOME': os.path.expandvars("$HOME"),
+    'CURRENT_DIR_HOST': os.path.abspath(CURRENT_DIR),
+    'CURRENT_DIR': os.path.abspath("{CURRENT_DIR}{APPENDIX}".format(**locals())),
+})
+
+subprocess.Popen(cmdline, cwd=dir, env=env).wait()

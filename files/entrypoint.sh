@@ -10,9 +10,9 @@ if [[ -n "$LOCAL_UID" && "$LOCAL_UID" != "0" ]]; then
 	chown "$LOCAL_UID" $HOME/.local -R
         touch $HOME/yankring_history_v2.txt
         chown "$LOCAL_UID" $HOME/yankring_history_v2.txt
-    gosu vide /start.sh "$@"
+    	exec gosu vide /start.sh "$@"
 else
-    /start.sh "$@"
+    	exec /start.sh "$@"
 fi
 
 
