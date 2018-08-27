@@ -5,20 +5,18 @@ import inspect
 import subprocess
 
 parameters = sys.argv[1:]
-args = [x for x in parameters if x.startswith('-')]
-parameters = [x for x in parameters if not x.startswith('-')]
+args = list(parameters)
+files = [x for x in parameters if not x.startswith('-')]
 
 SUDO = ['-sudo' in args]
+if SUDO:
+    args = filter(lambda a: a != '-sudo', args)
 
 filepath = inspect.getfile(inspect.currentframe())
 dir = os.path.dirname(os.path.join(os.path.dirname(filepath), os.path.realpath(filepath)))
 cwd = os.getcwd()
 
-if len(parameters) > 1:
-    print("Only 1 parameter supported")
-    sys.exit(0)
-
-FILE = parameters[0] if parameters else ""
+FILE = parameters[0] if len(parameters) == 1 else ""
 
 if not FILE:
     CURRENT_DIR = cwd
@@ -43,6 +41,8 @@ for folder in [
         APPENDIX = "_"
         FILE = folder + APPENDIX + '/' + FILE[len(folder):]
 
+vimargs = args
+
 subprocess.Popen([
     'docker-compose',
     'run',
@@ -53,5 +53,4 @@ subprocess.Popen([
     '-e LOCAL_UID={}'.format(os.getuid() if not SUDO else 0),
     'vide',
     '/start.sh',
-    FILE
-], cwd=dir).wait()
+] + vimargs, cwd=dir).wait()
