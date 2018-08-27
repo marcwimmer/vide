@@ -12,7 +12,6 @@ SUDO = '-sudo' in args
 if SUDO:
     args = filter(lambda a: a != '-sudo', args)
 
-import pudb;pudb.set_trace()
 filepath = inspect.getfile(inspect.currentframe())
 dir = os.path.dirname(os.path.join(os.path.dirname(filepath), os.path.realpath(filepath)))
 cwd = os.getcwd()
