@@ -15,6 +15,8 @@ import pprint
 import logging
 import time
 import uuid
+from openerp.tests import common
+common.TransactionCase
 from datetime import datetime, timedelta
 from unittest import skipIf
 from odoo import api
@@ -25,7 +27,9 @@ from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT
 from odoo.tools import DEFAULT_SERVER_DATE_FORMAT
 from odoo.exceptions import UserError, RedirectWarning, ValidationError, AccessError
 
+
 class $1(${4:tests.ComplexTestWithNewCompanyAndStocks}):
+class $1():
 
     def setUp(self):
         super($1, self).setUp()
@@ -2042,45 +2046,6 @@ def migrate(cr, version):
 
 endsnippet
 
-snippet unittest
-#CHECKLIST
-
-#
-# 1. tabelle ir_module muss demo=true bei dem modul haben (mit contint sichergestellt)
-# 2. import in tests muss direkt sein, ohne glob (sonst members nicht erkannt)
-#
-#
-# -*- coding: utf-8 -*-
-import arrow
-import os
-import pprint
-import logging
-import time
-import uuid
-from datetime import datetime, timedelta
-from unittest import skipIf
-from openerp import api
-from openerp import fields
-from openerp.addons.unit_test_complex import tests
-from openerp.tests import common
-from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT
-from openerp.tools import DEFAULT_SERVER_DATE_FORMAT
-from openerp.exceptions import UserError, RedirectWarning, ValidationError, AccessError
-
-class $1(${4:tests.ComplexTestWithNewCompanyAndStocks}):
-
-    def setUp(self):
-        super($1, self).setUp()
-        self.makeDefaultCustomersSuppliers()
-        self.makeDefaultProducts()
-
-    @skipIf(os.getenv("ODOO_TESTS", "0") == "0", "")
-    def test_$2(self):
-        """ $3  """
-        env = api.Environment(self.env.cr, self.capa_manager_marketing.id, {})
-        self.assertTrue(latest_line.after_confirmed)
-endsnippet
-
 snippet float_round
 price = tools.float_round(price, precision_rounding=rule.price_round)
 endsnippet
@@ -2468,4 +2433,14 @@ activity_ids = fields.One2many(
 	auto_join=True,
 	groups="base.group_user",
 	domain=lambda self: [('res_model', '=', self._name)])
+endsnippet
+
+snippet mute_logger
+try:
+	with self._cr.savepoint(), tools.mute_logger('odoo.sql_db'):
+		variant.unlink()
+# We catch all kind of exception to be sure that the operation doesn't fail.
+except (psycopg2.Error, except_orm):
+	variant.write({'active': False})
+	pass
 endsnippet
