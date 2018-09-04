@@ -35,7 +35,8 @@ RUN apt-get install -y \
     python-lxml \
     libxml2-utils \
     gosu \
-    gettext
+    gettext \
+    coderay
 RUN pip install unidecode pudb flake8
 RUN npm install -g jshint
 

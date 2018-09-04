@@ -2,8 +2,6 @@
 "set rtp+=/usr/local/opt/fzf
 set rtp+=~/.vim/bundle/fzf/bin
 
-let $FZF_DEFAULT_COMMAND = 'ag -l -g ""'
-
 nnoremap <leader>ff :Files<CR> 
 nnoremap <leader>fc :Ag<CR> 
 nnoremap <leader>fl :Lines<CR> 
@@ -20,8 +18,8 @@ let g:fzf_buffers_jump = 1
 let g:fzf_commits_log_options = '--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
 "let g:fzf_command_prefix = 'Fzf'
 
-" ignore .gitignore
-let $FZF_DEFAULT_COMMAND = 'ag -l --skip-vcs-ignores '
+" ignore .gitignore and follow sumlinks
+let $FZF_DEFAULT_COMMAND = 'ag -l -f --skip-vcs-ignores '
 
 " When you press gv you vimgrep after the selected text
 vnoremap <silent> gv :Ag y<C-r>"<CR>

@@ -1362,7 +1362,7 @@ from openerp.modules.registry import RegistryManager
 pool = RegistryManager.get(cr.dbname)
 endsnippet
 
-snippet env
+snippet env "with api.Environment.manager"
 # try nicht unbedingt notwendig; bei __exit__ wird ein close aufgerufen
 with api.Environment.manage():
 	with registry(dbname).cursor() as cr:
