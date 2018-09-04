@@ -16,7 +16,6 @@ import logging
 import time
 import uuid
 from openerp.tests import common
-common.TransactionCase
 from datetime import datetime, timedelta
 from unittest import skipIf
 from odoo import api
@@ -29,7 +28,7 @@ from odoo.exceptions import UserError, RedirectWarning, ValidationError, AccessE
 
 
 class $1(${4:tests.ComplexTestWithNewCompanyAndStocks}):
-class $1():
+class $1(common.TransactionCase):
 
     def setUp(self):
         super($1, self).setUp()
@@ -229,6 +228,7 @@ endsnippet
 
 
 snippet crud "Overwrite create, update, delete in osv"
+@api.model
 def create(self, cr, uid, values, context=None):
 	result = super($1, self).create(cr, uid, values, context)
 	return result
