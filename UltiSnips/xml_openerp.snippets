@@ -270,12 +270,6 @@ snippet filter "GroupBy filter for grouping"
 <filter string="${1:string}" context="{'group_by': '${2:fieldname}:day|year|month'}"/>
 endsnippet
 
-snippet filter "Group - for grouping for example group by"
-<group expand='0' string='Group By...'>
-    $0
-</group>
-endsnippet
-
 snippet search "search: new"
 <record id="view_${1/\./_/g}_search" model="ir.ui.view">
 	<field name="model">${1:model}</field>
@@ -283,10 +277,9 @@ snippet search "search: new"
 	<search string="$2">
 		${0}
 		<filter string="" domain="[('', '=', )]" help="a tooltip" />
-		<group expand="0" string="Group By...">
-			<filter string="Customer" domain="[]" context="{'group_by':'partner_id'}"/>
-			<filter string="Today"  domain="[('day', '=', current_date)]" context="{'group_by':'partner_id'}"/>
-		</group>
+		use snippet "filter"
+		<filter string="Customer" domain="[]" context="{'group_by':'partner_id'}"/>
+		<filter string="Today"  domain="[('day', '=', current_date)]" context="{'group_by':'partner_id'}"/>
 	</search>
 	</field>
 </record>
@@ -1336,4 +1329,10 @@ endsnippet
 
 snippet qweb "format monetary V11"
 <t t-esc="${1:expression}" t-options="{'widget': 'monetary', 'display_currency': ${2:field_currency}}"/>
+endsnippet
+
+snippet menu "Web Icon"
+<record model="ir.ui.menu" id="root">
+	<field name="web_icon">contracts,static/contracts.png</field>
+</record>
 endsnippet

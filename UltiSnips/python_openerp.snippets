@@ -843,6 +843,18 @@ class Controller(http.Controller):
 
 endsnippet
 
+snippet controller "V11"
+from odoo import http
+from odoo.http import request
+
+class $1(http.Controller):
+
+    @http.route('${2:/some_url}', auth='${3:public}${4:user}', ${5:type="json"})
+    def handler(self, **post):
+        return stuff()
+
+endsnippet
+
 snippet controller "Method"
 @openerpweb.jsonrequest
 def ${1:name}(self, req, ${2:params}):
