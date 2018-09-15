@@ -228,7 +228,6 @@ endsnippet
 
 
 snippet crud "Overwrite create, update, delete in osv"
-@api.model
 def create(self, cr, uid, values, context=None):
 	result = super($1, self).create(cr, uid, values, context)
 	return result
