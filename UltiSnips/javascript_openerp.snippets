@@ -29,17 +29,6 @@ self.rpc({
 
 endsnippet
 
-snippet rpc "Project Designer"
-self.rpc({
-    url: '/web/urbana_project_designer/${1}',
-    async: false
-}, {
-}, function(result) {
-
-});
-
-endsnippet
-
 snippet ko
 ko.observable()${0}
 endsnippet
@@ -208,15 +197,19 @@ snippet widget "widget 9.0 used in qweb template"
 
 odoo.define("${1:any_free_name}", function(require) {
 
-	var core = require("web.core");
-	var qweb = core.qweb;
-	var common = require('web.form_common');
+    var QWeb = require('web.QWeb');
+    var field_registry = require('web.field_registry');
 
 	//override existing
-	var Preview = core.form_widget_registry.get('text').extend({
+	var Preview = field_registry.get('text').extend({
 	//new widget
-	var Preview = common.AbstractField.extend(common.ReinitializeFieldMixin, {
+	var Preview = require('web.AbstractField').extend(common.ReinitializeFieldMixin, {
 		template: 'attachments_preview_container',
+		// try this
+		events: _.extend({}, common.AbstractField.prototype.events, {
+			'click .o_notification_box .oe_field_translate': '_onTranslate',
+			'click .oe_title, .o_inner_group': '_onClick',
+		}),
 		events: { !! CAUTION when inheriting and events are set, then define new events in init; remember: 1.init 2. renderElement 3. inserted 4. start
 		},
 		init: function() {

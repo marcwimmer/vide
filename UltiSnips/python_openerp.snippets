@@ -1373,13 +1373,12 @@ from openerp.modules.registry import RegistryManager
 pool = RegistryManager.get(cr.dbname)
 endsnippet
 
-snippet env "with api.Environment.manager"
+snippet env "with api.Environment.manage"
 # try nicht unbedingt notwendig; bei __exit__ wird ein close aufgerufen
 with api.Environment.manage():
-	with registry(dbname).cursor() as cr:
-		env = api.Environment(cr, 1, {})
-		self2 = self.with_env(env)
-		current_obj = current_obj.with_env(env)
+	# As this function is in a new thread, I need to open a new cursor, because the old one may be closed
+	new_cr = self.pool.cursor()
+	self = self.with_env(self.env(cr=new_cr))
 
 endsnippet
 
@@ -2239,7 +2238,11 @@ snippet pre_init_hook
 'post_init_hook': 'hook_post_init',
 
 def hook_pre_init(cr):  # in __init__.py
-def hook_post_init(cr, registry):  # in __init__.py
+
+def post_init_hook(cr, reg):
+    Environment.reset()
+    env = Environment(cr, 1, context={})
+    # env['ir.attachment'].search([])._get_filesize_char()
 endsnippet
 
 snippet controller "download pdf concated reports"
@@ -2454,4 +2457,8 @@ try:
 except (psycopg2.Error, except_orm):
 	variant.write({'active': False})
 	pass
+endsnippet
+
+snippet safe_eval
+from odoo.tools.safe_eval import safe_eval
 endsnippet

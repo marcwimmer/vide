@@ -655,3 +655,7 @@ def emit_html():
 
 emit_html()
 endsnippet
+
+snippet inquirer "inquirer choices"
+which = inquirer.prompt([inquirer.List('name', 'Choose', choices=hosts.keys())])
+endsnippet
