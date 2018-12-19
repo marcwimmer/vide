@@ -99,5 +99,8 @@ WORKDIR /home/vide
 USER root
 ADD files/entrypoint.sh /usr/bin/entrypoint.sh
 RUN chmod a+x /usr/bin/entrypoint.sh
+
+RUN  ln -s /usr/bin/ag /home/vide/.vim/ag
+
 ENTRYPOINT /usr/bin/entrypoint.sh "$@"
 CMD []

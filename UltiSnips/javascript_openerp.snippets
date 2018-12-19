@@ -1,23 +1,5 @@
 extends javascript
 
-snippet kanban_con "Connection to Openerp from kanban"
-
-var c = openerp.sessions.session0.connection;
-c.rpc(url, data, onsucces_func);
-
-endsnippet
-
-snippet rpc "Openerp Free Conection"
-var con = openerp.sessions.session0.connection;
-con.rpc({"url": '/web/urbana/task/update_description', "async": true}, 
-{
-        "task_id": taskid,
-        "new_description": ta.val()
-}, 
-function(result) {
-});
-endsnippet
-
 snippet rpc "Free"
 self.rpc({
     url: '/web/${1}',
@@ -653,4 +635,27 @@ var dialog = new form_common.FormViewDialog(this, {
 		{text: _t("Close"), close: true}
 	]
 }).open();
+endsnippet
+
+snippet rpc "rpc any method (route)"
+self._rpc({
+		route: "/web/action/load",
+		params: {
+			action_id: "base.action_res_users_my",
+		},
+	})
+	.done(function (result) {
+		result.res_id = session.uid;
+		self.do_action(result);
+	});
+endsnippet
+
+snippet rpc "rpc method"
+this._rpc({
+                model: filter.write_model,
+                method: 'search_read',
+                domain: [["user_id", "=", session.uid]],
+                fields: [filter.write_field],
+            })
+            .then(function (res) {
 endsnippet
