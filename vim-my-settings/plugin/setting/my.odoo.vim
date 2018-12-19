@@ -16,6 +16,7 @@ map <leader>rT :OdooRunLastTest<cr>
 map <leader>or :OdooQuickRestart<cr>
 map <leader>oR :OdooRestart<cr>
 map <leader>uv :OdooUpdateView<cr>
+map <leader>el :OdooExportLang<cr>
 map <leader>customs :OdooSwitchCustomsAndDb<cr>
 
 

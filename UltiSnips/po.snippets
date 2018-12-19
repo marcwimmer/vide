@@ -16,9 +16,9 @@ msgid "${4:src}"
 msgstr "${5:value}"
 endsnippet
 
-snippet po "field label (works!)"
+snippet po "field label (works in 11!)"
 #. module: ${1:module}
-#: field:${2:model_dot.},${3:field}
+#: model:ir.model.fields,field_description:product.field_product_product_default_code
 msgid "${4:src}"
 msgstr "${5:value}"
 endsnippet
@@ -26,6 +26,13 @@ endsnippet
 snippet po "selection"
 #. module: ${1:module}
 #: selection:${2:model.dot},${3:state}:0
+msgid "${4:term}"
+msgstr "$0"
+endsnippet
+
+snippet po "menuitem"
+#. module: ${1:module}
+#: model:ir.ui.menu,name:${2:full_xml_id}
 msgid "${4:term}"
 msgstr "$0"
 endsnippet

@@ -1,23 +1,5 @@
 extends javascript
 
-snippet kanban_con "Connection to Openerp from kanban"
-
-var c = openerp.sessions.session0.connection;
-c.rpc(url, data, onsucces_func);
-
-endsnippet
-
-snippet rpc "Openerp Free Conection"
-var con = openerp.sessions.session0.connection;
-con.rpc({"url": '/web/urbana/task/update_description', "async": true}, 
-{
-        "task_id": taskid,
-        "new_description": ta.val()
-}, 
-function(result) {
-});
-endsnippet
-
 snippet rpc "Free"
 self.rpc({
     url: '/web/${1}',
@@ -197,14 +179,13 @@ snippet widget "widget 9.0 used in qweb template"
 
 odoo.define("${1:any_free_name}", function(require) {
 
-	var core = require("web.core");
-	var qweb = core.qweb;
-	var common = require('web.form_common');
+    var QWeb = require('web.QWeb');
+    var field_registry = require('web.field_registry');
 
 	//override existing
-	var Preview = core.form_widget_registry.get('text').extend({
+	var Preview = field_registry.get('text').extend({
 	//new widget
-	var Preview = common.AbstractField.extend(common.ReinitializeFieldMixin, {
+	var Preview = require('web.AbstractField').extend(common.ReinitializeFieldMixin, {
 		template: 'attachments_preview_container',
 		// try this
 		events: _.extend({}, common.AbstractField.prototype.events, {
@@ -654,4 +635,27 @@ var dialog = new form_common.FormViewDialog(this, {
 		{text: _t("Close"), close: true}
 	]
 }).open();
+endsnippet
+
+snippet rpc "rpc any method (route)"
+self._rpc({
+		route: "/web/action/load",
+		params: {
+			action_id: "base.action_res_users_my",
+		},
+	})
+	.done(function (result) {
+		result.res_id = session.uid;
+		self.do_action(result);
+	});
+endsnippet
+
+snippet rpc "rpc method"
+this._rpc({
+                model: filter.write_model,
+                method: 'search_read',
+                domain: [["user_id", "=", session.uid]],
+                fields: [filter.write_field],
+            })
+            .then(function (res) {
 endsnippet
