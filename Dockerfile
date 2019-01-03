@@ -53,9 +53,9 @@ RUN update-alternatives --install /usr/bin/node node /usr/bin/nodejs 10
 # clone and compile fzf
 USER vide
 WORKDIR /home/vide
-RUN git clone https://github.com/junegunn/fzf fzf
+RUN git clone --depth 1 https://github.com/junegunn/fzf fzf
 WORKDIR /home/vide/fzf
-RUN make CMAKE_BUILD_TYPE=Release install
+RUN ./install
 USER root
 RUN cp bin/fzf /usr/local/bin
 
@@ -101,6 +101,23 @@ ADD files/entrypoint.sh /usr/bin/entrypoint.sh
 RUN chmod a+x /usr/bin/entrypoint.sh
 
 RUN  ln -s /usr/bin/ag /home/vide/.vim/ag
+
+RUN apt remove -y --auto-remove \
+	build-essential \
+	ruby-dev \
+	python-dev \
+	libpython-dev \
+	libncurses5-dev \
+	liblzma-dev \
+	libpcre3-dev \
+        python-pip \
+        cmake \
+        git \
+        golang-go \
+        libtool-bin \
+        libtool \
+        automake \
+        g++
 
 ENTRYPOINT /usr/bin/entrypoint.sh "$@"
 CMD []
