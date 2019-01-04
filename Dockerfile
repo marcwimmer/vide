@@ -112,7 +112,6 @@ RUN apt remove -y --auto-remove \
 	libpcre3-dev \
         python-pip \
         cmake \
-        git \
         golang-go \
         libtool-bin \
         libtool \
