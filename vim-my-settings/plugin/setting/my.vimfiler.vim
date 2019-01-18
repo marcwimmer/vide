@@ -4,7 +4,9 @@ nnoremap - :VimFilerBufferDir<CR>
  " Enable file operation commands.
 " call vimfiler#custom#profile('default', 'context', { 'safe' : 0, 'edit_action': 'tabopen' })
 " Open in new tab
-call vimfiler#custom#profile('default', 'context', { 'safe' : 0 })
+if exists("vimfiler#custom#profile")
+    call vimfiler#custom#profile('default', 'context', { 'safe' : 0 })
+endif
 "nnoremap <silent> <buffer> <expr> - call vimfiler#do_action('split')
 
 

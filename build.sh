@@ -1,2 +1,2 @@
 #!/bin/bash
-docker-compose build --no-cache
+podman build -t vipod --no-cache .

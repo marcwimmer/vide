@@ -55,7 +55,7 @@ USER vide
 WORKDIR /home/vide
 RUN git clone --depth 1 https://github.com/junegunn/fzf fzf
 WORKDIR /home/vide/fzf
-RUN ./install
+RUN ./install --all
 USER root
 RUN cp bin/fzf /usr/local/bin
 
@@ -83,7 +83,7 @@ RUN git clone --depth 1 https://github.com/VundleVim/Vundle.vim Vundle.vim
 ADD vim-my-settings vim-my-settings
 RUN mkdir -p /home/vide/.config/nvim
 ADD files/vimrc /home/vide/.config/nvim/init.vim
-RUN nvim +PlugInstall +qall
+RUN nvim +silent +VimEnter +PlugInstall +qall
 
 RUN cd YouCompleteMe && \
 git submodule update --init --recursive && \
