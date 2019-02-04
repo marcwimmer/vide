@@ -68,9 +68,16 @@ odoo.define("phonebox.start_call", function(require) {
 
 	var StartCall = Widget.extend({
 		template: 'phonebox.internal-call-button-in-systray',
+
 		events: {
 			'click a': 'clicked',
 		},
+		//entdeckt, wie man wohl richtig events bei vererbung erweitert
+		events: _.extend({}, rootWidget.RootWidget.prototype.events || {}, {
+			'click [data-action]': '_onActionMenuClick',
+			'mouseover > ul > li.dropdown:not(.open)': '_onMenuHovered',
+			'click .o_mobile_menu_toggle': '_onMobileMenuToggleClick',
+		}),
 		init: function() {
 			this._super.apply(this, arguments);
 		},

@@ -2163,10 +2163,6 @@ payment.post()
 self.assertEqual(in_invoice.state, 'open')
 endsnippet
 
-snippet basemodel
-from openerp.models import BaseModel
-endsnippet
-
 snippet recompute
 self._recompute_todo(self._fields['${1: field}'])
 self.recompute()
