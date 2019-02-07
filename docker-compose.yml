@@ -15,6 +15,5 @@ services:
             # - ~/development/vim-openerp-browser:/home/vide/.vim/bundle/vim-openerp-browser
             #- ~/development/vim-run-file:/home/vide/.vim/bundle/vim-run-file
         environment:
-            - ODOO_HOME
             - LOCAL_UID=$LOCAL_UID
             - GIT_DISCOVERY_ACROSS_FILESYSTEM=1

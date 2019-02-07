@@ -37,11 +37,18 @@ vimargs = args
 env = os.environ.copy()
 cmdline = [
     'docker-compose',
+    '-f',
+    'docker-compose.yml',
     'run',
     '--rm',
     'vide',
     '/start.sh',
 ] + vimargs
+
+path = os.path.expanduser("~/.vide")
+if os.path.exists(path):
+    cmdline.insert(3, path)
+    cmdline.insert(3, '-f')
 
 env.update({
     'LOCAL_UID': str(os.getuid() if not SUDO else 0),
