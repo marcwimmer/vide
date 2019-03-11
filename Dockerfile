@@ -36,8 +36,10 @@ RUN apt-get install -y \
     libxml2-utils \
     gosu \
     gettext \
-    coderay
+    coderay \
+    python3-pip
 RUN pip install unidecode pudb flake8
+RUN pip3 install unidecode pudb flake8
 RUN npm install -g jshint
 
 # ssh setup

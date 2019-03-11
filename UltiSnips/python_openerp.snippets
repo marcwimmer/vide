@@ -15,7 +15,6 @@ import pprint
 import logging
 import time
 import uuid
-from openerp.tests import common
 from datetime import datetime, timedelta
 from unittest import skipIf
 from odoo import api
@@ -31,7 +30,7 @@ class $1(${4:tests.ComplexTestWithNewCompanyAndStocks}):
 class $1(common.TransactionCase):
 
     def setUp(self):
-        super($1, self).setUp()
+        super().setUp()
         self.makeDefaultCustomersSuppliers()
         self.makeDefaultProducts()
 
@@ -722,7 +721,7 @@ from selenium import common
 from selenium import selenium
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.keys import Keys
-import inspect, os, xmlrpclib, time, subprocess, sys 
+import inspect, os, xmlrpc, time, subprocess, sys 
 import time
 import sys
 timeout = 30
@@ -735,7 +734,7 @@ password = "${3:password}"
 browser = webdriver.Firefox() # Get local session of firefox
 
 def exe(*params):
-	socket_obj = xmlrpclib.ServerProxy('%s/xmlrpc/object'%(host))
+	socket_obj = xmlrpclib.client.ServerProxy('%s/xmlrpc/object'%(host))
 	return socket_obj.execute(db, 1, pwd, *params)
 
 
@@ -767,10 +766,10 @@ browser.maximize_window()
 	browser.close()
 endsnippet
 
-snippet script "Script to Access OSV"
+snippet xmlrpc "Script to Access odoo via xmlrpc"
 import inspect
 import os
-import xmlrpclib
+import xmlrpc
 import time
 import subprocess
 import sys
@@ -781,14 +780,14 @@ pwd = "${1:password}"
 db = "${2:db}"
 
 def login(username, password):
-	socket_obj = xmlrpclib.ServerProxy('%s/xmlrpc/common' % (host))
+	socket_obj = xmlrpclib.client.ServerProxy('%s/xmlrpc/common' % (host))
 	uid = socket_obj.login(db, username, password)
 	return uid
 uid = login(username, pwd)
 
 def exe(*params):
 	global uid
-	socket_obj = xmlrpclib.ServerProxy('%s/xmlrpc/object' % (host))
+	socket_obj = xmlrpclib.client.ServerProxy('%s/xmlrpc/object' % (host))
 	return socket_obj.execute(db, uid, pwd, *params)
 
 values = exe("res.partner", "read", [100], ["name"])
@@ -910,6 +909,7 @@ snippet fF "Fields Float"
 endsnippet
 
 snippet fF "dp precision"
+from odoo.addons import decimal_precision as dp
 import openerp.addons.decimal_precision as dp
 '$1' =  fields.Float('${2:string}', digits=dp.get_precision('${3:Unit of Measure}'))
 endsnippet
@@ -1870,6 +1870,12 @@ def doit(self, param1, param2):
 
 @api.one  (evtl. auch multi)
 @tools.ormcache('self')
+
+@api.model
+@tools.ormcache('self._uid')
+def context_get(self):
+    .....
+
 endsnippet
 
 
@@ -2457,4 +2463,30 @@ endsnippet
 
 snippet safe_eval
 from odoo.tools.safe_eval import safe_eval
+endsnippet
+
+snippet optimization
+ self.env['res.partner'].with_context(prefetch_fields=False).mapped('name')  # fast
+
+ with self.env.norecompute():
+     for line in order.line ....
+self.recompute()
+
+
+#disable value tracking
+record.with_context(mail_notrack=Ture)
+
+#disable all mail features autosubscription, value tracking ...
+record.with_context(tracking_disable=True)
+
+endsnippet
+
+snippet NewId
+from odoo.models import NewId
+endsnippet
+
+snippet expression
+from odoo.osv import expression
+
+expression.AND([dom1, dom2])
 endsnippet

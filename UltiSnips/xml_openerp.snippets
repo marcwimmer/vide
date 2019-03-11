@@ -552,46 +552,18 @@ class $6(models.AbstractModel):
 </odoo>
 endsnippet
 
-#================================================
-#Report RML
-#================================================
-snippet rml "RML"
-<report id="${1:report_id}" 
-	model="${2:model}" 
-	name="${3:name}"
-	string="${4:string}" 
-	rml="${5:module_dir}/reports/$3.xml" 
-	report_type='pdf'
-/>
-endsnippet
-
-snippet rml "Report Definition"
-<report
-	auto="False"
-	id="${1:id}"
-	model="${2:model}"
-	name="$2"
-	report_type="pdf"
-	rml="${3:module}/reports/${4:file}.rml"
-	string="${5:button_caption}"
-	attachment="(object.state in ('open','paid')) and ('INV'+(object.number or '').replace('/','')+'.pdf')"
-	attachment_use="True"
-	usage="default"
-	/>
-endsnippet
-
 #=================================================
-#Report Webkit
+#Report
 #================================================
 snippet report "Report Action"
 <report auto="False" 
 	id="${1/\./_/g}_report_action" 
 	model="${2:model}"
 	name="${1:my.report.without.starting.report}" 
-	file="${3:module_name}/${4:makofilename}.mako"
+	file="$1"
 	string="${5:a_title}" 
 	attachment="object.name + ' ' + time.strftime('%Y-%m-%d') + '.pdf'"
-	report_type="$6" />
+	/>
 endsnippet
 
 #=================================================
