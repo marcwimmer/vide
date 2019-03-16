@@ -4,6 +4,8 @@ import sys
 import inspect
 import subprocess
 
+docker_host = subprocess.check_output("docker network inspect --format='{{range .IPAM.Config}}{{.Gateway}}{{end}}' bridge", shell=True).strip()
+
 parameters = sys.argv[1:]
 args = list(parameters)
 files = [x for x in parameters if not x.startswith('-')]
@@ -41,6 +43,10 @@ cmdline = [
     'docker-compose.yml',
     'run',
     '--rm',
+    '-e',
+    'DOCKER_HOST={}'.format(docker_host),
+    '-e',
+    'PUDB_ADDIN_DEBUG_HOST={}'.format(docker_host),
     'vide',
     '/start.sh',
 ] + vimargs

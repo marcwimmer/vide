@@ -1,3 +1,4 @@
+.agignore
 build/*
 tmp/*
 tmp.copy/*

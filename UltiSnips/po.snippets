@@ -1,9 +1,26 @@
+snippet po "static xml file qweb"
+Achtung: benoetigt patch; Problem: Modul wird nicht
+in ir.translation geschrieben; andererseits beim import ausgefiltert,
+wenn keine res_id aber modul angegeben wird. Wohl nur bei Modulinstallation setzbar
+aber unpraktisch beim entwickeln.
+
+So wird bei request web/webclient/translations die Werte zurueckgegeben und sind 
+per javascript zur Verfuegung
+
+#. openerp-web
+#. module: phonebox
+msgid "In Englisch"
+msgstr "In Deutsch"
+endsnippet
+
 snippet po "report"
 #. module: ${1:module}
 #: report:${2:report_name_without_report.}:0
 msgid "${3:src}"
 msgstr "${4:value}"
+endsnippet
 
+snippet po "report"
 #: report:addons/${2:module_name}/reports/${3:filename}:${4:line}
 msgid "${5:src}"
 msgstr "${6:value}"
