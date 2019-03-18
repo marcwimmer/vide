@@ -1,6 +1,6 @@
-FROM ubuntu:18.04
-RUN apt-get update
-RUN apt-get install -y \
+FROM debian:buster
+ENV DEBIAN_FRONTEND=noninteractive
+RUN apt-get update && apt-get install -y \
     build-essential \
     rsync \
     git \
@@ -9,8 +9,6 @@ RUN apt-get install -y \
     libncurses5-dev \
     python-dev \
     ruby-dev \
-    nodejs \
-    npm \
     libpython-dev \
     build-essential \
     cmake \
@@ -37,9 +35,22 @@ RUN apt-get install -y \
     gosu \
     gettext \
     coderay \
-    python3-pip
+    python3-pip \ 
+    gperf \
+    luajit \
+    luarocks \
+    libuv1-dev \
+    libluajit-5.1-dev \
+    libunibilium-dev \
+    libmsgpack-dev \
+    libtermkey-dev \
+    libvterm-dev \
+    software-properties-common
+
 RUN pip install unidecode pudb flake8
 RUN pip3 install unidecode pudb flake8
+RUN curl -sL https://deb.nodesource.com/setup_11.x | bash -
+RUN apt update & apt install -y nodejs
 RUN npm install -g jshint
 
 # ssh setup
@@ -68,20 +79,20 @@ RUN git clone --depth 1 https://github.com/neovim/neovim
 WORKDIR /usr/src/neovim
 RUN make -j4 CMAKE_BUILD_TYPE=RelWithDebInfo
 RUN make -j4 install
-RUN cp /usr/local/bin/nvim /usr/bin/vim
+RUN cp /bin/nvim /usr/bin/vim
 RUN pip install neovim 
 
 
 # install plugin loader for the bundles, so that PlugInstall works
-RUN mkdir -p /home/vide/.vim/bundle
+USER vide
+RUN mkdir -p ~/.vim/bundle
 RUN chown vide:vide /home/vide/.vim/bundle -R
 WORKDIR /home/vide/.vim/bundle
-RUN curl -fLo /usr/local/share/nvim/runtime/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+RUN curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
 # download minimal plugins
 USER vide
-#                                                                         still needed? plug.vim from above...
-RUN git clone --depth 1 https://github.com/VundleVim/Vundle.vim Vundle.vim 
+#RUN git clone --depth 1 https://github.com/VundleVim/Vundle.vim Vundle.vim 
 ADD vim-my-settings vim-my-settings
 RUN mkdir -p /home/vide/.config/nvim
 ADD files/vimrc /home/vide/.config/nvim/init.vim

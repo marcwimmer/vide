@@ -24,7 +24,7 @@ vim-scripts/taglist.vim
 vim-scripts/L9
 vim-scripts/FuzzyFinder
 marcwimmer/vim-openerp-browser
-marcwimmer/vim-pudbaddin
+#marcwimmer/vim-pudbaddin
 marcwimmer/vim-run-file
 rstacruz/sparkup
 mtth/scratch.vim
