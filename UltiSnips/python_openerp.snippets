@@ -522,7 +522,7 @@ return {
 	'res_model': self._name,
 	#'res_id': ,
 	#'domain': [],
-	#'views': [(False, 'form'), (False, 'tree')],
+	#'views': [(obj.get_formview_id(), 'form'), (False, 'tree')],
 	#'views': [(False, 'tree'), (False, 'form')],
 	'type': 'ir.actions.act_window',
 	'flags': {'form': {
@@ -977,7 +977,7 @@ endsnippet
 snippet ALL
 import os
 import glob
-__all__ = [os.path.basename(f)[:-3] for f in glob.glob(os.path.dirname(__file__) + "/*.py")]
+__all__ = sorted([os.path.basename(f)[:-3] for f in glob.glob(os.path.dirname(__file__) + "/*.py")])
 endsnippet
 
 snippet timezone
@@ -1364,15 +1364,6 @@ def open_line(self, cr, uid, id, context=None):
 	}
 endsnippet
 
-snippet pool "Pool"
-pool = pooler.get_pool(cr.dbname)
-endsnippet
-
-snippet pool "Registry Manager"
-from openerp.modules.registry import RegistryManager
-pool = RegistryManager.get(cr.dbname)
-endsnippet
-
 snippet env "with api.Environment.manage"
 # try nicht unbedingt notwendig; bei __exit__ wird ein close aufgerufen
 with api.Environment.manage():
@@ -1380,6 +1371,9 @@ with api.Environment.manage():
 	new_cr = self.pool.cursor()
 	self = self.with_env(self.env(cr=new_cr))
 
+# oder so: weiss no noch nicht warum man manage braucht
+with registry(request.env.cr.dbname).cursor() as cr:
+	env = api.Environment(cr, SUPERUSER_ID, {})
 endsnippet
 
 snippet env "With Threading; send mail, when done"
@@ -1740,10 +1734,6 @@ snippet read "V9"
 @api.multi # not working by that; list returned
 def read(self, fields=None, load='_classic_read'):
 	result = super($1, self).read(fields=fields, load=load)
-endsnippet
-
-snippet iprof
-from openerp.addons.module_tools import profile
 endsnippet
 
 snippet baseurl
@@ -2489,4 +2479,14 @@ snippet expression
 from odoo.osv import expression
 
 expression.AND([dom1, dom2])
+endsnippet
+
+snippet registry "registry descendants"
+registry(self.env.cr.dbname).descendants(['suggestion.mixin'], '_inherit')
+endsnippet
+
+snippet profile
+from odoo.tools.profiler import profile
+
+@profile
 endsnippet

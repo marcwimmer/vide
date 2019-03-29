@@ -79,7 +79,7 @@ RUN git clone --depth 1 https://github.com/neovim/neovim
 WORKDIR /usr/src/neovim
 RUN make -j4 CMAKE_BUILD_TYPE=RelWithDebInfo
 RUN make -j4 install
-RUN cp /bin/nvim /usr/bin/vim
+RUN cp /usr/local/bin/nvim /usr/bin/vim
 RUN pip install neovim 
 
 
