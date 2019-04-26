@@ -199,6 +199,16 @@ def onchange_$1(self, cr, uid, ids, ${1:field1}, context=None):
 			"field": [],
 		}
 	}
+
+    @api.multi
+    def onchange(self, values, field_name, field_onchange):
+        result = super(PurchaseOrderLine, self).onchange(values, field_name, field_onchange)
+        if isinstance(result, dict) and isinstance(field_name, str):  # single field change
+            if result.get('value', False):
+                if result['value'].get('date_planned', False):
+                    result['value'].pop('date_planned')
+
+        return result
 endsnippet
 
 snippet model "memory class base on sql view"
@@ -2489,4 +2499,10 @@ snippet profile
 from odoo.tools.profiler import profile
 
 @profile
+endsnippet
+
+snippet expression
+from odoo.osv import expression
+expression.OR
+expression.AND
 endsnippet

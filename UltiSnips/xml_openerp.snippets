@@ -1318,3 +1318,7 @@ endsnippet
 snippet qweb "t-raw"
 <t t-call="..." r-raw="0"/>
 endsnippet
+
+snippet xml 'column_invisible'
+<field name="picking_textual_state" attrs="{'column_invisible': [('parent.state', 'not in', ['done', 'cancel', 'draft'])]}"/>
+endsnippet
