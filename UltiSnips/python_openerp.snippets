@@ -1160,7 +1160,7 @@ endsnippet
 
 snippet default_get "V11"
 def default_get(self, fields):
-	res = super().default_get(fields)
+	res = super($1, self).default_get(fields)
 	return res
 endsnippet
 
