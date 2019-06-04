@@ -7,8 +7,10 @@ aber unpraktisch beim entwickeln.
 So wird bei request web/webclient/translations die Werte zurueckgegeben und sind 
 per javascript zur Verfuegung
 
+#. module: ${1:module}
 #. openerp-web
-#. module: phonebox
+#: code:$1:0
+#, python-format
 msgid "In Englisch"
 msgstr "In Deutsch"
 endsnippet
@@ -53,6 +55,14 @@ snippet po "menuitem"
 msgid "${4:term}"
 msgstr "$0"
 endsnippet
+
+snippet po "char field translated"
+#. module: ${1:module}
+#: model:${2:product.product},${3:name}:${4:full_xml_id}
+msgid "${5:term}"
+msgstr "$0"
+endsnippet
+
 
 snippet uml_a
 ä
