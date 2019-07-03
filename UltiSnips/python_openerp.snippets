@@ -1,14 +1,6 @@
 extends python
 
 snippet unittest "V11"
-#CHECKLIST
-
-#
-# 1. tabelle ir_module muss demo=true bei dem modul haben (mit contint sichergestellt)
-# 2. import in tests muss direkt sein, ohne glob (sonst members nicht erkannt)
-#
-#
-# -*- coding: utf-8 -*-
 import arrow
 import os
 import pprint
@@ -26,13 +18,10 @@ from odoo.tools import DEFAULT_SERVER_DATE_FORMAT
 from odoo.exceptions import UserError, RedirectWarning, ValidationError, AccessError
 
 
-class $1(${4:tests.ComplexTestWithNewCompanyAndStocks}):
 class $1(common.TransactionCase):
 
-    def setUp(self):
-        super().setUp()
-        self.makeDefaultCustomersSuppliers()
-        self.makeDefaultProducts()
+	def setUp(self):
+		super().setUp()
 
     @skipIf(os.getenv("ODOO_TESTS", "0") == "0", "")
     def test_$2(self):
