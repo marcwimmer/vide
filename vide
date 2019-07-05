@@ -42,7 +42,6 @@ cmdline = [
     '-f',
     'docker-compose.yml',
     'run',
-    '--rm',
     '-e',
     'DOCKER_HOST={}'.format(docker_host),
     '-e',
@@ -62,5 +61,4 @@ env.update({
     'CURRENT_DIR_HOST': os.path.abspath(CURRENT_DIR),
     'CURRENT_DIR': os.path.abspath("{CURRENT_DIR}{APPENDIX}".format(**locals())),
 })
-
 subprocess.Popen(cmdline, cwd=dir, env=env).wait()

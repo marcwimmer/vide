@@ -8,4 +8,5 @@ autocmd BufWrite *.py :call DeleteTrailingWS()
 autocmd BufWrite *.coffee :call DeleteTrailingWS()
 
 " let g:python_host_prog  = '/usr/bin/python'
-" let g:python3_host_prog = '/usr/bin/python3'
+let g:pymode_python = 'python3'
+let g:python3_host_prog = '/usr/bin/python3'

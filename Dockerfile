@@ -4,12 +4,9 @@ RUN apt-get update && apt-get install -y \
     build-essential \
     rsync \
     git \
-    python \
     cmake \
     libncurses5-dev \
-    python-dev \
     ruby-dev \
-    libpython-dev \
     build-essential \
     cmake \
     ctags \
@@ -27,15 +24,14 @@ RUN apt-get update && apt-get install -y \
     liblzma-dev \
     libpcre3-dev \
     silversearcher-ag \
-    python-pip \
     curl \
     golang-go \
-    python-lxml \
     libxml2-utils \
     gosu \
     gettext \
     coderay \
     python3-pip \ 
+    python3-dev \ 
     gperf \
     luajit \
     luarocks \
@@ -45,13 +41,18 @@ RUN apt-get update && apt-get install -y \
     libmsgpack-dev \
     libtermkey-dev \
     libvterm-dev \
-    software-properties-common
+    software-properties-common \
+    locales
 
-RUN pip install unidecode pudb flake8
-RUN pip3 install unidecode pudb flake8
+RUN locale-gen "en_US.UTF-8"
+ENV LC_CTYPE="en_US.UTF-8"
+ENV LC_ALL="en_US.UTF-8"
+ENV LANG="en_US.UTF-8"
+
+RUN pip3 install unidecode pudb flake8 pynvim pathlib
 RUN curl -sL https://deb.nodesource.com/setup_11.x | bash -
 RUN apt update & apt install -y nodejs
-RUN npm install -g jshint
+RUN npm install -g jshint neovim
 
 # ssh setup
 RUN mkdir /root/.ssh
@@ -80,7 +81,6 @@ WORKDIR /usr/src/neovim
 RUN make -j4 CMAKE_BUILD_TYPE=RelWithDebInfo
 RUN make -j4 install
 RUN cp /usr/local/bin/nvim /usr/bin/vim
-RUN pip install neovim 
 
 
 # install plugin loader for the bundles, so that PlugInstall works
@@ -100,7 +100,7 @@ RUN nvim +PlugInstall +qall
 
 RUN cd YouCompleteMe && \
 git submodule update --init --recursive && \
-/usr/bin/python install.py # --tern-completer
+/usr/bin/python3 install.py # --tern-completer
 
 
 # final steps, setup env and prepare start.sh
