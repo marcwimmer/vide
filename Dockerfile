@@ -118,4 +118,7 @@ RUN  ln -s /usr/bin/ag /home/vide/.vim/ag
 
 ENTRYPOINT /usr/bin/entrypoint.sh "$@"
 RUN apt install -y python3-lxml
+RUN apt install -y python python-pip python-lxml
+RUN pip install unidecode pudb flake8 neovim
+RUN pip install python-vim
 CMD []
