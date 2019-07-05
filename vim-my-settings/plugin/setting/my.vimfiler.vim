@@ -13,7 +13,7 @@ function! VimFilerSearchInDir(cmd)
     let file = vimfiler#get_file(b:vimfiler)
     let path = file.action__path
     echo("Searching in " . path)
-python <<eof
+python3 <<eof
 import vim
 path = vim.eval("path") 
 path = os.path.dirname(path)
