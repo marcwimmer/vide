@@ -1,4 +1,6 @@
 FROM debian:buster
+CMD []
+ENTRYPOINT /usr/bin/entrypoint.sh "$@"
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get install -y \
     build-essential \
@@ -42,7 +44,10 @@ RUN apt-get update && apt-get install -y \
     libtermkey-dev \
     libvterm-dev \
     software-properties-common \
-    locales
+    locales \
+    python python-pip python-lxml \
+    python3-lxml
+
 
 RUN locale-gen "en_US.UTF-8"
 ENV LC_CTYPE="en_US.UTF-8"
@@ -50,6 +55,10 @@ ENV LC_ALL="en_US.UTF-8"
 ENV LANG="en_US.UTF-8"
 
 RUN pip3 install unidecode pudb flake8 pynvim pathlib
+RUN pip install unidecode pudb flake8 neovim
+RUN pip install python-vim
+
+#node
 RUN curl -sL https://deb.nodesource.com/setup_11.x | bash -
 RUN apt update & apt install -y nodejs
 RUN npm install -g jshint neovim
@@ -81,7 +90,6 @@ WORKDIR /usr/src/neovim
 RUN make -j4 CMAKE_BUILD_TYPE=RelWithDebInfo
 RUN make -j4 install
 RUN cp /usr/local/bin/nvim /usr/bin/vim
-
 
 # install plugin loader for the bundles, so that PlugInstall works
 USER vide
@@ -116,9 +124,3 @@ RUN chmod a+x /usr/bin/entrypoint.sh
 
 RUN  ln -s /usr/bin/ag /home/vide/.vim/ag
 
-ENTRYPOINT /usr/bin/entrypoint.sh "$@"
-RUN apt install -y python3-lxml
-RUN apt install -y python python-pip python-lxml
-RUN pip install unidecode pudb flake8 neovim
-RUN pip install python-vim
-CMD []
