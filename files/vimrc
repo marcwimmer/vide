@@ -11,7 +11,7 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call plug#begin("~/.vim/bundle")
 
 " let Vundle manage Vundle, required
-python << PYTHONEOF
+python3 << PYTHONEOF
 import vim
 import os
 from os.path import expanduser

@@ -96,6 +96,7 @@ USER vide
 ADD vim-my-settings vim-my-settings
 RUN mkdir -p /home/vide/.config/nvim
 ADD files/vimrc /home/vide/.config/nvim/init.vim
+RUN echo '1'
 RUN nvim +PlugInstall +qall
 
 RUN cd YouCompleteMe && \
@@ -116,4 +117,5 @@ RUN chmod a+x /usr/bin/entrypoint.sh
 RUN  ln -s /usr/bin/ag /home/vide/.vim/ag
 
 ENTRYPOINT /usr/bin/entrypoint.sh "$@"
+RUN apt install -y python3-lxml
 CMD []
