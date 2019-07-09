@@ -659,3 +659,11 @@ endsnippet
 snippet inquirer "inquirer choices"
 which = inquirer.prompt([inquirer.List('name', 'Choose', choices=hosts.keys())])
 endsnippet
+
+snippet csv
+with (dir / 'sales_flat_order_address.csv').open('rb') as f:
+    reader = csv.reader(f)
+    for row in reader:
+        print(row)
+        break
+endsnippet
