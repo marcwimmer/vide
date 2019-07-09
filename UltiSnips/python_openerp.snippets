@@ -768,7 +768,7 @@ endsnippet
 snippet xmlrpc "Script to Access odoo via xmlrpc"
 import inspect
 import os
-import xmlrpc
+import xmlrpc.client
 import time
 import subprocess
 import sys
@@ -779,14 +779,14 @@ pwd = "${1:password}"
 db = "${2:db}"
 
 def login(username, password):
-	socket_obj = xmlrpclib.client.ServerProxy('%s/xmlrpc/common' % (host))
+	socket_obj = xmlrpc.client.ServerProxy('%s/xmlrpc/common' % (host))
 	uid = socket_obj.login(db, username, password)
 	return uid
 uid = login(username, pwd)
 
 def exe(*params):
 	global uid
-	socket_obj = xmlrpclib.client.ServerProxy('%s/xmlrpc/object' % (host))
+	socket_obj = xmlrpc.client.ServerProxy('%s/xmlrpc/object' % (host))
 	return socket_obj.execute(db, uid, pwd, *params)
 
 values = exe("res.partner", "read", [100], ["name"])
