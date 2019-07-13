@@ -224,22 +224,7 @@ class ${1/\./_/g}(models.Model):
 		""")
 endsnippet
 
-
-snippet crud "Overwrite create, update, delete in osv"
-def create(self, cr, uid, values, context=None):
-	result = super($1, self).create(cr, uid, values, context)
-	return result
-
-def write(self, cr, uid, ids, values, context=None):
-	result = super($1, self).write(cr, uid, ids, values, context)
-	return result
-
-def unlink(self, cr, uid, ids, context=None):
-	result = super($1, self).unlink(cr, uid, ids, context)
-	return result
-endsnippet
-
-snippet crud "V8"
+snippet crud
 @api.model
 def create(self, vals):
 	result = super($1, self).create(vals)
@@ -256,19 +241,6 @@ def unlink(self):
 	return result
 endsnippet
 
-snippet crud "V11"
-def create(self, vals):
-	result = super().create(vals)
-	return result
-
-def write(self, vals):
-	result = super().write(vals)
-	return result
-
-def unlink(self):
-	result = super().unlink()
-	return result
-endsnippet
 
 snippet fvg "V9 Fields View Get"
 @api.model
@@ -2494,4 +2466,8 @@ snippet expression
 from odoo.osv import expression
 expression.OR
 expression.AND
+endsnippet
+
+snippet queue_imports
+from odoo.addons.queue_job.job import job
 endsnippet
