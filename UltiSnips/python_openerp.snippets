@@ -2459,7 +2459,9 @@ endsnippet
 snippet profile
 from odoo.tools.profiler import profile
 
+@api.multi
 @profile
+def .....(self):
 endsnippet
 
 snippet expression
