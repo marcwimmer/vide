@@ -54,8 +54,8 @@ ENV LC_CTYPE="en_US.UTF-8"
 ENV LC_ALL="en_US.UTF-8"
 ENV LANG="en_US.UTF-8"
 
-RUN pip3 install unidecode pudb flake8 pynvim pathlib
-RUN pip install unidecode pudb flake8 neovim python-vim
+RUN pip3 install unidecode pudb flake8 pynvim pathlib click
+RUN pip install unidecode pudb flake8 neovim python-vim click
 
 #node
 RUN curl -sL https://deb.nodesource.com/setup_11.x | bash -
