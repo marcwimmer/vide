@@ -261,13 +261,13 @@ endsnippet
 
 snippet filter "Many2Field with filter options (dont know how this is in openerp 7"
 <field name="user_id">
-     <filter domain="[('user_id','=',uid)]" help="My Tasks" />
-     <filter domain="[('user_id','=',False)]" help="Unassigned Tasks" />
+     <filter name="..." domain="[('user_id','=',uid)]" help="My Tasks" />
+     <filter name="..." domain="[('user_id','=',False)]" help="Unassigned Tasks" />
 </field>
 endsnippet
 
 snippet filter "GroupBy filter for grouping"
-<filter string="${1:string}" context="{'group_by': '${2:fieldname}:day|year|month'}"/>
+<filter name="group_by_${1}" string="${1:string}" context="{'group_by': '${2:fieldname}:day|year|month'}"/>
 endsnippet
 
 snippet search "search: new"
