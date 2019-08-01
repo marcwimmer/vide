@@ -70,18 +70,10 @@ def ${1:name}(self, cr, uid, ids, context=None):
 	return True
 endsnippet 
 
-snippet model_id_get
-res_id = self.pool['ir.model.data'].get_object_reference(cr, uid, "${1:module}", "${2:second_part}")[1]
-endsnippet
-
 snippet model_id_get "V8"
 env.ref('....')
 ${1:self.env['ir.model.data'].xmlid_to_res_id('$2')}
 ${3:self.env['ir.model.data'].xmlid_to_object('$4')}
-endsnippet
-
-snippet utf8
-# -*- coding: utf-8 -*-
 endsnippet
 
 snippet date2str
@@ -153,29 +145,6 @@ endsnippet
 snippet dbname_from_thread
 db_name = getattr(threading.currentThread(), 'dbname', None)
 endsnippet
-
-snippet mod "OpenERP Module"
-{
-    "name" : "${1:module_name}",
-    "description": "${2:description}",
-    "version" : "1.0",
-    "author" : "${3:user}",
-    "category" : "${4:category}",
-    "depends" : ["base"],
-    "demo_xml" : [ ],
-    "update_xml" : [
-        #"subdir/file.xml",
-    ],
-    "test": [],
-    "installable": True,
-    "active": False,
-    "web": False,
-    "js": [],
-    "css": [],
-    "qweb": [],
-}
-endsnippet
-
 
 snippet onchange
 def onchange_$1(self, cr, uid, ids, ${1:field1}, context=None):
