@@ -915,9 +915,11 @@ snippet fstate "Fields state"
 endsnippet
 
 snippet ALL
-import os
-import glob
-__all__ = sorted([os.path.basename(f)[:-3] for f in glob.glob(os.path.dirname(__file__) + "/*.py")])
+import importlib
+from pathlib import Path
+mods = []
+mods += [x for x in [f.with_suffix('').name for x in Path(__file__).parent.glob("*.py") if f.name != '__init__.py] if x not in mods]
+[importlib.import('.' + x, package=__name__)]
 endsnippet
 
 snippet timezone
