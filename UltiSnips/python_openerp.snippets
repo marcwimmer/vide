@@ -34,7 +34,8 @@ snippet translate_selection "<V9"
 dict(self.pool.get(${1:model}).fields_get(cr, uid, allfields=[${2:field}], context=context)[$2]['selection']).get(${3:value}, $3)
 endsnippet
 snippet translate_selection ">=V9"
-dict(self.fields_get([${1:field}])[$1]['selection']).get(${2:value}, ${3:default_value})
+term = dict(self.fields_get([${1:field}])[$1]['selection']).get(${2:value}, ${3:default_value})
+term = self.env['ir.translation']._get_source(None, ('selection'), self.env.user.lang, term)
 endsnippet
 
 snippet superuser
