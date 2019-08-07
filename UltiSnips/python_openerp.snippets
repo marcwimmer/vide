@@ -2445,3 +2445,7 @@ endsnippet
 snippet queue_imports
 from odoo.addons.queue_job.job import job
 endsnippet
+
+snippet lang_get
+lang = self.env['res.lang']._lang_get(self.env.user.lang)
+endsnippet
