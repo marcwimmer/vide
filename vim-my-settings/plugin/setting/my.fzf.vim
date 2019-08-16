@@ -19,7 +19,7 @@ let g:fzf_commits_log_options = '--graph --color=always --format="%C(auto)%h%d %
 "let g:fzf_command_prefix = 'Fzf'
 
 " ignore .gitignore and follow sumlinks
-let $FZF_DEFAULT_COMMAND = 'ag -l -f --skip-vcs-ignores '
+let $FZF_DEFAULT_COMMAND = 'ag -l -f --skip-vcs-ignores'
 
 " When you press gv you vimgrep after the selected text
 vnoremap <silent> gv :Ag y<C-r>"<CR>

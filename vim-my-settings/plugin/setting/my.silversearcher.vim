@@ -3,7 +3,7 @@
 
 "alternative:
 "Which has the same effect but will report every match on the line.
-let g:ackprg = '~/.vim/ag --vimgrep'
+let g:ackprg = "~/.vim/ag --vimgrep"
 "
 "Shortcut Tips
 "e    to open file and close the quickfix window
