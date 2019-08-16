@@ -3,9 +3,16 @@
 set rtp+=~/.vim/bundle/fzf/bin
 
 nnoremap <leader>ff :Files<CR> 
-nnoremap <leader>fc :Ag<CR> 
+nnoremap <leader>fc :VideAg<CR> 
+nnoremap <leader>fC :VideAgAll<CR> 
 nnoremap <leader>fl :Lines<CR> 
 nnoremap <leader>l :FZFMru<CR> 
+
+let $DEFAULT_AG_IGNORES = '--ignore *.po'
+let $DEFAULT_AG_DOWN = '~80%'
+
+command! -bang -nargs=* VideAg call fzf#vim#ag(<q-args>, '$DEFAULT_AG_IGNORES', {'down': $DEFAULT_AG_DOWN})
+command! -bang -nargs=* VideAgAll call fzf#vim#ag(<q-args>, '', {'down': $DEFAULT_AG_DOWN})
 
 "original
 "let g:fzf_files_options = '--preview "(coderay {} || cat {}) 2> /dev/null | head -'.&lines.'"'

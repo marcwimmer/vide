@@ -25,7 +25,8 @@ endfunction
 autocmd FileType vimfiler call s:vimfiler_my_settings()
 function! s:vimfiler_my_settings()
     nmap <buffer> <leader>ff :call VimFilerSearchInDir('Files')<CR>
-    nmap <buffer> <leader>fc :call VimFilerSearchInDir('Ag')<CR>
+    nmap <buffer> <leader>fc :call VimFilerSearchInDir('VideAg')<CR>
+    nmap <buffer> <leader>fC :call VimFilerSearchInDir('VideAgAll')<CR>
     nmap <silent><buffer> - <Plug>(vimfiler_smart_h)
     nmap <silent><buffer> <BS> <Plug>(vimfiler_close)
     nmap <buffer>T  vimfiler#do_action('tabopen')<CR>
