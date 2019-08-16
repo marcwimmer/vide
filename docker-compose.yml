@@ -13,8 +13,6 @@ services:
           - ./files/vimrc:/home/vide/.config/nvim/init.vim
           - $HOME:$HOME
           - $CURRENT_DIR_HOST:$CURRENT_DIR
-            # - ~/development/vim-openerp-browser:/home/vide/.vim/bundle/vim-openerp-browser
-            #- ~/development/vim-run-file:/home/vide/.vim/bundle/vim-run-file
         environment:
             - LOCAL_UID=$LOCAL_UID
             - GIT_DISCOVERY_ACROSS_FILESYSTEM=1
