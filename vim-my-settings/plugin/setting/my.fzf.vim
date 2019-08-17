@@ -8,7 +8,7 @@ nnoremap <leader>fC :VideAgAll<CR>
 nnoremap <leader>fl :Lines<CR> 
 nnoremap <leader>l :FZFMru<CR> 
 
-let $DEFAULT_AG_IGNORES = '--ignore *.po'
+let $DEFAULT_AG_IGNORES = '--ignore *.po --ignore *.pot'
 let $DEFAULT_AG_DOWN = '~80%'
 
 command! -bang -nargs=* VideAg call fzf#vim#ag(<q-args>, '$DEFAULT_AG_IGNORES', {'down': $DEFAULT_AG_DOWN})
