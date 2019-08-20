@@ -14,6 +14,7 @@ function! VimFilerSearchInDir(cmd)
     let path = file.action__path
     echo("Searching in " . path)
 python <<eof
+import os
 import vim
 path = vim.eval("path") 
 path = os.path.dirname(path)

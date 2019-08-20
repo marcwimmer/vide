@@ -7,8 +7,8 @@ services:
         volumes:
           - ./UltiSnips:/home/vide/.vim/UltiSnips
           - ./vim-my-settings:/home/vide/.vim/bundle/vim-my-settings
-          - ./installed_plugins/vim-openerp-browser:/home/vide/.vim/bundle/vim-openerp-browser
-          - /home/user1/tests/vim-pudbaddin:/home/vide/.vim/bundle/vim-pudbaddin
+          # - ./installed_plugins/vim-openerp-browser:/home/vide/.vim/bundle/vim-openerp-browser
+          # - /home/user1/tests/vim-pudbaddin:/home/vide/.vim/bundle/vim-pudbaddin
           - ~/.config/vide/cache:/home/vide/.cache
           - ./files/vimrc:/home/vide/.config/nvim/init.vim
           - $HOME:$HOME
