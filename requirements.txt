@@ -1,0 +1,11 @@
+pyyaml
+flake8
+neovim
+requests
+click
+unidecode
+pudb
+inquirer
+retrying
+passlib
+humanize

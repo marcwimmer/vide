@@ -92,11 +92,9 @@ RUN curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://r
 
 # download minimal plugins
 USER vide
-#RUN git clone --depth 1 https://github.com/VundleVim/Vundle.vim Vundle.vim 
 ADD vim-my-settings vim-my-settings
 RUN mkdir -p /home/vide/.config/nvim
 ADD files/vimrc /home/vide/.config/nvim/init.vim
-RUN echo '1'
 RUN nvim +PlugInstall +qall
 
 RUN cd YouCompleteMe && \
@@ -117,8 +115,8 @@ RUN chmod a+x /usr/bin/entrypoint.sh
 RUN  ln -s /usr/bin/ag /home/vide/.vim/ag
 
 ENTRYPOINT /usr/bin/entrypoint.sh "$@"
-RUN apt install -y python3-lxml
-RUN apt install -y python python-pip python-lxml
-RUN pip install unidecode pudb flake8 neovim
-RUN pip install python-vim
+RUN apt install -y python3-lxml python python-pip python-lxml
+RUN pip install unidecode pudb flake8 neovim python-vim
+ADD requirements.txt /tmp
+RUN pip3 install -r /tmp/requirements.txt
 CMD []
