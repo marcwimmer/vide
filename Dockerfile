@@ -125,5 +125,6 @@ ENV SILVERSEARCHER_EXE=/usr/bin/ag
 ENV NVIM_PYTHON2=/usr/bin/python
 ENV NVIM_PYTHON3=/usr/bin/python3
 ENV NVIM_BUNDLE_DIR=/home/vide/.config/nvim/bundle
+ENV NVIM_ULTISNIPS_DIR=~/.vim/UltiSnips
 
 CMD []
