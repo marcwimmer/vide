@@ -1,6 +1,5 @@
 " If installed using Homebrew
-"set rtp+=/usr/local/opt/fzf
-set rtp+=~/.vim/bundle/fzf/bin
+set rtp+=$FZF_BIN_DIR
 
 nnoremap <leader>ff :Files<CR> 
 nnoremap <leader>fc :Ag<CR> 

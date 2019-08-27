@@ -4,45 +4,44 @@ filetype off
 
 
 set rtp+=~
-set rtp+=~/.vim/bundle/Vundle.vim
+"set rtp+=~/.config/nvim/bundle/Vundle.vim
+set rtp+=$NVIM_BUNDLE_DIR/Vundle.vim
 
 " set the runtime path to include Vundle and initialize
 " using vim plug
-call plug#begin("~/.vim/bundle")
+
+let g:my_bundle_loader = $NVIM_BUNDLE_DIR
+
+call plug#begin($NVIM_BUNDLE_DIR)
 
 " let Vundle manage Vundle, required
 python3 << PYTHONEOF
+from pathlib import Path
 import vim
 import os
 from os.path import expanduser
 home = expanduser("~")
-root_path = home + "/.vim/bundle/vim-my-settings"
-if os.path.isfile(root_path + "/bundles.list"):
-    with open(root_path + "/bundles.list") as f:
-        bundles = [x for x in f.read().split("\n") if x]
-        for bundle in bundles:
-            if not bundle.startswith("#"):
-                vim.command("Plug '%s'" % bundle)
+root_path = Path(home) / os.environ["NVIM_BUNDLE_DIR"] / "vim-my-settings"
+bundles_list = root_path / "bundles.list"
+if bundles_list.exists():
+    bundles = [x for x in bundles_list.read_text().split("\n") if x and not x.startswith("#")]
+    for bundle in bundles:
+        vim.command("Plug '%s'" % bundle)
 def execute_file(filepath):
-    if os.path.isfile(filepath):
-        with open(filepath) as f:
-            content = (f.read() or "").split("\n")
-        for line in content:
-            if not line or line.startswith("\""):
+    if filepath.exists():
+        for line in filepath.read_text().split("\n"):
+            if not line or line.startswith('"'):
                 continue
             vim.command(line)
-execute_file(root_path + "/_init")
+execute_file(root_path / "_init")
 
 #execute files from "my-init" directory
-init_script_dir = root_path + "/my-init"
-if os.path.isdir(root_path + "/my-init"):
-    for file in os.listdir(init_script_dir):
-        if file.endswith(".txt"):
+init_script_dir = root_path / "my-init"
+if init_script_dir.is_dir():
+    for filepath in init_script_dir.glob("*"):
+        if str(filepath).endswith(".txt"):
             continue
-        filepath = init_script_dir + "/" + file
-        os.system("chmod a+x \"%s\" && \"%s\"" %
-            (filepath, filepath)
-        )
+        os.system('chmod a+x "{f}" && "{f}"'.format(f=filepath))
 
 PYTHONEOF
 

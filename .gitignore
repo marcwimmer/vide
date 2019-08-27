@@ -6,3 +6,4 @@ machine/Dockerfile
 cache
 .DS_Store
 vim-my-settings/.netrwhist
+local

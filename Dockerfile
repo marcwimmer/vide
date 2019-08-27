@@ -71,7 +71,8 @@ RUN git clone --depth 1 https://github.com/junegunn/fzf fzf
 WORKDIR /home/vide/fzf
 RUN ./install
 USER root
-RUN cp bin/fzf /usr/local/bin
+# RUN cp bin/fzf /usr/local/bin
+ENV FZF_BIN_DIR=/home/vide/fzf/bin
 
 
 # clone and compile neovim
@@ -119,7 +120,10 @@ RUN apt install -y python3-lxml python python-pip python-lxml
 RUN pip install unidecode pudb flake8 neovim python-vim
 ADD requirements.txt /tmp
 RUN pip3 install -r /tmp/requirements.txt
-ENV LANG=en_US.UTF-8
-ENV LC_ALL=en_US.UTF-8
-ENV LC_CTYPE=en_US.UTF-8
+
+ENV SILVERSEARCHER_EXE=/usr/bin/ag
+ENV NVIM_PYTHON2=/usr/bin/python
+ENV NVIM_PYTHON3=/usr/bin/python3
+ENV NVIM_BUNDLE_DIR=/home/vide/.config/nvim/bundle
+
 CMD []
