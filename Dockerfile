@@ -119,4 +119,7 @@ RUN apt install -y python3-lxml python python-pip python-lxml
 RUN pip install unidecode pudb flake8 neovim python-vim
 ADD requirements.txt /tmp
 RUN pip3 install -r /tmp/requirements.txt
+ENV LANG=en_US.UTF-8
+ENV LC_ALL=en_US.UTF-8
+ENV LC_CTYPE=en_US.UTF-8
 CMD []
