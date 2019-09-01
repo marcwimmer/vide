@@ -659,3 +659,8 @@ endsnippet
 snippet inquirer "inquirer choices"
 which = inquirer.prompt([inquirer.List('name', 'Choose', choices=hosts.keys())])
 endsnippet
+
+snippet chmodx "pathlib chmod+x"
+import stat
+${1:file}.chmod($1.stat().st_mode | stat.S_IEXEC)
+endsnippet
