@@ -2,6 +2,11 @@ FROM debian:buster
 CMD []
 ENTRYPOINT /usr/bin/entrypoint.sh "$@"
 ENV DEBIAN_FRONTEND=noninteractive
+ENV NVIM_BUNDLE_DIR=/home/vide/.vim/bundle
+ENV NVIM_PYTHON2=/usr/bin/python
+ENV NVIM_PYTHON3=/usr/bin/python3
+ENV NVIM_ULTISNIPS=~/.vim/UltiSnips
+
 RUN apt-get update && apt-get install -y \
     build-essential \
     rsync \
@@ -56,7 +61,7 @@ ENV LANG="en_US.UTF-8"
 
 ADD requirements.txt /root/
 ADD requirements3.txt /root/
-RUN pip install -3 /root/requirements.txt
+RUN pip install -r /root/requirements.txt
 RUN pip3 install -r /root/requirements.txt
 
 #node
@@ -108,9 +113,9 @@ ADD files/vimrc /home/vide/.config/nvim/init.vim
 RUN echo '1'
 RUN nvim +PlugInstall +qall
 
-RUN cd YouCompleteMe && \
-git submodule update --init --recursive && \
-/usr/bin/python3 install.py # --tern-completer
+#RUN cd YouCompleteMe && \
+#git submodule update --init --recursive && \
+#/usr/bin/python3 install.py # --tern-completer
 
 
 # final steps, setup env and prepare start.sh
@@ -124,8 +129,3 @@ ADD files/entrypoint.sh /usr/bin/entrypoint.sh
 RUN chmod a+x /usr/bin/entrypoint.sh
 
 RUN  ln -s /usr/bin/ag /home/vide/.vim/ag
-
-ENV NVIM_BUNDLE_DIR=/home/vide/.vim/bundle
-ENV NVIM_PYTHON2=/usr/bin/python
-ENV NVIM_PYTHON3=/usr/bin/python3
-ENV NVIM_ULTISNIPS=~/.vim/UltiSnips

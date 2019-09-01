@@ -1,3 +1,9 @@
-
-RUN pip3 install unidecode pudb flake8 pynvim pathlib click
-RUN pip install unidecode pudb flake8 neovim python-vim click
+unidecode
+pudb
+flake8
+pynvim
+pathlib
+click
+neovim
+python-vim
+retrying
