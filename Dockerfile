@@ -124,3 +124,6 @@ RUN chmod a+x /usr/bin/entrypoint.sh
 RUN  ln -s /usr/bin/ag /home/vide/.vim/ag
 
 ENV NVIM_BUNDLE_DIR=/home/vide/.vim/bundle
+ENV NVIM_PYTHON2=/usr/bin/python
+ENV NVIM_PYTHON3=/usr/bin/python3
+ENV NVIM_ULTISNIPS=~/.vim/UltiSnips
