@@ -123,3 +123,4 @@ RUN chmod a+x /usr/bin/entrypoint.sh
 
 RUN  ln -s /usr/bin/ag /home/vide/.vim/ag
 
+ENV NVIM_BUNDLE_DIR=/home/vide/.vim/bundle
