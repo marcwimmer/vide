@@ -34,7 +34,7 @@ othree/xml.vim
 vim-voom/VOoM
 Shougo/unite.vim
 Shougo/vimfiler.vim
-#Valloric/YouCompleteMe
+Valloric/YouCompleteMe
 bling/vim-airline
 airblade/vim-rooter
 
