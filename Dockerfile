@@ -1,5 +1,11 @@
 FROM debian:buster
 ENV DEBIAN_FRONTEND=noninteractive
+ENV SILVERSEARCHER_EXE=/usr/bin/ag
+ENV NVIM_PYTHON2=/usr/bin/python
+ENV NVIM_PYTHON3=/usr/bin/python3
+ENV NVIM_BUNDLE_DIR=/home/vide/.config/nvim/bundle
+ENV NVIM_ULTISNIPS_DIR=~/.vim/UltiSnips
+
 RUN apt-get update && apt-get install -y \
     build-essential \
     rsync \
@@ -120,11 +126,5 @@ RUN apt install -y python3-lxml python python-pip python-lxml
 RUN pip install unidecode pudb flake8 neovim python-vim
 ADD requirements.txt /tmp
 RUN pip3 install -r /tmp/requirements.txt
-
-ENV SILVERSEARCHER_EXE=/usr/bin/ag
-ENV NVIM_PYTHON2=/usr/bin/python
-ENV NVIM_PYTHON3=/usr/bin/python3
-ENV NVIM_BUNDLE_DIR=/home/vide/.config/nvim/bundle
-ENV NVIM_ULTISNIPS_DIR=~/.vim/UltiSnips
 
 CMD []
