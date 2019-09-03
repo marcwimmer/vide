@@ -92,18 +92,19 @@ RUN cp /usr/local/bin/nvim /usr/bin/vim
 
 # install plugin loader for the bundles, so that PlugInstall works
 USER vide
-RUN mkdir -p ~/.vim/bundle
-RUN chown vide:vide /home/vide/.vim/bundle -R
-WORKDIR /home/vide/.vim/bundle
+RUN mkdir -p $NVIM_BUNDLE_DIR
+RUN chown vide:vide $NVIM_BUNDLE_DIR -R
+WORKDIR $NVIM_BUNDLE_DIR
 RUN curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
 # download minimal plugins
 USER vide
+WORKDIR $NVIM_BUNDLE_DIR
 ADD vim-my-settings vim-my-settings
-RUN mkdir -p /home/vide/.config/nvim
 ADD files/vimrc /home/vide/.config/nvim/init.vim
 RUN nvim +PlugInstall +qall
 
+RUN find / -name YouCompleteMe
 RUN cd YouCompleteMe && \
 git submodule update --init --recursive && \
 /usr/bin/python3 install.py # --tern-completer
@@ -125,6 +126,8 @@ ENTRYPOINT /usr/bin/entrypoint.sh "$@"
 RUN apt install -y python3-lxml python python-pip python-lxml
 RUN pip install unidecode pudb flake8 neovim python-vim
 ADD requirements.txt /tmp
-RUN pip3 install -r /tmp/requirements.txt
+ADD requirements3.txt /tmp
+RUN pip install -r /tmp/requirements.txt
+RUN pip3 install -r /tmp/requirements3.txt
 
 CMD []
