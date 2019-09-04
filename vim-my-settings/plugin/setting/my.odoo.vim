@@ -2,8 +2,7 @@
 
 
 map <leader>fo :OdooFzf<cr>
-map <leader>ff :OdooFiles<cr>
-map <leader>fF: :OdooFileContents<CR> 
+"map <leader>ff :OdooFiles<cr>
 
 map <leader>uc :OdooCompleteUpdateCache<cr>
 map <leader>gi :OdooGotoInheritedViewSplit<cr>
