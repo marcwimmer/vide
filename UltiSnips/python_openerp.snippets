@@ -1010,8 +1010,7 @@ pp.pprint(SETS)
 endsnippet
 
 snippet seq "by xmlid"
-dummy, seq_id = self.pool['ir.model.data'].get_object_reference(cr, uid, "${1:module}", "${2:name}") 
-seq = self.pool['ir.sequence'].next_by_id(cr, 1, seq_id, {})
+self.env.['$1'].next_by_id()
 endsnippet
 
 snippet seq "by xmlid v9"
