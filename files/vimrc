@@ -5,6 +5,7 @@ filetype off
 
 set rtp+=~
 "set rtp+=~/.config/nvim/bundle/Vundle.vim
+"set rtp+=/home/marc/.config/nvim/bundle/Vundle.vim
 set rtp+=$NVIM_BUNDLE_DIR/Vundle.vim
 
 " set the runtime path to include Vundle and initialize
@@ -12,7 +13,8 @@ set rtp+=$NVIM_BUNDLE_DIR/Vundle.vim
 
 let g:my_bundle_loader = $NVIM_BUNDLE_DIR
 
-call plug#begin($NVIM_BUNDLE_DIR)
+call vundle#begin($NVIM_BUNDLE_DIR)
+Plugin 'VundleVim/Vundle.vim'
 
 " let Vundle manage Vundle, required
 python3 << PYTHONEOF
@@ -26,7 +28,7 @@ bundles_list = root_path / "bundles.list"
 if bundles_list.exists():
     bundles = [x for x in bundles_list.read_text().split("\n") if x and not x.startswith("#")]
     for bundle in bundles:
-        vim.command("Plug '%s'" % bundle)
+        vim.command("Plugin '%s'" % bundle)
 def execute_file(filepath):
     if filepath.exists():
         for line in filepath.read_text().split("\n"):
@@ -46,4 +48,4 @@ if init_script_dir.is_dir():
 PYTHONEOF
 
 " All of your Plugins must be added before the following line
-call plug#end()            " required
+call vundle#end()            " required

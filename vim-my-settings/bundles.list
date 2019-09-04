@@ -1,5 +1,5 @@
 marcwimmer/vim-my-settings
-VundleVim/Vundle.vim
+#VundleVim/Vundle.vim
 
 #bundles to load:
 airblade/vim-gitgutter
