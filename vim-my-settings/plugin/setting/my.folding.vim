@@ -11,6 +11,6 @@ set foldcolumn=4
 au FileType javascript call JavaScriptFold()
 
 "Folding toggle with space - cool
-nnoremap <space> za
-vnoremap <space> zf
+"nnoremap <space> za
+"vnoremap <space> zf
 

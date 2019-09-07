@@ -2,8 +2,6 @@ let mapleader=","
 
 " leave insert mode by typing jk - really cool
 inoremap jk <esc>
-" Paste Command Shortcut
-:set pastetoggle=<F7>
 
 " Otherwise stupid ex-mode
 nnoremap Q :quit!<CR>
@@ -13,9 +11,9 @@ noremap <leader>qa: qall!<CR>
 nnoremap <leader>w :w!<CR>
 
 " New Tab:
-nnoremap <leader>tn :tabnew<CR>
+nnoremap <leader>t :tabnew<CR>
 " Close Tab:
-nnoremap <leader>tc :tabclose<CR>
+nnoremap <leader>T :tabclose<CR>
 
 " goto Next:
 nnoremap gn :cnext<CR>
