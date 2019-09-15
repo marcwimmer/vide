@@ -1,3 +1,0 @@
-[submodule "installed_plugins/vim-openerp-browser"]
-	path = installed_plugins/vim-openerp-browser
-	url = ssh://git@git.clear-consulting.de:50004/vim/Odoo-browser
