@@ -1,6 +1,7 @@
 marcwimmer/vim-my-settings
 #VundleVim/Vundle.vim
 
+yggdroot/indentline
 #bundles to load:
 airblade/vim-gitgutter
 NLKNguyen/papercolor-theme

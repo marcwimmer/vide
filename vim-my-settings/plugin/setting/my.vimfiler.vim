@@ -16,9 +16,11 @@ function! VimFilerSearchInDir(cmd)
 python <<eof
 import os
 import vim
-path = vim.eval("path") 
-path = os.path.dirname(path)
-vim.command("chdir {}".format(path))
+from pathlib import Path
+path = Path(vim.eval("path"))
+if path.is_file():
+    path = path.parent
+vim.command("chdir '{}'".format(str(path)))
 vim.command(":" + vim.eval('a:cmd'))
 eof
 endfunction
