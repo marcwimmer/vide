@@ -671,3 +671,8 @@ def chunks(l, n):
     for i in range(0, len(l), n):
         yield l[i:i + n]
 endsnippet
+
+snippet groupby
+from itertools import groupby
+for category, lines in groupby(self.order_line, lambda l: l.layout_category_id):
+endsnippet
