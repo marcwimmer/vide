@@ -18,8 +18,7 @@ import os
 import vim
 from pathlib import Path
 path = Path(vim.eval("path"))
-if path.is_file():
-    path = path.parent
+path = path.parent
 vim.command("chdir {}".format(str(path))) # without quotation needed
 vim.command(":" + vim.eval('a:cmd'))
 eof
