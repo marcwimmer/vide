@@ -980,30 +980,6 @@ snippet email_template "record qweb (needs email_template_qweb)"
   </record>
 endsnippet
 
-snippet email_template "div-table from odoo 8 on"
-<b>Price Indication for you</b>
-<div class="local" style="display:table;">
-	  <div class='header' style="display:table-header-group;">
-			<div style="display:table-row;">
-				<div style="display:table-cell;">Quantity</div>
-				<div style="display:table-cell;">Product</div>
-				<div style="display:table-cell;">Price</div>
-				<div style="display:table-cell;">Total</div>
-			</div>
-		</div>
-		<div style="display:table-row-group;">
-			% for productline in object.product_ids:
-			<div style="display:table-row;">
-				<div style="display:table-cell;">${productline.product_qty} ${productline.product_uom.name}</div>
-				<div style="display:table-cell;">${productline.product_id.name}</div>
-				<div style="display:table-cell;">${productline.product_id.list_price | format_currency} ${productline.product_id.env.user.company_id.currency_id.name}</div>
-				<div style="display:table-cell;">${productline.total | format_currency} ${productline.product_id.env.user.company_id.currency_id.name}</div>
-			</div>
-			% endfor
-		</div>
-</div>
-endsnippet
-
 snippet form_view_ref
 context={'form_view_ref': 'xmlid'}
 endsnippet
