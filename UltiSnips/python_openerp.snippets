@@ -1364,14 +1364,10 @@ endsnippet
 
 snippet env "with api.Environment.manage"
 # try nicht unbedingt notwendig; bei __exit__ wird ein close aufgerufen
-with api.Environment.manage():
-	# As this function is in a new thread, I need to open a new cursor, because the old one may be closed
-	new_cr = self.pool.cursor()
-	self = self.with_env(self.env(cr=new_cr))
-
-# oder so: weiss no noch nicht warum man manage braucht
-with registry(request.env.cr.dbname).cursor() as cr:
+db_registry = odoo.modules.registry.Registry.new(self.env.cr.dbname)
+with api.Environment.manage(), db_registry.cursor() as cr:
 	env = api.Environment(cr, SUPERUSER_ID, {})
+
 endsnippet
 
 snippet env "With Threading; send mail, when done"
