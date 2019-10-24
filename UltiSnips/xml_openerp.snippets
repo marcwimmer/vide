@@ -346,7 +346,6 @@ snippet act "window-action called by menu-item"
     <field name='name'>${2:name}</field>
     <field name='res_model'>${3:model}</field>
     <field name='view_mode'>${4:tree,form}</field>
-    <field name='view_type'>form</field>
     ${5:<field name='context'>${6:context"}</field>}
     ${7:<field name='domain'>${8:domain}</field>}
     ${9:<field name='view_id' ref='${10:view_id}' />}
@@ -354,20 +353,6 @@ snippet act "window-action called by menu-item"
     <field name="help"><![CDATA[<p> No $13 found!  </p>]]></field>
 </record>
 <menuitem parent="${12:parent_xml_id}" id="menu_$1" action="$1_action"/>
-endsnippet
-
-snippet act "window-action on more button"
-<act_window id="${1:id}" 
-	key2="client_action_multi" 
-	name="${2:display_name_in_more_button}" 
-	res_model="${3:model_where_def_is zB res.partner}" 
-	Angabe von src_model ist pflicht!
-	src_model="${4:model(s)_where_displayed account.invoice}" 
-	view_mode="form" view_type="form"
-	target="new" 
-	context="{'default_${5:field_name}': active_id}"
-    ${6:groups="${7:groups}"}
-	/>
 endsnippet
 
 snippet act "server-action on more button (pre 11)"
@@ -1234,7 +1219,6 @@ snippet report "Pivot"
     <record id="pivot1_action" model="ir.actions.act_window">
       <field name="name">Logged Time Analysis</field>
       <field name="res_model">project.notes_with_time.report</field>
-      <field name="view_type">form</field>
       <field name="view_mode">pivot</field>
       <field name="context">{}</field>
       <field name="domain">[]</field>
