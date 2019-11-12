@@ -1364,7 +1364,8 @@ endsnippet
 
 snippet env "with api.Environment.manage"
 # try nicht unbedingt notwendig; bei __exit__ wird ein close aufgerufen
-db_registry = odoo.modules.registry.Registry.new(self.env.cr.dbname)
+from odoo import registry
+db_registry = registry(self.env.cr.dbname)
 with api.Environment.manage(), db_registry.cursor() as cr:
 	env = api.Environment(cr, SUPERUSER_ID, {})
 
