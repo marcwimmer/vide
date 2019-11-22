@@ -1128,25 +1128,8 @@ def name_get(self):
 	return res
 endsnippet
 
-snippet default_get "V7"
-def default_get(self, cr, uid, fields, context=None):
-	res = super(${1:klass}, self).default_get(cr, uid, fields, context=context)
-
-	res['${2:fieldname}'] = ${3:fieldvalue}
-	return res
-endsnippet
-
-snippet default_get "V8"
-@api.model
-def default_get(self, fields):
-	res = super($1, self).default_get(fields)
-	data = self.trans_rec_get()
-	if 'trans_nbr' in fields:
-		res.update({'trans_nbr': data['trans_nbr']})
-	return res
-endsnippet
-
 snippet default_get "V11"
+@api.model
 def default_get(self, fields):
 	res = super($1, self).default_get(fields)
 	return res
