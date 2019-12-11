@@ -2468,3 +2468,9 @@ from odoo.osv import expression
 expression.OR
 expression.AND
 endsnippet
+
+snippet post_init
+def _auto_init(self):
+	self.pool.post_init(self.update_dynamic_fields)
+	return super(Product, self)._auto_init()
+endsnippet
