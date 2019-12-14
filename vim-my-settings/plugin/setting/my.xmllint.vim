@@ -1,4 +1,9 @@
 "xmllint zum formatieren verwenden
 "au FileType xml exe ":silent 1,$!xmllint --format --recover - 2>/dev/null"
-map <leader>ft :silent exe "1,$!xmllint --format --recover - 2>/dev/null"<CR>
-
+"
+function FuncLintXml()
+    :let l:savepos = getpos('.')
+    :silent exe "1,$!xmllint --format --recover - 2>/dev/null"
+    :call setpos('.', l:savepos)
+endfunction
+map <leader>ft :call FuncLintXml()<CR>
