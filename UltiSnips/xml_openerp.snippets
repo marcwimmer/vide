@@ -253,6 +253,10 @@ snippet filter "Bool Filter Yes / no and domain"
 <filter name='${1:name}' domain="[('name', '=', 'aaaa')]" string='${2:string}'/>
 endsnippet
 
+snippet filter "Today"
+<filter name="today" domain="[('date', '&gt;=', context_today().strftime('%%Y-%%m-%%d') + ' 00:00:00')]" string="Today"/>
+endsnippet
+
 snippet filter "Search simple search filter (constraints by domain)"
 <field name="${1:fieldname}" string="${2:string}" ${3:filter_domain="${4:domain}"}}"}/>
 example:
