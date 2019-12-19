@@ -45,32 +45,12 @@ from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT
 from odoo.tools import DEFAULT_SERVER_DATE_FORMAT
 endsnippet
 
-snippet sb
-self.browse(cr, uid, ${1:id}, context=context)
-endsnippet
-
-snippet sr
-self.read(cr, uid, ${1:id}, [${2:fields}]context=context)
-endsnippet
-
 snippet imp_
 from tools.translate import _
 endsnippet
 
 snippet spg
 self.pool["$1"]$0
-endsnippet
-
-snippet def
-def ${1:name}(self, cr, uid, ids, context=None):
-	if isinstance(ids, (int, long)):
-		ids = [ids]
-	${0}
-	return True
-endsnippet 
-
-snippet model_id_get
-res_id = self.pool['ir.model.data'].get_object_reference(cr, uid, "${1:module}", "${2:second_part}")[1]
 endsnippet
 
 snippet model_id_get "V8"
@@ -175,30 +155,6 @@ snippet mod "OpenERP Module"
 }
 endsnippet
 
-
-snippet onchange
-def onchange_$1(self, cr, uid, ids, ${1:field1}, context=None):
-	return {
-		"warning": {'title': '...', 'message': '...'},
-		"value": {
-			"any_field_1": any_value_you_want
-		}
-		"domain": {
-			"field": [],
-		}
-	}
-
-    @api.multi
-    def onchange(self, values, field_name, field_onchange):
-        result = super(PurchaseOrderLine, self).onchange(values, field_name, field_onchange)
-        if isinstance(result, dict) and isinstance(field_name, str):  # single field change
-            if result.get('value', False):
-                if result['value'].get('date_planned', False):
-                    result['value'].pop('date_planned')
-
-        return result
-endsnippet
-
 snippet model "memory class base on sql view"
 from odoo import models, api, tools, _
 
@@ -223,20 +179,6 @@ class ${1/\./_/g}(models.Model):
 		""")
 endsnippet
 
-
-snippet crud "Overwrite create, update, delete in osv"
-def create(self, cr, uid, values, context=None):
-	result = super($1, self).create(cr, uid, values, context)
-	return result
-
-def write(self, cr, uid, ids, values, context=None):
-	result = super($1, self).write(cr, uid, ids, values, context)
-	return result
-
-def unlink(self, cr, uid, ids, context=None):
-	result = super($1, self).unlink(cr, uid, ids, context)
-	return result
-endsnippet
 
 snippet crud "V8"
 @api.model
@@ -303,35 +245,6 @@ def fields_view_get(self, view_id=None, view_type='form', toolbar=False, submenu
 	return result
 endsnippet
 
-snippet fvg "V7 Fields View Get"
-def fields_view_get(self, cr, uid, view_id=None, view_type='form', context={}, toolbar=False):
-	result = super($1, self).fields_view_get(cr, uid, view_id, view_type, context=context, toolbar=toolbar)
-	###your modification in the view
-	###result['fields'] will give you the fields. modify it if needed
-	###result['arch'] will give you the xml architecture. modify it if needed
-	"""
-	from openerp.osv.orm import setup_modifiers
-	from lxml import etree
-	doc = etree.XML(result['arch'])
-	for node in doc.xpath("//field[@name='project_id']"):
-		# do some computations....
-		node.set('domain', YOUR DOMAIN)
-
-		# invisible, attrs (modifiers) setzen; modifiers muss per setup_modifiers uebertragen werden
-		# ich hab z.B. dynamisch einen Knopf hinzugefuegt; dann noch in result['fields'] ein dict anlegen:
-		# result['fields'].setdefault(fieldname, {})
-		anynode.set("readonly", "1")
-
-		#insert a new field:
-			from openerp.osv.fields import field_to_dict
-			result['fields']['fieldname'] = field_to_dict(self, cr, uid, self._columns['fieldname'], context=context)
-		#for new and updated fields:
-		setup_modifiers(anynode, result['fields']['fieldname'])
-	result['arch'] = etree.tostring(doc)
-	"""
-	return result
-endsnippet
-
 snippet fields "fields.reference: Method for delivering models as content of fields.reference; MUST BE OUTSIDE OF CLASS!"
 def _get_models(self, cr, uid, context=None):
 	ir_model = self.pool["ir.model"]
@@ -343,51 +256,6 @@ endsnippet
 
 snippet fields "fields.selection: Method for delivering selection contents"
 '${1:field_name}': fields.selection(lambda *params: ${2:your_func}, string="${3:a_string}"),
-endsnippet
-
-snippet fields "fields.function: method read value"
-def ${1:name}(self, cr, uid, ids, field_name, args, context=None):
-	result = {}
-	for o in self.read(cr, uid, ids, [], context=context):
-		result[o['id']] = $0
-	return result
-endsnippet
-
-snippet fields "fields.function: method as base for selectable values"
-#put somewhere: STATES = [('unstable', 'Unstable')]
-'${1:field_name}': fields.function(_get_state_id, type='selection', selection=STATES, readonly=False, method=True),
-endsnippet
-
-snippet fields "fields.function: store method or change depending on"
-'${1:field_name}': fields.function(${2:method}, type="${3:type}", method=True, string="${4:string}", size=256,
-													store={
-															'${5:model}': (
-																	lambda self, cr, uid, ids, context=None: ids,
-																	['${6:changed_field1}', '${7:changed_field2}'],
-																	5 #priority
-															)
-													}), 
-endsnippet
-
-snippet fields "fields.function: inverse write"
-#fields.function(... fnct_inv=$1)
-def ${1:field_name}(self, cr, uid, ids, field_name, field_value, fnct_inv_arg, context=None):
-	if isinstance(ids, (int, long)): 
-		ids = [ids]
-	for id in ids:
-		self.write(cr, uid, [id], {field_name: field_value}, context=context)
-	return True
-endsnippet
-
-snippet fields "fields.function: fnct_search parameter in field-definition"
-fnct_search= lambda self, cr, uid, obj, name, args, context=None: self.your_cool_search_function(cr, uid, obj, name, args, context=context)
-endsnippet
-
-snippet fields "fields.function: fnct_search def"
-def ${1:name}(self, cr, uid, obj, name, args, context=None):
-	${0}
-	found_ids = []
-	return [('id', 'in', found_ids)]
 endsnippet
 
 snippet Fields "selection add"
