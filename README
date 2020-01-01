@@ -1,2 +1,6 @@
 #!/bin/bash
 
+MACOS 
+
+brew install --HEAD neovim
+
