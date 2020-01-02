@@ -2341,3 +2341,24 @@ def _auto_init(self):
 	self.pool.post_init(self.update_dynamic_fields)
 	return super(Product, self)._auto_init()
 endsnippet
+
+snippet CouldNotSerializeRetry
+from psycopg2 import OperationalError
+from odoo.service.model import PG_CONCURRENCY_ERRORS_TO_RETRY
+
+ids = self.env['stock.picking'].search([('state', 'not in', ['done', 'cancel'])], order='id')
+while ids:
+	id = ids.pop(0)
+	logger.info("Compute blocked for {}".format(id))
+	db_registry = registry(self.env.cr.dbname)
+	with api.Environment.manage(), db_registry.cursor() as cr:
+		env = api.Environment(cr, 1, {})
+		picking = env['stock.picking'].browse(id)
+		try:
+			picking._compute_blocked()
+		except OperationalError as err:
+			if err.pgcode not in PG_CONCURRENCY_ERRORS_TO_RETRY:
+				raise
+			ids.append(id)
+			logger.info("Retrying compute blocked for {}".format(id))
+endsnippet
