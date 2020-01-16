@@ -1,5 +1,6 @@
 marcwimmer/vim-my-settings
 #VundleVim/Vundle.vim
+ahw/vim-hooks
 
 yggdroot/indentline
 #bundles to load:
