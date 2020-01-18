@@ -41,8 +41,8 @@ bling/vim-airline
 airblade/vim-rooter
 
 #python:
-tmhedberg/SimpylFold
-hynek/vim-python-pep8-indent
+#tmhedberg/SimpylFold
+#hynek/vim-python-pep8-indent
 
 
 # makes slow:
