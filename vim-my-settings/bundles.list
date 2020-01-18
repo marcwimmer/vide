@@ -42,7 +42,7 @@ airblade/vim-rooter
 
 #python:
 #tmhedberg/SimpylFold
-#hynek/vim-python-pep8-indent
+hynek/vim-python-pep8-indent
 
 
 # makes slow:
