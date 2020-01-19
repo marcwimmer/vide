@@ -7,8 +7,13 @@ let javaScript_fold=1
 let python_fold=1
 set foldcolumn=4
 
+function s:PythonFold() 
+    set foldmethod=indent
+endfunction
+
 "For Plugin jelera/vim-javascript-syntax
 au FileType javascript call JavaScriptFold()
+au FileType python call s:PythonFold()
 
 "Folding toggle with space - cool
 "nnoremap <space> za

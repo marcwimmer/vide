@@ -39,6 +39,8 @@ Shougo/vimfiler.vim
 Valloric/YouCompleteMe
 bling/vim-airline
 airblade/vim-rooter
+tpope/vim-eunuch
+Raimondi/delimitMate
 
 #python:
 #tmhedberg/SimpylFold
