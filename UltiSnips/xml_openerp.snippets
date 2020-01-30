@@ -185,7 +185,7 @@ snippet kanban "new kanban"
     <record model="ir.ui.view" id="view_${1/\./_/g}_kanban">
         <field name="model">${1:model}</field>
         <field name="name">${2:name}</field>
-        <field name='tye'>kanban</field>
+        <field name='type'>kanban</field>
         <field name="arch" type="xml">
             <kanban default_group_by="${3:group_col}">
                 <field name="name"/>
