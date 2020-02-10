@@ -938,6 +938,13 @@ snippet act "Specific view for window action"
 	<field name="act_window_id" ref="${5:id}" />
 	<field name="sequence">${6:sequence}</field>
 </record>
+
+better:
+<field name="view_ids" eval="
+  [(5, 0, 0),
+  (0, 0, {'view_mode': 'form', 'view_id': ref('swm_solar_crm.view_crm_lead_form')}),
+  (0, 0, {'view_mode': 'tree', 'view_id': ref('crm.crm_case_tree_view_leads')}),
+  (0, 0, {'view_mode': 'kanban', 'view_id': ref('crm.view_crm_lead_kanban')})]"/>
 endsnippet
 
 snippet href "Call action from kanban view"
