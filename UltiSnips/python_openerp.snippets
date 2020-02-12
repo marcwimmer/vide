@@ -354,7 +354,7 @@ snippet sqlc "UNIQUE single field"
 endsnippet
 
 snippet sqlc "UNIQUE field-combination"
-('${1:field_name}_${2:field_name2}_unique', "unique($1, $2)", _("Only one unique entry allowed for %s") % '${3:description}'),
+('${1:field_name}_${2:field_name2}_unique', "unique($1, $2)", _("Only one unique entry allowed.")),
 endsnippet
 
 snippet constraints "Block"
