@@ -643,9 +643,10 @@ snippet sec "Domain Filter Rule on current user"
 endsnippet
 
 snippet sec "Domain Filter Rule on current company"
-<record id="${1:module}.property_rule_${2:model}" model="ir.rule">
+<record id="domain_company__${2/\./_/g}" model="ir.rule">
 	<field name="domain_force">[('company_id','child_of', [user.company_id.id])]</field>
-		<field name="groups" eval="[[4, ref('$4')]]" />
+    <field name='model_id' ref='model_${2:model}' />
+    <field name="groups" eval="[[4, ref('$4')]]" />
     <field name='perm_read' eval='True' />
     <field name='perm_create' eval='False' />
     <field name='perm_unlink' eval='False' />
