@@ -217,6 +217,7 @@ odoo.define("${1:any_free_name}", function(require) {
 		},
 	});
 	core.form_widget_registry.add('preview', Preview);
+    field_registry.add('scan_input_lot', ScanWidget); // as form widget
 	return Preview;
 
 });
