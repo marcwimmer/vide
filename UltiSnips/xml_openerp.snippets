@@ -701,7 +701,7 @@ endsnippet
 #============================
 snippet qweb "templates"
 <?xml version="1.0" encoding="UTF-8"?>
-<templates xml:space="preserve">
+<templates>
 
 </templates>
 endsnippet
@@ -901,7 +901,7 @@ endsnippet
 
 
 snippet odoowebsite "Main Menu"
-<template id="header" inherit_id="website.layout" name="Support Header Menu Link" xml:space="preserve">
+<template id="header" inherit_id="website.layout" name="Support Header Menu Link">
     <xpath expr="//header//ul[@id='top_menu']/li" position="inside">
         <li t-att-class="'' if website_sale_order and website_sale_order.cart_quantity else 'hidden'">
             <a href="/support">
