@@ -676,3 +676,21 @@ snippet groupby
 from itertools import groupby
 for category, lines in groupby(self.order_line, lambda l: l.layout_category_id):
 endsnippet
+
+global !p
+def fraction(a, b):
+    try:
+        return "%.1f" % (float(a)/float(b))
+    except (ValueError, ZeroDivisionError):
+        return "ERR"
+endglobal
+
+snippet uuid
+`!p import uuid
+if not snip.c:
+    import os
+    snip.rv = str(uuid.uuid4())
+    snip.rv = snip.fn
+    snip.rv = os.getcwd()
+`
+endsnippet
