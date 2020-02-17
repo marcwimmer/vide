@@ -694,3 +694,11 @@ if not snip.c:
     snip.rv = os.getcwd()
 `
 endsnippet
+
+snippet jsonencode
+class StringEncoder(json.JSONEncoder):
+    def default(self, obj):
+        return str(obj)
+
+json.dumps(data, cls=StringEncoder)
+endsnippet
