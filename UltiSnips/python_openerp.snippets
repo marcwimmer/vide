@@ -2366,3 +2366,8 @@ endsnippet
 snippet AbstractComponent
 from odoo.addons.component.core import AbstractComponent
 endsnippet
+
+snippet get_module_icon
+from odoo import modules
+modules.module.get_module_icon(self.env[activity['model']]._original_module)
+endsnippet
