@@ -1,9 +1,11 @@
 marcwimmer/vim-my-settings
 #VundleVim/Vundle.vim
 ahw/vim-hooks
+vifm/vifm
 
 yggdroot/indentline
 #bundles to load:
+marcwimmer/vim-open-syncdestination
 airblade/vim-gitgutter
 NLKNguyen/papercolor-theme
 tmhedberg/matchit
