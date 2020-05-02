@@ -26,31 +26,8 @@ snippet record
 	<field name="${3}">${4}</field>
 </record>
 endsnippet
-#================================================
-#OSV Init
-#================================================
-snippet osv_init_data "Many2Many Values"
-<field name="${1:field_name}" eval="[(6,0,[ref('${2:xml_id}')])]"/>
-endsnippet
 
-#================================================
-#CRON JOBS
-#================================================
-snippet cronjob "<=V10"
-<record id="${1:ir_cronjobname_action}" model="ir.cron">
-	<field name="name">${2:ANY_NICE_NAME}</field>
-	<field name="interval_number">${3:5}</field>
-	<field name="interval_type">${4:minutes}</field>
-	<field name="numbercall">-1</field>
-	<field name="doall" eval="False" />
-	<field name="model" eval="'${5:model}'"/>
-	<field name="function" eval="'${6:model_method}'" />
-	<field name="args" eval="'([],)'" />
-	<field name="nextcall" eval="'2000-01-01 20:15:00'" />
-</record>
-endsnippet
-
-snippet cronjob "V11 (not yet tested)"
+snippet cronjob 
 <record id="${1:ir_cronjobname_action}" model="ir.cron">
 	<field name="name">${1/\./_/g}</field>
 	<field name="interval_number">${3:5}</field>
@@ -59,16 +36,13 @@ snippet cronjob "V11 (not yet tested)"
 	<field name="state">code</field>
 	<field name="code">model.${6:method}()</field>
 	<field name="nextcall" eval="'2000-01-01 20:15:00'" />
+	<field name="numbercall">-1</field>
 </record>
 endsnippet
 
 #================================================
 #UI
 #================================================
-snippet onchange 
-on_change="onchange_$1(${1:field1})"
-endsnippet 
-
 snippet mi "Menuitem"
 <menuitem name="${1:label}" parent="${2:parent_xml_id}" id="${3:id_of_menu}" />
 endsnippet
@@ -124,14 +98,6 @@ snippet form "new form"
 </record>
 endsnippet
 
-
-snippet wall "append after sheet < V11"
-<!-- append after <sheet /> and inherit from mail.thread -->
-<div class="oe_chatter">
-    <field name="message_follower_ids" widget="mail_followers"/>
-    <field name="message_ids" widget="mail_thread"/>
-</div>
-endsnippet
 
 snippet wall "append after sheet V11"
 <!-- append after <sheet /> and inherit from mail.thread -->
@@ -232,7 +198,7 @@ snippet tree "new tree"
 	<field name="arch" type="xml">
 		now use decoration-info, it, danger, info....
 		<tree default_order="" string="${3:title}" ${4:decoration-danger="state!='done' and date_set&lt;=current_date"}>
-			<field name="name" />
+			<field name="name" optional="show hide"/>
             ${0}
 		</tree>
 	</field>
@@ -486,15 +452,15 @@ endsnippet
 #Report QWeb
 #================================================
 snippet report "qweb-pdf"
-<!-- url to debug: http://host/report/pdf/$7.$4/<id> -->
+<!-- works with V11 !-->
+<!-- url to debug: http://host/report/pdf/$4/<id> -->
 <!-- QWeb Reports -->
 <report 
 	id="$1"
 	model="$2"
 	string="$3"
 	report_type="qweb-pdf"
-	file="${7:module}.${4:name_of_view_id}"
-	name="$7.$4"
+	name="${4:name_with_leading_module_and_dot}" 
 	${5:
 	print_report_name="(object.state in ('open','paid')) and ('INV'+(object.number or '').replace('/','')+'.pdf')"
 	}
@@ -759,7 +725,7 @@ $0
 endsnippet
 
 snippet function 
-<function id="${1/\./_/g}_${2}" model="${1:model}" name="${2:funcname}">
+<function model="${1:model}" name="${2:funcname}">
 	<value>param1</value>
 </function>
 $0

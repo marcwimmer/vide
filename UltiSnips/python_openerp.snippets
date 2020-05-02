@@ -211,10 +211,10 @@ def unlink(self):
 	return result
 endsnippet
 
-snippet fvg "V9 Fields View Get"
+snippet fvg "V13 Fields View Get"
 @api.model
-def fields_view_get(self, view_id=None, view_type='form', toolbar=False, submenu=False):
-	result = super(BaseNextActivity, self).fields_view_get(view_id=view_id, view_type=view_type, toolbar=toolbar, submenu=submenu)
+def _fields_view_get(self, view_id=None, view_type='form', toolbar=False, submenu=False):
+	result = super(BaseNextActivity, self)._fields_view_get(view_id=view_id, view_type=view_type, toolbar=toolbar, submenu=submenu)
 	if view_type == 'form':
 		doc = etree.XML(result['arch'])
 		node = doc.xpath("//group[@name='next_activity_group']")
@@ -826,7 +826,7 @@ snippet fm2o "Fields many2one"
 endsnippet
 
 snippet fM2o "Fields many2one"
-${1}_id = fields.Many2one('${2:model}', string='${3}')
+${1}_id = fields.Many2one('${2:model}', string='${3}', ondelete="${4:set null}${5:cascade}${6:restrict}")
 endsnippet
 
 snippet fr "Fields Reference"
@@ -1266,17 +1266,8 @@ code = base64.b64encode(io.read())
 
 endsnippet
 
-snippet copy
-def copy(self, cr, uid, id, default=None, context=None):
-	if default is None:
-		default = {}
-	default[''] = ...
-	return super(${1:clazz}, self).copy(cr, uid, id, default, context)
-endsnippet
-
-snippet copy "copy V8"
-@api.multi
-def copy(self, default=None)
+snippet copy 
+def copy(self, default=None):
 	return super(${1:clazz}, self).copy(default=default)
 endsnippet
 
@@ -1303,18 +1294,14 @@ from kivy.clock import Clock
 from random import randint
 endsnippet
 
-snippet message_post "V9: override"
-@api.cr_uid_ids_context
-@api.returns('mail.message', lambda value: value.id)
-def message_post(self, cr, uid, thread_id, context=None, **kwargs):
-	if isinstance(thread_id, basestring):
-		thread_id = get_real_ids(thread_id)
-	if context.get('default_date'):
-		del context['default_date']
-	return super(calendar_event, self).message_post(cr, uid, thread_id, context=context, **kwargs)
+snippet message_post "simple log"
+self.message_post(
+	body=job['body'],
+	subtype='mail.mt_comment',
+)
 endsnippet
 
-snippet message_post "Message Post Cases"
+snippet message_post "To Partners"
 """
      - ``mail_create_nosubscribe``: at create or message_post, do not subscribe
        uid to the record thread
@@ -1334,7 +1321,6 @@ snippet message_post "Message Post Cases"
        email notifications; True by default
 """
 self.message_post(subtype_id=self.env.ref("mail.mt_note'), body='${0}')
-self.with_context(mail_message_post(subtype_id=self.env.ref("mail.mt_note'), body='${0}')
 
 # message_post "Message to default followers"
 self.message_post(cr, uid, [id], body='${0}', ${1:subtype='${2:xmlid}'}, )
@@ -2107,119 +2093,52 @@ def get_complete_pdf(self, *params, **kwparams):
 	])
 endsnippet
 
-snippet monkeypatch "<=V10"
+snippet monkeypatch ">=V11"
+# basically methods all models depending on a value at ir.model
+class IrModel(models.Model):
+	_inherit = 'ir.model'
 
-# use add magic fields for fields that are used in views like attachment_ids
-origin = {
-    '_add_magic_fields': models.BaseModel._add_magic_fields
-}
+	crit_field = fields.Bool....
 
-def _add_magic_fields(self):
-    origin['_add_magic_fields'](self)
-    #dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe()))) # script directory
-    module_name = get_resource_from_path(dir)[0]
-    self.env.cr.execute("select state from ir_module_module where name =%s", (module_name,))
-    state = self.env.cr.fetchone()
-    if state:
-        state = state[0]
+	@api.multi
+	def _patch_quick_create(self):
 
-    if state != 'installed':
-        return
+		def _wrap_name_create():
+				@api.model
+				def wrapper(self, name):
+					...................
+				return wrapper
 
-	if 'doc_count' not in self._fields:
-		self._add_field('field_name', fields2.Integer(compute=_get_attachments, string="Count Documents"))
-
-
-models.BaseModel._add_magic_fields = _add_magic_fields
-
-def make_$1():
-
-	@api.model
-	def $1(self, name='', args=None, operator='ilike', limit=100):
-		res = $1.origin(self, name=name, args=args, operator=operator, limit=limit)
-		return res
-	return $1
-
-class ModelExtended(models.Model):
-    _inherit = 'ir.model'
-
-    def _register_hook(self, cr, ids=None):
-
-        if ids is None:
-            ids = self.search(cr, SUPERUSER_ID, [])
-        for model in self.browse(cr, SUPERUSER_ID, ids):
-            m = self.pool.get(model.model, False)
-			if not m:
+		method_name = '${1:the_method_name_to_patch}'
+		for model in self:
+			model_obj = self.env.get(model.model)
+			if not isinstance(model_obj, models.BaseModel):
 				continue
-			m._patch_method('$1', make_$1())
+			if model.avoid_quick_create:
+				model_obj._patch_method(method_name, _wrap_name_create())
+			else:
+				method = getattr(model_obj, method_name, None)
+				if method and hasattr(method, 'origin'):
+					model_obj._revert_method(method_name)
+		return True
 
-			# add a field
-			# for fields in views use _add_magic_fields
-			#if 'doc_count' not in m._fields:
-			#	m._add_field(cr, SUPERUSER_ID, 'doc_count', fields2.Integer(compute=_get_attachments, string="Count Documents"))
-			#m._setup_fields(cr, SUPERUSER_ID, False)
-			#m._setup_complete(cr, SUPERUSER_ID)
-
-        return super(ModelExtended, self)._register_hook(cr, ids=ids)
-endsnippet
-
-snippet monkey_patch "patch instead of override method of class (computed fields e.g.)"
-def make_$1():
+	def _register_hook(self):
+		models = self.search([])
+		models._patch_quick_create()
+		return super(IrModel, self)._register_hook()
 
 	@api.model
-	def $1(self):
-		res = $1.origin(self)
+	def create(self, vals):
+		ir_model = super(IrModel, self).create(vals)
+		ir_model._patch_quick_create()
+		return ir_model
+
+	@api.multi
+	def write(self, vals):
+		res = super(IrModel, self).write(vals)
+		self._patch_quick_create()
 		return res
-	return $1
 
-    def _register_hook(self, cr):
-		super($class, self)._register_hook(cr)
-		m._patch_method('$1', make_$1())
-endsnippet
-
-snippet monkeypatch "V11"
-
-# use add magic fields for fields that are used in views like attachment_ids
-
-def make_$1():
-
-	@api.model
-	def $1(self, name='', args=None, operator='ilike', limit=100):
-		res = $1.origin(self, name=name, args=args, operator=operator, limit=limit)
-		return res
-	return $1
-
-
-METHODEN HINZUFUEGEN evtl. so und ueberschreiben
-class Base(models.AbstractModel):
-
-    _inherit = 'base'
-
-    @api.model
-    def suspend_security(self):
-        return self.sudo(user=BaseSuspendSecurityUid(self.env.uid))
-
-	def _add_magic_fields(self):
-		super()._add_magic_fields()
-		if 'doc_count' not in self._fields:
-			self._add_field('field_name', fields2.Integer(compute=_get_attachments, string="Count Documents"))
-
-
-class ModelExtended(models.Model):
-    _inherit = 'ir.model'
-
-    @api.model_cr
-    def _register_hook(self):
-
-        if not self:
-		    self = self.search([])
-        for model in self:
-            m = self.env.get(model.model, None)
-			if m is None:
-				continue
-			m._patch_method('$1', make_$1())
-
-        return super()._register_hook()
 endsnippet
 
 snippet build_model
@@ -2370,4 +2289,12 @@ endsnippet
 snippet get_module_icon
 from odoo import modules
 modules.module.get_module_icon(self.env[activity['model']]._original_module)
+endsnippet
+
+snippet read_group
+read_group(self, domain, fields, groupby, offset=0, limit=None, orderby=False, lazy=True)
+endsnippet
+
+snippet import_job
+from odoo.addons.queue_job.job import job
 endsnippet
