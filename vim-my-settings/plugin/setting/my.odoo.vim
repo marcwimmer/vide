@@ -81,6 +81,7 @@ endfunction
 
 
 map <leader>gmf :call OpenOdooFile('__manifest__.py', 0)<cr>
+map <leader>gMf :call OpenOdooFile('MANIFEST', 0)<cr>
 map <leader>gma :call OpenOdooFile('ir.model.access.csv', 1)<cr>
 map <leader>om :call OdooPutCurrentModuleName()<cr>
 inoremap <silent> <leader>om <C-R>=OdooPutCurrentModuleName()<cr>
