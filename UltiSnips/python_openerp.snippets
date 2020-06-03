@@ -155,30 +155,6 @@ snippet mod "OpenERP Module"
 }
 endsnippet
 
-snippet model "memory class base on sql view"
-from odoo import models, api, tools, _
-
-class ${1/\./_/g}(models.Model):
-	_name = "${1:model_name}
-	_auto = False
-	"${3:field_name}": fields.char("${4:field_title}", readonly=True,size=100)
-
-    @api.model_cr
-	def init(self):
-		tools.drop_view_if_exists(self._cr, '${1/\./\_/g}}')
-		self._cr.execute("""
-				CREATE or REPLACE view $5 as (
-					SELECT
-						res_partner.id,
-						res_partner.name as name
-					FROM
-						res_partner
-					WHERE
-						res_partner.id > 10
-				)
-		""")
-endsnippet
-
 
 snippet crud "V8"
 @api.model
@@ -784,8 +760,8 @@ snippet fi "Fields Integer"
 '${1}': fields.integer('${2:string}'),
 endsnippet
 
-snippet fs "Fields Selection"
-'${1}': fields.selection([('${2:v1}', '${3:v2}'), ], '${4:string}'),
+snippet fS "Fields Selection"
+${1} = fields.Selection([('${2:v1}', '${3:v2}'), ], '${4:string}')
 endsnippet
 
 snippet stup "String Tuple"
@@ -2298,3 +2274,28 @@ endsnippet
 snippet import_job
 from odoo.addons.queue_job.job import job
 endsnippet
+
+snippet model "memory class base on sql view"
+from odoo import models, api, tools, _
+
+class ${1/\./_/g}(models.Model):
+	_name = "${1:model_name}
+	_auto = False
+	"${3:field_name}": fields.char("${4:field_title}", readonly=True,size=100)
+
+    @api.model_cr
+	def init(self):
+		tools.drop_view_if_exists(self._cr, self._table)
+		self._cr.execute("""
+				CREATE or REPLACE view $5 as (
+					SELECT
+						res_partner.id,
+						res_partner.name as name
+					FROM
+						res_partner
+					WHERE
+						res_partner.id > 10
+				)
+		""")
+endsnippet
+

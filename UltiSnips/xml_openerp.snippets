@@ -196,7 +196,6 @@ snippet tree "new tree"
 <record id="view_${1/\./_/g}_tree" model="ir.ui.view">
 	<field name="model">${1:model}</field>
 	<field name="arch" type="xml">
-		now use decoration-info, it, danger, info....
 		<tree default_order="" string="${3:title}" ${4:decoration-danger="state!='done' and date_set&lt;=current_date"}>
 			<field name="name" optional="show hide"/>
             ${0}
@@ -231,8 +230,8 @@ endsnippet
 
 snippet filter "Many2Field with filter options (dont know how this is in openerp 7"
 <field name="user_id">
-     <filter domain="[('user_id','=',uid)]" help="My Tasks" />
-     <filter domain="[('user_id','=',False)]" help="Unassigned Tasks" />
+     <filter name="my" domain="[('user_id','=',uid)]" help="My Tasks" />
+     <filter name="unassigned" domain="[('user_id','=',False)]" help="Unassigned Tasks" />
 </field>
 endsnippet
 
@@ -248,8 +247,8 @@ snippet search "search: new"
 		${0}
 		<filter string="" domain="[('', '=', )]" help="a tooltip" />
 		use snippet "filter"
-		<filter string="Customer" domain="[]" context="{'group_by':'partner_id'}"/>
-		<filter string="Today"  domain="[('day', '=', current_date)]" context="{'group_by':'partner_id'}"/>
+		<filter name="group_by_x" string="Customer" domain="[]" context="{'group_by':'partner_id'}"/>
+		<filter name="group_by_y" string="Today"  domain="[('day', '=', current_date)]" context="{'group_by':'partner_id'}"/>
 	</search>
 	</field>
 </record>
@@ -258,7 +257,6 @@ endsnippet
 snippet search "search: inherit"
 <record id="view_${1/\./_/g}_search" model="ir.ui.view">
 	<field name="model">${1:model}</field>
-	<field name="type">search</field>
 	<field name="inherit_id" ref="${2:}
 	<field name="arch" type="xml">
 		<data>
@@ -511,7 +509,7 @@ endsnippet
 #Report
 #================================================
 snippet report "Report Action"
-<report auto="False" 
+<report 
 	id="${1/\./_/g}_report_action" 
 	model="${2:model}"
 	name="${1:my.report.without.starting.report}" 
