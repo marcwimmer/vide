@@ -182,43 +182,33 @@ pop.on('create_completed', self, function(id) {
 }); 
 endsnippet
 
-snippet widget "widget 9.0 used in qweb template"
+snippet widget "widget 13.0"
+odoo.define("source_code_viewer", function(require) {
 
-odoo.define("${1:any_free_name}", function(require) {
-
+    var AbstractField = require('web.AbstractField');
+    var core = require('web.core');
     var QWeb = require('web.QWeb');
     var field_registry = require('web.field_registry');
 
-	//override existing
-	var Preview = field_registry.get('text').extend({
-	//new widget
-	var Preview = require('web.AbstractField').extend(common.ReinitializeFieldMixin, {
-		template: 'attachments_preview_container',
-		// try this
-		events: _.extend({}, common.AbstractField.prototype.events, {
-			'click .o_notification_box .oe_field_translate': '_onTranslate',
-			'click .oe_title, .o_inner_group': '_onClick',
-		}),
-		events: { !! CAUTION when inheriting and events are set, then define new events in init; remember: 1.init 2. renderElement 3. inserted 4. start
-		},
-		init: function() {
-			this._super.apply(this, arguments);
-		},
-		destroy: function() {
-			this._super.apply(this, arguments);
-		},
-		start: function() {
-			return this._super.apply(this, arguments);
-		},
-		render_value: function() {  // bei field
-		renderElement: function() {  // bei widget
-			this._super.apply(this, arguments);
-			this.$el.html("test123");
-		},
-	});
-	core.form_widget_registry.add('preview', Preview);
-    field_registry.add('scan_input_lot', ScanWidget); // as form widget
-	return Preview;
+    //override existing
+    var SourceCodeViewer = AbstractField.extend({
+        template: 'source_code_viewer',
+        init: function() {
+            this._super.apply(this, arguments);
+        },
+        destroy: function() {
+            this._super.apply(this, arguments);
+        },
+        start: function() {
+            return this._super.apply(this, arguments);
+        },
+        _render: function() {
+            this._super.apply(this, arguments);
+            this.$el.html("test123");
+        },
+    });
+    field_registry.add('source_code_viewer', SourceCodeViewer); // as form widget
+    return SourceCodeViewer;
 
 });
 endsnippet
