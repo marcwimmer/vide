@@ -3,6 +3,7 @@ marcwimmer/vim-my-settings
 ahw/vim-hooks
 vifm/vifm
 
+mfukar/robotframework-vim
 christoomey/vim-tmux-navigator
 yggdroot/indentline
 #bundles to load:
