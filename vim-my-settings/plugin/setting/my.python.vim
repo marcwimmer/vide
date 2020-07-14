@@ -12,4 +12,4 @@ let g:python_host_prog  = $NVIM_PYTHON2
 let g:python3_host_prog = $NVIM_PYTHON3
 
 " disable python2
-" let g:loaded_python_provider = 0
+let g:loaded_python_provider = 0
