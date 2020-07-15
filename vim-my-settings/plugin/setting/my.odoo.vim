@@ -27,7 +27,7 @@ endfunction
 " open manifest file
 function! g:OpenOdooFile(filename, search_upward_form_manifest)
 let path=expand('%:p')
-python <<eof
+python3 <<eof
 import os
 import vim
 from pathlib import Path
@@ -59,7 +59,7 @@ endfunction
 function! g:OdooPutCurrentModuleName()
 let path=expand('%:p')
 let l:result=''
-python <<eof
+python3 <<eof
 import os
 import vim
 from pathlib import Path
