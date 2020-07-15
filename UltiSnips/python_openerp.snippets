@@ -2319,3 +2319,14 @@ snippet track_template
 
         return res
 endsnippet
+
+
+
+snippet render_qweb_view
+values = {
+	'object': record,
+	'model_description': model_description,
+}
+assignation_msg = view.render(values, engine='ir.qweb', minimal_qcontext=True)
+assignation_msg = self.env['mail.thread']._replace_local_links(assignation_msg)
+endsnippet
