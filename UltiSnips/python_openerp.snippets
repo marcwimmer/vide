@@ -2303,3 +2303,30 @@ endsnippet
 snippet import_queuejob
 from odoo.addons.queue_job.job import job
 endsnippet
+
+snippet track_template
+    # ---------------------------------------------------
+    # Mail gateway
+    # ---------------------------------------------------
+
+    def _track_template(self, changes):
+        res = super(HelpdeskTicket, self)._track_template(changes)
+        test_task = self[0]
+        #changes, tracking_value = tracking[test_task.id]
+        if "stage_id" in changes and test_task.stage_id.mail_template_id:
+            res['stage_id'] = (test_task.stage_id.mail_template_id,
+                               {"composition_mode": "mass_mail"})
+
+        return res
+endsnippet
+
+
+
+snippet render_qweb_view
+values = {
+	'object': record,
+	'model_description': model_description,
+}
+assignation_msg = view.render(values, engine='ir.qweb', minimal_qcontext=True)
+assignation_msg = self.env['mail.thread']._replace_local_links(assignation_msg)
+endsnippet
