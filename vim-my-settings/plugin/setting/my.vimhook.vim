@@ -5,7 +5,7 @@ let g:vimhook_bufferoutput = 0
 
 " open sync destination file
 function! g:OpenSyncDestinations()
-python <<eof
+python3 <<eof
 import os
 import vim
 from pathlib import Path
