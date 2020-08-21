@@ -1,3 +1,6 @@
 "Enable Mouse
 "set mouse=a
-set mouse=
+"
+"scrolling in blink ipad
+"bad for copying with cmd+c from webssh
+"set mouse=a
