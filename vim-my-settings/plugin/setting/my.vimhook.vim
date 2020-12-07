@@ -9,14 +9,25 @@ python3 <<eof
 import os
 import vim
 from pathlib import Path
-path = Path(os.getcwd())
+FILENAME = '.vimhook.syncdestination'
 
-while path.parent != path:
-    test = path / '.vimhook.syncdestination'
-    if test.exists():
-        vim.command(f":e {test}")
-        break
-    path = path.parent
+def editfile():
+    path = Path(os.getcwd())
+    while path.parent != path:
+        test = path / FILENAME 
+        if test.exists():
+            vim.command(f":e {test}")
+            return True
+        path = path.parent
+
+if not editfile():
+    path = Path(os.getcwd())
+    while path.parent != path:
+        test = path / '.git'
+        if test.exists():
+            (path / FILENAME).write_text("")
+            vim.command(f":e {path / FILENAME}")
+        path = path.parent
 
 eof
 
