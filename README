@@ -1,6 +1,11 @@
 #!/bin/bash
 
-MACOS 
+MACOS  
 
 brew install --HEAD neovim
+bin/install.sh
 
+
+Ubuntu:
+apt install -y neovim
+bin/install.sh
