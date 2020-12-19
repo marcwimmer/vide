@@ -68,7 +68,7 @@ snippet btn "button: calling action V9"
 endsnippet
 
 snippet btn "button: cancel"
-<button special="cancel" string="cancel" class="oe_link" />
+<button special="cancel" string="Cancel" class="oe_link" />
 endsnippet
 
 
@@ -1016,4 +1016,13 @@ endsnippet
 
 snippet xml "column_invisible"
 <field name="picking_textual_state" attrs="{'column_invisible': [('parent.state', 'not in', ['done', 'cancel', 'draft'])]}"/>
+endsnippet
+
+snippet track_subtype
+@api.multi
+def _track_subtype(self, init_values):
+	self.ensure_one()
+	if 'state' in init_values and self.state == 'sale':
+		return 'custom_invoice.mt_invoices_confirmed'
+	return super(SaleOrder, self)._track_subtype(init_values)
 endsnippet

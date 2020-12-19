@@ -127,18 +127,34 @@ odoo.define("phonebox.start_call", function(require) {
 });
 endsnippet
 
-snippet clientaction "9.0"
-//not tested
-var Widget = require('web.Widget');
-
-var BodyWidget = Widget.extend({
-});
-return BodyWidget;
+snippet clientaction "13.0"
+// First of all, import the things we need here.
 var core = require('web.core');
-core.action_registry.add('pos.ui', BodyWidget);
-core.action_registry.add('pos.ui', function() {
-   //....
+var AbstractAction = require('web.AbstractAction');
+var QWeb = core.qweb;
+var _t = core._t;
+var rpc = require("web.rpc");
+
+//Extend the AbstractAction and include our custom defined widget.
+var new_test_model_client = AbstractAction.extend({
+	template: "......",
+	title: core._t("New Dialog"),
+	//This is where the widget is initialized
+	init: function(parent, action, options) {
+		this._super.apply(this, arguments);
+	},
+	events: {
+		//Include events such as click, change, here
+	},
+	start: function () {
+        this._super.apply(this, arguments);
+	},
 });
+//Add the custom defined widget to registry.
+core.action_registry.add('new_test_model_client', new_test_model_client);
+return new_test_model_client;
+
+
 
 endsnippet
 
@@ -489,6 +505,11 @@ function make_message(data) {
 };
 chatManager.make_message = make_message;
 endsnippet
+
+snippet frontend_dialog 
+var Dialog = require('web.Dialog');
+Dialog.alert(this, "Hello, world!");
+endsnippet 
 
 snippet cal_sidebar "Calendar Sidebar Filter Option"
 odoo.define("followup.calendar_extension", function(require) {
