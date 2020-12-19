@@ -9,18 +9,3 @@ geladen.
 Mit Hilfe von vundle werden alle Pakete gemanaged. Es lassen sich damit
 problemlos Pakete installieren, deinstallieren und updaten.
 
-Initial-Setup
-=================
-./build.sh
-
-
-Install
-=================
-./install
-
-Anpassungen unter ~/.vide möglich.
-Dort einer docker-compose.yml hinterlegen.
-
-
-<h1>Add a new bundle</h1>
-Please edit .vim/bundles/vim-my-settings/plugin/settings/bundles.list
