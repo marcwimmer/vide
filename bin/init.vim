@@ -23,6 +23,7 @@ from os.path import expanduser
 home = expanduser("~")
 root_path = Path(home) / os.environ["NVIM_BUNDLE_DIR"] / "vim-my-settings"
 bundles_list = root_path / "bundles.list"
+raise Exception(bundles_list)
 if bundles_list.exists():
     bundles = [x for x in bundles_list.read_text().split("\n") if x and not x.startswith("#")]
     for bundle in bundles:
