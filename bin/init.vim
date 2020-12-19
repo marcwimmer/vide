@@ -29,21 +29,8 @@ if bundles_list.exists():
     bundles = [x for x in bundles_list.read_text().split("\n") if x and not x.startswith("#")]
     for bundle in bundles:
         vim.command("Plugin '%s'" % bundle)
-def execute_file(filepath):
-    if filepath.exists():
-        for line in filepath.read_text().split("\n"):
-            if not line or line.startswith('"'):
-                continue
-            vim.command(line)
-execute_file(root_path / "_init")
-
-#execute files from "my-init" directory
-init_script_dir = root_path / "my-init"
-if init_script_dir.is_dir():
-    for filepath in init_script_dir.glob("*"):
-        if str(filepath).endswith(".txt"):
-            continue
-        os.system('chmod a+x "{f}" && "{f}"'.format(f=filepath))
+	
+vim.command('let mapleader=","')
 
 PYTHONEOF
 
