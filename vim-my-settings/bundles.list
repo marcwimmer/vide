@@ -44,7 +44,7 @@ Valloric/YouCompleteMe
 bling/vim-airline
 airblade/vim-rooter
 tpope/vim-eunuch
-Raimondi/delimitMate
+# Raimondi/delimitMate # uncool
 
 #python:
 #tmhedberg/SimpylFold
