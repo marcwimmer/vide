@@ -10,5 +10,4 @@ retrying
 passlib
 humanize
 tabulate
-buttervolume
 urllib3
