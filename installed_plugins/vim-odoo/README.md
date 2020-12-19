@@ -1,0 +1,1 @@
+# vim-openerp-browser
