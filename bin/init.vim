@@ -4,8 +4,6 @@ filetype off
 
 
 set rtp+=~
-"set rtp+=~/.config/nvim/bundle/Vundle.vim
-"set rtp+=/home/marc/.config/nvim/bundle/Vundle.vim
 set rtp+=$NVIM_BUNDLE_DIR/Vundle.vim
 
 " set the runtime path to include Vundle and initialize
@@ -30,8 +28,6 @@ if bundles_list.exists():
     for bundle in bundles:
         vim.command("Plugin '%s'" % bundle)
 	
-vim.command('let mapleader=","')
-
 PYTHONEOF
 
 " All of your Plugins must be added before the following line
