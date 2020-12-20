@@ -1,15 +1,13 @@
 #!/bin/bash
-echo
-echo Setup VIDE
-echo
-
-echo 
-echo NEOVim must be installed
+set -e
 DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
-pip3 install -r "$DIR/requirements3.txt"
-
-curl -fLo ~/.config/nvim/autoload --create-dirs \
-    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-
-bin/vide +'PlugInstall --sync' +qa
-python3 ~/.config/vide/bundles/YouCompleteMe/install.py
+echo Setup VIDE
+echo NEOVim must be installed
+echo Installing vim-plug
+mkdir -p ~/.config/nvim/autoload
+wget -O ~/.config/nvim/autoload/plug.vim https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+#curl -fLo ~/.config/nvim/autoload https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+echo "Do:"
+echo "pip3 install -r \"$DIR/requirements3.txt\""
+echo "bin/vide +'PlugInstall --sync' +qa"
+echo "python3 ~/.config/vide/bundles/YouCompleteMe/install.py"
