@@ -2,6 +2,8 @@
 set nocompatible "we are using vim, not vi!
 filetype off
 
+set rtp+=$PLUG_DIR/vim-plug
+
 call plug#begin($NVIM_BUNDLE_DIR)
 
 " let vim-plug manage plugins
