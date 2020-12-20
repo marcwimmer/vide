@@ -5,6 +5,7 @@ filetype off
 
 set rtp+=~
 set rtp+=$PLUG_DIR/vim-plug
+set rtp+=$PLUG_DIR/vim-my-settings
 
 " set the runtime path to include Vundle and initialize
 " using vim plug
@@ -13,6 +14,7 @@ set rtp+=$PLUG_DIR/vim-plug
 
 call plug#begin($NVIM_BUNDLE_DIR)
 Plug 'VundleVim/Vundle.vim'
+Plug 'settings/my.odoo.vim'
 
 " let Vundle manage Vundle, required
 python3 << PYTHONEOF
