@@ -16,3 +16,4 @@ ln -s "$(pwd)/bin/init.vim"  ~/.config/nvim/init.vim
 pip3 install -r requirements3.txt
 
 nvim +'PlugInstall --sync' +qa
+python3 ~/.config/vide/bundles/YouCompleteMe/install.py
