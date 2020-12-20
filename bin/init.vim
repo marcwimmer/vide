@@ -13,7 +13,7 @@ from pathlib import Path
 import vim
 import os
 from os.path import expanduser
-bundles_list = Path(expanduser("~")) / os.environ["VIDE_HOME"] / "plugins" / "vim-my-settings" / "bundles.list"
+bundles_list = Path(expanduser("~")) / os.environ["VIDE_HOME"] / "bundles.list"
 if bundles_list.exists():
     bundles = [x for x in bundles_list.read_text().splitlines() if x and not x.startswith("#")]
     for bundle in bundles:
@@ -29,7 +29,6 @@ call plug#end()            " required
 
 " Load settings
 python3 << PYTHONEOF
-root_path = Path(expanduser("~")) / os.environ["VIDE_HOME"] / "plugins" / "vim-my-settings"
-for file in (root_path / "settings").glob("*.vim"):
+for file in (Path(expanduser("~")) / os.environ["VIDE_HOME"] / "settings").glob("*.vim"):
     vim.command(f"so {file}")
 PYTHONEOF

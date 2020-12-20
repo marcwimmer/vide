@@ -7,7 +7,6 @@ mfukar/robotframework-vim
 christoomey/vim-tmux-navigator
 yggdroot/indentline
 #bundles to load:
-#marcwimmer/vim-open-syncdestination
 airblade/vim-gitgutter
 NLKNguyen/papercolor-theme
 tmhedberg/matchit
@@ -29,10 +28,9 @@ easymotion/vim-easymotion
 #vim-scripts/taglist.vim
 vim-scripts/L9
 vim-scripts/FuzzyFinder
+$VIDE_HOME/plugins/vim-syncdestination
 $VIDE_HOME/plugins/vim-odoo
-#marcwimmer/vim-openerp-browser
-#marcwimmer/vim-pudbaddin
-#marcwimmer/vim-run-file
+$VIDE_HOME/plugins/vim-run-file
 rstacruz/sparkup
 mtth/scratch.vim
 jelera/vim-javascript-syntax
