@@ -6,6 +6,7 @@ filetype off
 set rtp+=~
 set rtp+=$PLUG_DIR/vim-plug
 set rtp+=$PLUG_DIR/vim-my-settings
+set rtp+=$PLUG_DIR/vim-odoo
 
 " set the runtime path to include Vundle and initialize
 " using vim plug
@@ -13,7 +14,6 @@ set rtp+=$PLUG_DIR/vim-my-settings
 " let g:my_bundle_loader = $NVIM_BUNDLE_DIR
 
 call plug#begin($NVIM_BUNDLE_DIR)
-Plug 'VundleVim/Vundle.vim'
 
 " let Vundle manage Vundle, required
 python3 << PYTHONEOF
@@ -22,13 +22,11 @@ import vim
 import os
 from os.path import expanduser
 home = expanduser("~")
-root_path = Path(home) / os.environ["VIDE_HOME"] / "plugins" / "vim-my-settings"
-bundles_list = root_path / "bundles.list"
+bundles_list = Path(home) / os.environ["VIDE_HOME"] / "plugins" / "vim-my-settings" / "bundles.list"
 if bundles_list.exists():
-    bundles = [x for x in bundles_list.read_text().split("\n") if x and not x.startswith("#")]
+    bundles = [x for x in bundles_list.read_text().splitlines() if x and not x.startswith("#")]
     for bundle in bundles:
         vim.command(f"Plug '{bundle}'")
-
 	
 PYTHONEOF
 

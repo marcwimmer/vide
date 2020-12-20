@@ -4,6 +4,7 @@ MACOS
 
 brew install --HEAD neovim
 bin/install.sh
+brew install fzf
 
 
 Ubuntu:
