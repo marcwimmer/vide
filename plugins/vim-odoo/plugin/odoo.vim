@@ -1,4 +1,3 @@
-oman
 command! OdooUpdateView call OdooExecute('update_view_in_db', "")
 command! OdooUpdateModuleFile call OdooExecute('update_module_file', '')
 command! OdooUpdateModule call OdooExecute('update_module', '')
@@ -20,6 +19,8 @@ command! OdooFzf call OdooFzfSearch()
 command! -bang -nargs=* AgOdoo call fzf#vim#ag(<q-args>, '', {'down': '~40%'})
 
 function _OdooLoadPlugins()
+" Absolute path of script file with symbolic links resolved:
+let s:path = resolve(expand('<sfile>:p'))
 python3 << PYTHONEOF
 def do_reload(module, force=False):
     if os.getenv("RELOAD_ODOO_MODULES", "") == "1" or force:
@@ -32,9 +33,8 @@ import sys
 import inspect, os
 import vim
 from os.path import expanduser
-home = expanduser("~")
-bundle_dir = Path(os.environ["NVIM_BUNDLE_DIR"])
-dir = Path(home) / "vim-odoo"
+dir = Path(vim.eval("resolve(expand('<sfile>:p'))")).parent
+dir = Path(os.environ['VIDE_HOME']) / 'plugins' / 'vim-odoo' / 'plugin'
 if not dir.exists():
     raise Exception(f"Not found: {dir}")
 sys.path.append(str(dir))

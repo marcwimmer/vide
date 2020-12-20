@@ -29,7 +29,7 @@ easymotion/vim-easymotion
 #vim-scripts/taglist.vim
 vim-scripts/L9
 vim-scripts/FuzzyFinder
-vim-odoo
+$VIDE_HOME/plugins/vim-odoo
 #marcwimmer/vim-openerp-browser
 #marcwimmer/vim-pudbaddin
 #marcwimmer/vim-run-file
