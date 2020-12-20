@@ -51,6 +51,7 @@ err = ''
 load = odoo.execute_from_vim(vim, "just_load", False)
 
 p = Path(os.getcwd())
+vim.command('silent let g:AST_FILE = ""')
 while len(p.parts) > 1:
     AST_FILE = p / '.odoo.ast'
     if AST_FILE.exists():
@@ -58,6 +59,10 @@ while len(p.parts) > 1:
         break
     p = p.parent
 PYTHONEOF
+
+if g:AST_FILE == ""
+    return
+endif
 
 call fzf#run(fzf#wrap({'source': 'cat ' . g:AST_FILE, 'sink': funcref('OdooOpenFzfLine'), 'down': '75%' }))
 "call fzf#run(fzf#wrap({'source': g:AST_FILE, 'sink': funcref('OdooOpenFzfLine'), 'down': '75%' }))
@@ -72,13 +77,17 @@ let current_buff = bufnr("%")
 call _OdooLoadPlugins()
 let g:LAST_ERROR=''
 python3 <<EOF
+import vim
+
+filepath = vim.eval("a:filepath")
 import vim, os, subprocess
 from pathlib import Path
 if filepath:
-    path = os.path.dirname(vim.eval('a:filepath'))
+    path = Path(filepath).parent
 else:
     path = None
-if not path or not Path(path).exists():
+
+if not path or not path.exists():
     vim.command("let s:filepath=''")
 else:
     vim.command("let s:filepath='{}'".format(path))
