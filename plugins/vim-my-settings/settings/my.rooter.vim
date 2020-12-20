@@ -1,5 +1,5 @@
 let g:rooter_silent_chdir = 0
-let g:rooter_use_lcd = 1
+let g:rooter_cdm_cmd="lcd"
 
 "disable mapping key <leader>cd
 let g:rooter_disable_map = 1
