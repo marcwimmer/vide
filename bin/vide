@@ -1,0 +1,9 @@
+#!/bin/bash
+DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+mkdir -p ~/.config/vide/bundles
+export NVIM_BUNDLE_DIR=~/.config/vide/bundles
+export PLUG_DIR="$DIR/../plugin/vim-plug"
+export VIDE_HOME="$DIR/.."
+export NVIM_ULTISNIPS_DIR="$DIR/../UltiSnips"
+
+nvim "$@"

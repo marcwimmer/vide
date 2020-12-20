@@ -9,3 +9,9 @@ bin/install.sh
 Ubuntu:
 apt install -y neovim
 bin/install.sh
+
+
+
+First Run:
+--------------
+:PlugUpdate
