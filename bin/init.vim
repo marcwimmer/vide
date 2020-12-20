@@ -4,14 +4,14 @@ filetype off
 
 
 set rtp+=~
-set rtp+=$NVIM_BUNDLE_DIR/Vundle.vim
+set rtp+=$PLUG_DIR/vim-plug
 
 " set the runtime path to include Vundle and initialize
 " using vim plug
 
-let g:my_bundle_loader = $NVIM_BUNDLE_DIR
+" let g:my_bundle_loader = $NVIM_BUNDLE_DIR
 
-call vundle#begin($NVIM_BUNDLE_DIR)
+call plug#begin($NVIM_BUNDLE_DIR)
 Plugin 'VundleVim/Vundle.vim'
 
 " let Vundle manage Vundle, required
@@ -32,4 +32,4 @@ if bundles_list.exists():
 PYTHONEOF
 
 " All of your Plugins must be added before the following line
-call vundle#end()            " required
+call plug#end()            " required
