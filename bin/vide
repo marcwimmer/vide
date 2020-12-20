@@ -5,5 +5,4 @@ export NVIM_BUNDLE_DIR=~/.config/vide/bundles
 export PLUG_DIR="$DIR/../plugin/vim-plug"
 export VIDE_HOME="$DIR/.."
 export NVIM_ULTISNIPS_DIR="$DIR/../UltiSnips"
-
-nvim "$@"
+nvim -u "$VIDE_HOME/bin/init.vim" "$@"
