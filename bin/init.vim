@@ -2,18 +2,9 @@
 set nocompatible "we are using vim, not vi!
 filetype off
 
-
-set rtp+=~
-set rtp+=$PLUG_DIR/vim-plug
-set rtp+=$PLUG_DIR/vim-my-settings
-set rtp+=$PLUG_DIR/vim-odoo
-
-" set the runtime path to include Vundle and initialize
-" using vim plug
-
 call plug#begin($NVIM_BUNDLE_DIR)
 
-" let Vundle manage Vundle, required
+" let vim-plug manage plugins
 python3 << PYTHONEOF
 from pathlib import Path
 import vim
@@ -24,6 +15,7 @@ if bundles_list.exists():
     bundles = [x for x in bundles_list.read_text().splitlines() if x and not x.startswith("#")]
     for bundle in bundles:
         bundle = bundle.replace("$VIDE_HOME", os.environ['VIDE_HOME'])
+        bundle = bundle.replace("$NVIM_BUNDLE_DIR", os.environ['NVIM_BUNDLE_DIR'])
         vim.command(f"Plug '{bundle}'")
 	
 PYTHONEOF
