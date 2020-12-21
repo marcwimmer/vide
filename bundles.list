@@ -28,9 +28,6 @@ easymotion/vim-easymotion
 #vim-scripts/taglist.vim
 vim-scripts/L9
 vim-scripts/FuzzyFinder
-$VIDE_HOME/plugins/vim-syncdestination
-$VIDE_HOME/plugins/vim-odoo
-$VIDE_HOME/plugins/vim-run-file
 rstacruz/sparkup
 mtth/scratch.vim
 jelera/vim-javascript-syntax
@@ -55,3 +52,9 @@ hynek/vim-python-pep8-indent
 
 #very slow:
 #########vim-scripts/TaskList.vim
+#
+# local modules
+$VIDE_HOME/plugins/vim-syncdestination
+$VIDE_HOME/plugins/vim-odoo
+$VIDE_HOME/plugins/vim-run-file
+$VIDE_HOME/plugins/syncdestination

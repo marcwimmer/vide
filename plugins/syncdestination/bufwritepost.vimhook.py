@@ -1,7 +1,7 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 """
 Syncs odoo projects to destination - looks for file
-.vimhook.syncdestination in root
+.syncdestination in root
 """
 # vimhook.bufferoutput = 0
 # vimhook.bufferoutput.vsplit = false
@@ -11,9 +11,7 @@ import os
 import subprocess
 from pathlib import Path
 
-CONFIG_FILE = '.vimhook.syncdestination'
-
-os.system("touch /tmp/a")
+CONFIG_FILE = '.syncdestination'
 
 options = [
     "-arP",
@@ -46,7 +44,7 @@ def _get_source_path(file_path):
                 if line.strip().startswith("#"): continue
                 if not line: continue
                 # example content: itebox:f/sunday
-                assert not str(rel_path).startswith("/"), 'rel path may not start with /'
+                assert not str(rel_path).startswith("/") or str(rel_path).startswith("/tmp"), 'rel path may not start with /'
                 return line, p, rel_path
         p = p.parent if p else None
 
