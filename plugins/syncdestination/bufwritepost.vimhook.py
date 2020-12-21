@@ -8,10 +8,12 @@ Syncs odoo projects to destination - looks for file
 # vimhook.async = true
 import sys
 import os
+import datetime
 import subprocess
 from pathlib import Path
 
 CONFIG_FILE = '.syncdestination'
+MAX_AGE = 30 # minutes
 
 options = [
     "-arP",
@@ -30,14 +32,32 @@ file_path = None
 if len(sys.argv) > 1:
     file_path = Path(os.getcwd()) / sys.argv[1]
 
+def deactivate_file(file):
+    lines = file.read_text().split("\n")
+    lines2 = []
+    for line in lines:
+        if line and not line.startswith("#"):
+            line = "#" + line
+        lines2.append(line)
+    file.write_text('\n'.join(lines2))
+
 def _get_source_path(file_path):
     p = file_path or Path(os.getcwd())
     while p != Path("/"):
         if (p / CONFIG_FILE).exists():
+            stat = (p / CONFIG_FILE).stat()
+            diff_seconds = (datetime.datetime.now() - datetime.datetime.fromtimestamp(stat.st_mtime)).total_seconds()
+            if diff_seconds / 60.0 > MAX_AGE:
+                # deactivate all
+                datetime.datetime.fromtimestamp((p / CONFIG_FILE).stat().st_mtime)
+                deactivate_file(p / CONFIG_FILE)
+                sys.exit(0)
+
             rel_path = Path('.')
             if file_path and (not file_path.is_dir() or file_path.is_symlink()):
                 file_path = file_path.parent
                 rel_path = file_path.relative_to(p)
+
             for line in (p / CONFIG_FILE).read_text().split("\n"):
                 while line.endswith("/"):
                     line = line[:-1]
