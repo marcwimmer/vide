@@ -1,3 +1,10 @@
+snippet po "ir.ui.view (not static) approved in V13"
+#. module: ${1:module}
+#: model_terms:ir.ui.view,arch_db:$1.$2
+msgid ""
+msgstr ""
+endsnippet
+
 snippet po "static xml file qweb"
 Achtung: benoetigt patch; Problem: Modul wird nicht
 in ir.translation geschrieben; andererseits beim import ausgefiltert,
@@ -9,7 +16,7 @@ per javascript zur Verfuegung
 
 #. module: ${1:module}
 #. openerp-web
-#: code:$1:0
+#: code:${2:path_to_file}:0
 #, python-format
 msgid "In Englisch"
 msgstr "In Deutsch"
@@ -106,9 +113,3 @@ snippet po "code"
 #: code:addons/${1:module}/${2:path_to_file}.py:0
 endsnippet
 
-snippet po "view/button in view approved in V13"
-#. module: ${1:module}
-#: model_terms:ir.ui.view,arch_db:$1.$2
-msgid ""
-msgstr ""
-endsnippet

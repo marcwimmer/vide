@@ -1026,3 +1026,7 @@ def _track_subtype(self, init_values):
 		return 'custom_invoice.mt_invoices_confirmed'
 	return super(SaleOrder, self)._track_subtype(init_values)
 endsnippet
+
+snippet ribbon
+<widget name="web_ribbon" title="Complaint" bg_color="bg-danger" attrs="{'invisible': [('complaint', '=', False)]}"/>
+endsnippet
