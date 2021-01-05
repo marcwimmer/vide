@@ -3,7 +3,7 @@ set nocompatible "we are using vim, not vi!
 filetype off
 let mapleader = "," " map leader to comma; must be here, so that regarded at loading plugins
 
-set rtp+=$PLUG_DIR/vim-plug
+set rtp+=$NVIM_AUTOLOAD_DIR
 
 call plug#begin($NVIM_BUNDLE_DIR)
 
