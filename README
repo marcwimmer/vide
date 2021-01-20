@@ -7,7 +7,16 @@ bin/install.sh
 brew install fzf
 
 
-Ubuntu:
+Ubuntu 18.04
+--------------
+apt install -y python3-venv silversearcher-ag g++-8
+update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 700 --slave /usr/bin/g++ g++ /usr/bin/g++-7
+update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-8 800 --slave /usr/bin/g++ g++ /usr/bin/g++-8
+
+add-apt-repository ppa:neovim-ppa/stable 
+apt-get update
+apt-get install neovim
+
 apt install -y neovim
 bin/install.sh
 
