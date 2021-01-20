@@ -1,5 +1,5 @@
 #!/bin/bash
-set -x
+set +x
 DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 export NVIM_BUNDLE_DIR=~/.config/vide/bundles
 mkdir -p "$NVIM_BUNDLE_DIR"
