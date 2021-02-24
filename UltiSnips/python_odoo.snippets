@@ -1401,3 +1401,15 @@ self.message_notify(
 	body=body,
 )
 endsnippet
+
+snippet stock_move_line_create
+dict(move._prepare_move_line_vals(), qty_done=quantity_done)
+endsnippet
+
+snippet retryable_error
+raise RetryableJobError(
+	"Observing: found undone preceding jobs",
+	seconds=60,
+	ignore_retry=True,
+)
+endsnippet

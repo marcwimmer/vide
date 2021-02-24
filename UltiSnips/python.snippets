@@ -116,7 +116,8 @@ endsnippet
 snippet current_dir
 import inspect
 import os
-dir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe()))) # script directory
+from pathlib import Path
+current_dir = oPath(s.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe()))))
 endsnippet
 
 snippet doc
@@ -710,4 +711,19 @@ endsnippet
 snippet trace
 import pudb
 pudb.set_trace()
+endsnippet
+
+snippet pymongo
+from pymongo import MongoClient
+mongoclient = MongoClient(
+	os.environ["MONGO_HOST"],
+	int(os.environ['MONGO_PORT']),
+	username=os.environ['MONGO_USERNAME'],
+	password=os.environ['MONGO_PASSWORD'],
+	connectTimeoutMS=20000, socketTimeoutMS=20000, serverSelectionTimeoutMS=20000,
+)
+db = mongoclient.get_database('cicd_sites')
+
+db.fine_one({...})
+db.update_one({search}, {"$set": {}}, upsert=False)
 endsnippet
