@@ -711,3 +711,7 @@ snippet trace
 import pudb
 pudb.set_trace()
 endsnippet
+
+snippet make-executable
+os.chmod(bin_autobot, os.stat(bin_autobot).st_mode | stat.S_IEXEC)
+endsnippet
