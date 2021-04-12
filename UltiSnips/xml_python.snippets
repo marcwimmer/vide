@@ -188,7 +188,7 @@ fonts="bold:...
  date_set&lt;=current_date
 endsnippet
 
-snippet tree "new tree"
+snippet tree-new
 <record id="view_${1/\./_/g}_tree" model="ir.ui.view">
 	<field name="model">${1:model}</field>
 	<field name="arch" type="xml">
@@ -200,7 +200,7 @@ snippet tree "new tree"
 </record>
 endsnippet
 
-snippet tree "inherit tree"
+snippet tree-inherit
 <record id="view_${1/\./_/g}_tree" model="ir.ui.view">
 	<field name="model">${1:model}</field>
     <field name="inherit_id" ref="${2:}"/>
@@ -210,32 +210,32 @@ snippet tree "inherit tree"
 </record>
 endsnippet
 
-snippet filter "Bool Filter Yes / no and domain"
+snippet filter-Bool
 <filter name='${1:name}' domain="[('name', '=', 'aaaa')]" string='${2:string}'/>
 endsnippet
 
-snippet filter "Today"
+snippet filter-Today
 <filter name="today" domain="[('date', '&gt;=', context_today().strftime('%%Y-%%m-%%d') + ' 00:00:00')]" string="Today"/>
 endsnippet
 
-snippet filter "Search simple search filter (constraints by domain)"
+snippet filter-Search-simple
 <field name="${1:fieldname}" string="${2:string}" ${3:filter_domain="${4:domain}"}}"}/>
 example:
 <field name="name" string="Product Lots" filter_domain="['|','|',('name','ilike',self),('prefix','ilike',self),('ref','ilike',self)]"/>
 endsnippet
 
-snippet filter "Many2Field with filter options (dont know how this is in openerp 7"
+snippet filter-Many2Field-with-filter-options 
 <field name="user_id">
      <filter name="my" domain="[('user_id','=',uid)]" help="My Tasks" />
      <filter name="unassigned" domain="[('user_id','=',False)]" help="Unassigned Tasks" />
 </field>
 endsnippet
 
-snippet filter "GroupBy filter for grouping"
+snippet filterGroupBy
 <filter string="${1:string}" context="{'group_by': '${2:fieldname}:day|year|month'}"/>
 endsnippet
 
-snippet search "search: new"
+snippet search-new
 <record id="view_${1/\./_/g}_search" model="ir.ui.view">
 	<field name="model">${1:model}</field>
 	<field name="arch" type="xml">
@@ -250,7 +250,7 @@ snippet search "search: new"
 </record>
 endsnippet
 
-snippet search "search: inherit"
+snippet search-inherit
 <record id="view_${1/\./_/g}_search" model="ir.ui.view">
 	<field name="model">${1:model}</field>
 	<field name="inherit_id" ref="${2:}
@@ -287,25 +287,19 @@ endsnippet
 #================================================
 #Actions
 #================================================
-snippet act "server-action with menuitem"
+snippet act_server-action-with-menuitem
 <record model="ir.actions.server" id="act_${1:id_of_menu}_server">
 	<field name="name">$1</field>
 	<field name="type">ir.actions.server</field>
 	<field name="model_id" ref="model_${2:model}" />
 	<field name="state">code</field>
-	7:
-	<field name="code">action=self.pool.get('$2').${3:method}(cr, uid, [], context=context)</field>
-	8:
-	<field name="code">action=self.${3:method}(cr, uid)</field>
-	10:
-	<field name="code">action=model.${3:method}()</field>
 	11:
 	<field name="binding_model_id"></field>
 </record>
 <menuitem id="$1" parent="${5:parent_xml_id}" name="${4:label}" action="act_$1_server" />
 endsnippet
 
-snippet act "window-action called by menu-item"
+snippet act-window-action-called-by-menu-item
 <record id='${1:id_of_menu}_action' model='ir.actions.act_window'>
     <field name='name'>${2:name}</field>
     <field name='res_model'>${3:model}</field>
@@ -319,24 +313,7 @@ snippet act "window-action called by menu-item"
 <menuitem parent="${12:parent_xml_id}" id="menu_$1" action="$1_action"/>
 endsnippet
 
-snippet act "server-action on more button (pre 11)"
-<record id="${1:id}" model="ir.actions.server">
-	<field name="name">${2:caption_on_morebutton}</field>
-	<field name="model_id" ref="model_${3/\./_/g}"/>
-	<field name="state">code</field>
-
-	<field name="code">action = self.${4:method}(cr, uid, context.get('active_ids', []), context=context)</field>
-</record>
-
-<record id="test_more_item" model="ir.values">
-	<field eval="'client_action_multi'" name="key2"/>
-	<field eval="'${3:model}'" name="model"/>
-	<field name="name">$1</field>
-	<field eval="'ir.actions.server,%d' % $1" name="value"/>
-</record>
-endsnippet
-
-snippet act "server-action on more button 11"
+snippet act-server-action-on-more-button
 <record id="${1:id}" model="ir.actions.server">
 	<field name="name">${2:caption_on_morebutton}</field>
 	<field name="model_id" ref="model_$3"/>
@@ -353,7 +330,7 @@ snippet act "server-action on more button 11"
 
 endsnippet
 
-snippet act "client action"
+snippet act-client-action
 <record id="${1:id}_client_action" model="ir.actions.client">
     <field name="name">$2</field>
     <field name="tag">$3</field>
@@ -761,7 +738,7 @@ snippet subtype "Subtype V11"
 self.message_post_with_view("$1_template", values={'self': '...', 'param1': 'v1'}, subtype_id="$1")
 endsnippet
 
-snippet sec "Add Group to menuitem"
+snippet sec-Add-Group-to-menuitem
 <record model="ir.ui.menu" id="${1:menu_id}">
     <field name="groups_id" eval="[(4, ref('${2:group_id}'))]" />
 </record>
@@ -810,7 +787,7 @@ snippet assets "Backend"
 endsnippet
 
 
-snippet act "Specific view for window action"
+snippet act_Specific-view-for-window-action
 <record model="ir.actions.act_window.view" id="${1:}">
 	<field name="view_mode">${2:tree}${3:form}</field>
 	<field name="view_id" ref="${4:view_id}" />
@@ -887,17 +864,6 @@ snippet field_width_in_percent
 <field name="street_name" style="width: 80%%"
 endsnippet
 
-snippet datapolice
-<record model="data.police" id="${1:any_id}">
-  <field name="model">${2:model}</field>
-  <field name="checkdef">${3:def}</field>
-  OR expr using obj. == ....
-  <field name="expr">${3:def}</field>
-  <field name="name">${4:description}</field>
-  <field name="domain"></field>
-</record>
-endsnippet
-
 snippet tree_create
 <tree create="0">
 endsnippet
@@ -906,7 +872,7 @@ snippet tree_delete
 <tree delete="0">
 endsnippet
 
-snippet field "Style inline"
+snippet field-Style-inline
 options="{'style-inline': true}
 endsnippet
 
@@ -984,7 +950,7 @@ snippet ir.filter
 </record>
 endsnippet
 
-snippet act "URL Action"
+snippet act-URL-Action
 <record id="$1" model="ir.actions.act_url">
   <field name="name">R2</field>
   <field name="target">self</field>
@@ -992,11 +958,11 @@ snippet act "URL Action"
 </record>
 endsnippet
 
-snippet qweb "format date V11"
+snippet qweb-format-date-V11
 <t t-esc="${1:expression}" t-options="{'widget': 'date'}"/>
 endsnippet
 
-snippet qweb "format monetary V11"
+snippet qweb-format-monetary-V11
 <t t-esc="${1:expression}" t-options="{'widget': 'monetary', 'display_currency': ${2:field_currency}}"/>
 endsnippet
 
@@ -1006,15 +972,15 @@ snippet menu "Web Icon"
 </record>
 endsnippet
 
-snippet qweb "dynamic t-call"
+snippet qweb-dynamic-t-call
 <t t-call="{{variable}}"/>
 endsnippet
 
-snippet qweb "t-raw"
+snippet qweb-t-raw
 <t t-call="..." r-raw="0"/>
 endsnippet
 
-snippet xml "column_invisible"
+snippet column_invisible
 <field name="picking_textual_state" attrs="{'column_invisible': [('parent.state', 'not in', ['done', 'cancel', 'draft'])]}"/>
 endsnippet
 

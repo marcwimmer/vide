@@ -882,14 +882,14 @@ snippet exc_redirect
 raise RedirectWarning(msg, action.id, _('Go to the configuration panel'))
 endsnippet
 
-snippet model "new"
+snippet model_new
 from odoo import _, api, fields, models, SUPERUSER_ID
 from odoo.exceptions import UserError, RedirectWarning, ValidationError
 class $1(models.Model):
 	_name = '$2'
 endsnippet
 
-snippet model "inherit"
+snippet model_inherit
 from odoo import _, api, fields, models, SUPERUSER_ID
 from odoo.exceptions import UserError, RedirectWarning, ValidationError
 class $1(models.Model):
@@ -1322,7 +1322,7 @@ snippet import_job
 from odoo.addons.queue_job.job import job
 endsnippet
 
-snippet model "memory class base on sql view"
+snippet model_based_on_view
 from odoo import models, api, tools, _
 
 class ${1/\./_/g}(models.Model):
