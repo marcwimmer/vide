@@ -72,7 +72,7 @@ snippet btn "button: cancel"
 endsnippet
 
 
-snippet form "new form"
+snippet form_new "new form"
 <record id="view_${1/\./_/g}_form" model="ir.ui.view">
 	<field name="name">$1 form</field>
 	<field name="model">${1:model}</field>
@@ -104,7 +104,7 @@ snippet wall "append after sheet V11"
 </div>
 endsnippet
 
-snippet form "inherit form"
+snippet form_inherit "inherit form"
 <record id="view_${1/\./_/g}_form" model="ir.ui.view">
 	<field name="model">${1:model}</field>
 	<field name="inherit_id" ref="${2:}"/>
@@ -1030,3 +1030,4 @@ endsnippet
 snippet ribbon
 <widget name="web_ribbon" title="Complaint" bg_color="bg-danger" attrs="{'invisible': [('complaint', '=', False)]}"/>
 endsnippet
+
