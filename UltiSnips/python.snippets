@@ -1447,6 +1447,10 @@ raise RetryableJobError(
 )
 endsnippet
 
+snippet pudb
+import pudb;pudb.set_trace()
+endsnippet
+
 snippet vim
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 endsnippet
@@ -1566,7 +1570,7 @@ snippet current_dir
 import inspect
 import os
 from pathlib import Path
-current_dir = oPath(s.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe()))))
+current_dir = Path(os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe()))))
 endsnippet
 
 snippet doc
