@@ -107,7 +107,7 @@ endsnippet
 snippet form_inherit "inherit form"
 <record id="view_${1/\./_/g}_form" model="ir.ui.view">
 	<field name="model">${1:model}</field>
-	<field name="inherit_id" ref="${2:}"/>
+	<field name="inherit_id" ref="$CLIPBOARD"/>
 	<field name="arch" type="xml">
         ${0}
 	</field>
