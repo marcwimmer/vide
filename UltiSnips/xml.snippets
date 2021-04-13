@@ -55,19 +55,19 @@ snippet req "attribute Required depending on another field value"
 {'required':[('${1:field}','=','${2:some_value}')]}
 endsnippet
 
-snippet btn "button: calling method of object"
+snippet btn_method_of_object
 <button name="${1:method_name}" string="${2:button_caption}" type="object" />
 endsnippet
 
-snippet btn "button: calling action"
+snippet btn_calling_action
 <button name="%(${1:action_id})d" string="${2:button_caption}" type="action" />
 endsnippet 
 
-snippet btn "button: calling action V9"
+snippet btn_calling_action
 <button string="${1:string}" name="${2:action_id_complete}" type="action" ${3:class="oe_stat_button"}/>
 endsnippet
 
-snippet btn "button: cancel"
+snippet btn_cancel
 <button special="cancel" string="Cancel" class="oe_link" />
 endsnippet
 
@@ -114,11 +114,11 @@ snippet form_inherit "inherit form"
 </record>
 endsnippet
 
-snippet field "simple"
+snippet field_simple
 <field name="${1}" />
 endsnippet
 
-snippet field "form field restrict values to connected m2m-field"
+snippet field_form-field-restrict-values-to-connected m2m-field
 <field name="${1}" domain="[('id', 'in', ${0:many2manyfield}[0][2])]"/>
 endsnippet
 
@@ -143,36 +143,36 @@ snippet calendar
     </record>
 endsnippet
 
-snippet kanban "new kanban"
-    <record model="ir.ui.view" id="view_${1/\./_/g}_kanban">
-        <field name="model">${1:model}</field>
-        <field name="name">${2:name}</field>
-        <field name='type'>kanban</field>
-        <field name="arch" type="xml">
-            <kanban default_group_by="${3:group_col}">
-                <field name="name"/>
-                <templates>
-                    <t t-name="kanban-box">
-                        <ul>
-                            <li t-if="record.name.raw_value">Name <field name="name"/></li>
-                        </ul>
-                    </t>
-                </templates>
-            </kanban>
+snippet kanban_new
+<record model="ir.ui.view" id="view_${1/\./_/g}_kanban">
+    <field name="model">${1:model}</field>
+    <field name="name">${2:name}</field>
+    <field name='type'>kanban</field>
+    <field name="arch" type="xml">
+        <kanban default_group_by="${3:group_col}">
+            <field name="name"/>
+            <templates>
+                <t t-name="kanban-box">
+                    <ul>
+                        <li t-if="record.name.raw_value">Name <field name="name"/></li>
+                    </ul>
+                </t>
+            </templates>
+        </kanban>
 
-        </field>
-    </record>
+    </field>
+</record>
 endsnippet
 
-snippet kanban "inherit kanban"
-    <record model="ir.ui.view" id="view_${2/\./_/g}_kanban">
-        <field name="model">${2:model}</field>
-        <field name='type'>kanban</field>
-        <field name='inherit_id' ref="${1:}" />
-        <field name="arch" type="xml">
-            ${0}
-        </field>
-    </record>
+snippet kanban_inherit
+<record model="ir.ui.view" id="view_${2/\./_/g}_kanban">
+    <field name="model">${2:model}</field>
+    <field name='type'>kanban</field>
+    <field name='inherit_id' ref="${1:}" />
+    <field name="arch" type="xml">
+        ${0}
+    </field>
+</record>
 endsnippet
 
 snippet decoration-info
@@ -277,7 +277,7 @@ snippet graph "graph: insert line graph view"
 endsnippet
 
 
-snippet header ""
+snippet header
 <header>
     <button string="Confirm" name="hr_verify_sheet" states="draft" class="oe_highlight"/>
     <field name="state" widget="statusbar" statusbar_visible="draft,confirm" attrs="{'readonly': True}" clickable='True'/>
@@ -352,7 +352,7 @@ endsnippet
 #Wizards
 #================================================
 
-snippet report "Criteria Form"
+snippet report-Criteria-Form
 <sheet>
 <group string="" col="4">
   <field name="date_start"/>
@@ -368,7 +368,7 @@ endsnippet
 #Report Excel
 #================================================
 
-snippet report "Excel"
+snippet report-Excel
 <report id="${1:report_id}" 
 	model="${2:model}" 
 	name="${3:name}" 
@@ -381,7 +381,7 @@ endsnippet
 #================================================
 #Report QWeb
 #================================================
-snippet report "qweb-pdf"
+snippet report-qweb-pdf
 <!-- works with V11 !-->
 <!-- url to debug: http://host/report/pdf/$4/<id> -->
 <!-- QWeb Reports -->
@@ -440,7 +440,7 @@ endsnippet
 #=================================================
 #Report
 #================================================
-snippet report "Report Action"
+snippet report-Report-Action
 <report 
 	id="${1/\./_/g}_report_action" 
 	model="${2:model}"
@@ -454,7 +454,7 @@ endsnippet
 #=================================================
 #Security
 #================================================
-snippet sec "Group Category"
+snippet sec-Group-Category
 <record model="ir.module.category" id="${1:id}">
     <field name="name">${2:name}</field>
     ${3:<field name="description">${4:describe it}</field>}
@@ -464,7 +464,7 @@ snippet sec "Group Category"
 </record>
 endsnippet
 
-snippet sec "Group"
+snippet sec-Group
 <record id="group_${1:name}" model="res.groups">
 	<field name="name">${1/\_/\./g}</field>
     <field name="users" eval="[(4, ref('base.user_root'))]"/>
@@ -472,7 +472,7 @@ snippet sec "Group"
 </record>
 endsnippet
 
-snippet sec "Manager and user security group"
+snippet sec-Manager-and-user-security group
 <record id="group_${1:internal_name}_manager" model="res.groups">
 	<field name="name">$1 / Manager</field>
 </record>
@@ -481,7 +481,7 @@ snippet sec "Manager and user security group"
 </record>
 endsnippet
 
-snippet sec "Access Read"
+snippet sec-Access Read
 <record model="ir.model.access" id="access_${1:module}_${2:model}_read">
 	<field name="name">access_$1_$2_read</field>
 		<field name="model_id" ref="$1.model_$2" />
@@ -493,7 +493,7 @@ snippet sec "Access Read"
 </record>
 endsnippet
 
-snippet sec "Access Read/Write"
+snippet sec-Access Read/Write
 <record model="ir.model.access" id="access_${1:module}_${2:model}_manager">
 	<field name="name">access_$1_$2_manager</field>
 		<field name="model_id" ref="$1.model_$2" />
@@ -505,7 +505,7 @@ snippet sec "Access Read/Write"
 </record>
 endsnippet
 
-snippet sec "Access Read, Access Read/Write"
+snippet sec-Access-Read-Access-Read/Write
 <record model="ir.model.access" id="access_${1:module}_${2:model}_read">
 	<field name="name">access_$1_$2_read</field>
 		<field name="model_id" ref="$1.model_$2" />
@@ -526,7 +526,7 @@ snippet sec "Access Read, Access Read/Write"
 </record>
 endsnippet
 
-snippet sec "Domain Filter Rule on current user"
+snippet-sec-Domain-Filter-Rule-on-current-user
 <record id="property_rule_${1:name}_${2/\./_/g}" model="ir.rule">
 		<field name="domain_force">[('${3:field_name}','=',user.id)]</field>
         <field name='model_id' ref='${2:model}' />
@@ -538,7 +538,7 @@ snippet sec "Domain Filter Rule on current user"
 </record>
 endsnippet
 
-snippet sec "Domain Filter Rule on current company"
+snippet-sec-Domain-Filter-Rule-on-current-company
 <record id="domain_company__${2/\./_/g}" model="ir.rule">
 	<field name="domain_force">[('company_id','child_of', [user.company_id.id])]</field>
     <field name='model_id' ref='model_${2:model}' />
@@ -550,7 +550,7 @@ snippet sec "Domain Filter Rule on current company"
 </record>
 endsnippet
 
-snippet sec "Domain Filter Rule filter child_of"
+snippet-sec-Domain-Filter-Rule-filter-child_of
 <record id="${1:module}.property_rule_${2:model}" model="ir.rule">
 	<field name="domain_force">[('account_id','child_of', [active_id])]</field>
 	<field name="groups" eval="[[4, ref('$4')]]" />
@@ -561,7 +561,7 @@ snippet sec "Domain Filter Rule filter child_of"
 </record>
 endsnippet
 
-snippet sec "Global Domain Rule"
+snippet-sec-Global-Domain-Rule
 Auswertung:
 1. es geht um read: sucht nach read=True in global; wenn kein match, abbruch,kein recht
 2. dann in global pro group mit read=True; wenn kein match, dann abbruch
@@ -595,26 +595,26 @@ endsnippet
 #============================
 #QWeb
 #============================
-snippet qweb "templates"
+snippet-qweb-templates
 <?xml version="1.0" encoding="UTF-8"?>
 <templates>
 
 </templates>
 endsnippet
 
-snippet qweb "template"
+snippet qweb-template
 <t t-name="${1:name}">
 </t>
 endsnippet
 
-snippet qweb "inherit template"
+snippet-qweb-inherit-template
 <t t-extend="$1" ${3:t-name="$4"}>
     <t t-jquery="" t-operation="before">
     </t>
 </t>
 endsnippet
 
-snippet qweb "qweb report structure"
+snippet-qweb-qweb-report-structure
 <t t-name="sale.report_saleorder">
     <t t-call="report.html_container">
         <t t-foreach="docs" t-as="doc">
@@ -672,7 +672,7 @@ snippet config
 </record>
 endsnippet
 
-snippet ir.value "tree_but_open - opens window on click in a tree"
+snippet-ir.value-tree_but_open---opens-window-on-click-in-a-tree
 <record model='ir.values' id="${1:id}">
     <field name='key2'>tree_but_open</field>
     <field name='model'>${6:model}</field>
@@ -681,7 +681,7 @@ snippet ir.value "tree_but_open - opens window on click in a tree"
 </record>
 endsnippet
 
-snippet ir.value "tree_but_action - executes any action on tree click (seldom used) "
+snippet-ir.value-tree_but_action---executes-any-action-on-tree-click-(seldom-used)-
 <record model='ir.values' id="${1:id}">
     <field name='key2'>tree_but_action</field>
     <field name='model'>${6:model}</field>
@@ -690,7 +690,7 @@ snippet ir.value "tree_but_action - executes any action on tree click (seldom us
 </record>
 endsnippet
 
-snippet ir.value "client_action_multi - executes action on multiple instances"
+snippet-ir.value-client_action_multi---executes-action-on-multiple-instances
 <record model='ir.values' id="${1:id}">
     <field name='key2'>client_action_multi</field>
     <field name='model'>${6:model}</field>
@@ -701,7 +701,7 @@ snippet ir.value "client_action_multi - executes action on multiple instances"
 </record>
 endsnippet
 
-snippet ir.value "client_print_multi - prints report on multiple instances"
+snippet-ir.value-client_print_multi---prints-report-on-multiple-instances
 <record model='ir.values' id="${1:id}">
     <field name='key2'>${2:tree_but_open}${3:tree_but_action}${4:client_print_multi}${5:client_action_multi}</field>
     <field name='model'>${6:model}</field>
@@ -709,17 +709,6 @@ snippet ir.value "client_print_multi - prints report on multiple instances"
     <field name='value' eval="'ir.actions.${8:act_window}${9:report.xml},%d'%${20:action_id}"/>
     <field name='object' eval="True" />
     <field name='key'>action</field>
-</record>
-endsnippet
-
-snippet subtype "Subtype <V11"
-<record id="${1:message_id}" model="mail.message.subtype">
-    <field name="res_model">${2:model}</field>
-    <field name="name">${3:subject}</field>
-    <field name="description">${4:body}</field>
-	<field name="default" eval="True"></field>
-	<field name="internal" eval="False"></field>
-	<field name="hidden" eval="True"></field>
 </record>
 endsnippet
 
@@ -767,7 +756,7 @@ snippet odoowebsite "Main Menu"
 </template>
 endsnippet
 
-snippet assets "Frontend"
+snippet assets-Frontend
 <!-- Front-end assets: custom css -->
 <template id="assets_frontend" inherit_id="website.assets_frontend" name="${2:MyIrgendwas}">
 	<xpath expr="." position="inside">
@@ -777,7 +766,7 @@ snippet assets "Frontend"
 </template>
 endsnippet
 
-snippet assets "Backend"
+snippet assets-Backend
 <template id="assets_backend" inherit_id="web.assets_backend" name="$1 Assets">
 	<xpath expr="." position="inside">
 		<link rel="stylesheet" href="/$1/static/src/css/styles.less"/>
@@ -807,7 +796,7 @@ snippet href "Call action from kanban view"
 <a name="%(xmlid)d" type="action"><field name="name"/></a>
 endsnippet
 
-snippet email_template "record"
+snippet email_template-record
 <record model="mail.template" id="${1}">
 	<field name="model_id" ref="${2}" />
 	<field name="name">${3}</field>
@@ -817,7 +806,7 @@ snippet email_template "record"
 </record> 
 endsnippet
 
-snippet email_template "record qweb (needs email_template_qweb)"
+snippet email_template-record qweb (needs email_template_qweb)
     <record model="mail.template" id="default_template">
       <field name="model_id" ref="base.model_res_partner"/>
       <field name="name">Invoice Warning per Partner</field>
@@ -884,7 +873,7 @@ snippet no_create "no create at many2one"
 options="{'no_create': True}"
 endsnippet
 
-snippet button_box "button box with button, that toggles bool state"
+snippet button_box_toggle_bool_state
 <div class="oe_button_box" name="button_box">
 	<button name="toggle_active" type="object" groups="base.group_no_one"
 			class="oe_stat_button" icon="fa-archive">
@@ -894,7 +883,7 @@ snippet button_box "button box with button, that toggles bool state"
 </div>
 endsnippet
 
-snippet button_box "button box with button, that executes action"
+snippet button_box_execute_action_button
 <button class="oe_stat_button" type="action" name="sale.act_res_partner_2_sale_order" 
 	attrs="{'invisible': [('customer', '=', False)]}"
 	icon="fa-usd">
