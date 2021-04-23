@@ -1,0 +1,18 @@
+snippet apt
+- name: install pip
+  apt:
+    name: "{{ item }}"
+    state: latest
+    update_cache: yes
+  loop:
+    - python3-pi
+endsnippet
+
+snippet pip
+- name: install pip packages
+  pip:
+    name: "{{ item }}"
+  loop:
+    - pathlib
+    - docker-compose
+endsnippet

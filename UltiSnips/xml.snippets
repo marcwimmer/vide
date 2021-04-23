@@ -1,3 +1,14 @@
+snippet datapolice
+<record model="data.police" id="${1:any_id}">
+  <field name="model">${2:model}</field>
+  <field name="checkdef">${3:def}</field>
+  OR expr using obj. == ....
+  <field name="expr">${3:def}</field>
+  <field name="name">${4:description}</field>
+  <field name="domain"></field>
+</record>
+endsnippet
+
 extends xml
 
 #================================================
@@ -61,7 +72,7 @@ endsnippet
 
 snippet btn_calling_action
 <button name="%(${1:action_id})d" string="${2:button_caption}" type="action" />
-endsnippet 
+endsnippet
 
 snippet btn_calling_action
 <button string="${1:string}" name="${2:action_id_complete}" type="action" ${3:class="oe_stat_button"}/>
@@ -948,7 +959,7 @@ snippet act-URL-Action
 endsnippet
 
 snippet qweb-format-date-V11
-<t t-esc="${1:expression}" t-options="{'widget': 'date'}"/>
+<t t-esc="${1:expression}" t-options='{"widget": "date", "format": "d.M.y H:m:s"}'/>
 endsnippet
 
 snippet qweb-format-monetary-V11
@@ -984,16 +995,5 @@ endsnippet
 
 snippet ribbon
 <widget name="web_ribbon" title="Complaint" bg_color="bg-danger" attrs="{'invisible': [('complaint', '=', False)]}"/>
-endsnippet
-
-snippet datapolice
-<record model="data.police" id="${1:any_id}">
-  <field name="model">${2:model}</field>
-  <field name="checkdef">${3:def}</field>
-  OR expr using obj. == ....
-  <field name="expr">${3:def}</field>
-  <field name="name">${4:description}</field>
-  <field name="domain"></field>
-</record>
 endsnippet
 

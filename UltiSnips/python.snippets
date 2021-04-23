@@ -350,7 +350,7 @@ values = exe("res.partner", "read", [100], ["name"])
 endsnippet
 
 
-snippet controller "V11"
+snippet controller
 from odoo import http
 from odoo.http import request
 
@@ -849,7 +849,7 @@ def ${1:attribute_name}(method):
 	return wrapper
 endsnippet
 
-snippet controller "Download File"
+snippet controller_download_file
 content = base64.b64decode(attachment['datas'])
 
 return http.request.make_response(content, [
@@ -1122,7 +1122,7 @@ def post_init_hook(cr, reg):
     # env['ir.attachment'].search([])._get_filesize_char()
 endsnippet
 
-snippet controller "download pdf concated reports"
+snippet controller_download_pdf_concat_reports "download pdf concated reports"
 @http.route('/newsletter/make_pdf', auth='user', website=True, type='http')
 def get_complete_pdf(self, *params, **kwparams):
 	nl_id = request.httprequest.args.get('nl_id')
