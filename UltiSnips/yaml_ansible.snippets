@@ -65,3 +65,10 @@ snippet task_run_locally
 - name: ...
   connection: local
 endsnippet
+
+snippet proxy_jump
+hy-ite:
+  client: ite.conf
+  ansible_ssh_common_args: '-o ProxyCommand="ssh -W %h:%p -q hy-router"'
+  ansible_host: 192.168.77.4
+endsnippet
