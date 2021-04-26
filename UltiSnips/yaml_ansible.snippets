@@ -16,3 +16,52 @@ snippet pip
     - pathlib
     - docker-compose
 endsnippet
+
+snippet file_exists
+- name: Check if $1 exists
+  stat:
+    path: $1
+  register: stat_result
+
+- name: Create $1, if it doesnt exist already
+  file:
+    path: $1
+    state: touch
+  when: not stat_result.stat.exists
+endsnippet
+
+snippet file_differs
+- name: first file check in inventory
+  stat:
+    path: $1
+    get_checksum: yes
+  delegate_to: localhost
+  register: $2
+
+- name: next check
+  stat:
+    path: $3
+    get_checksum: yes
+  register: $4
+
+- name: Block run only if file has no changes
+  $0
+  when: $2.stat.checksum == $4.stat.checksum
+
+endsnippet
+
+snippet synchronize_from_server
+- name: Fetch stuff from the remote and save to local
+  synchronize:
+    src: "{{ item }}"
+    dest=/tmp/
+    mode=pull
+  with_items:
+    - "folder/one"
+    - "folder/two"
+endsnippet
+
+snippet task_run_locally
+- name: ...
+  connection: local
+endsnippet

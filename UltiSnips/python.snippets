@@ -1653,7 +1653,7 @@ if not options.config or not options.migrations\
 config.read(options.config)
 endsnippet
 
-snippet logging
+snippet logging_many_options
 import logging
 from logging.handlers import RotatingFileHandler
 
@@ -1701,7 +1701,7 @@ def slug(o):
 		return o
 endsnippet
 
-snippet logging "Minimal to stdout"
+snippet logging_minimal_stdout "Minimal to stdout"
 FORMAT = '[%(levelname)s] %(name) -12s %(asctime)s %(message)s'
 logging.basicConfig(format=FORMAT)
 logging.getLogger().setLevel(logging.DEBUG)
@@ -1914,7 +1914,7 @@ if __name__ == '__main__':
 	unittest.main()
 endsnippet
 
-snippet logging "logger for __name__"
+snippet logging_for_name "logger for __name__"
 logger = logging.getLogger(__name__)
 endsnippet
 
