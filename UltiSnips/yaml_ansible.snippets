@@ -72,3 +72,23 @@ hy-ite:
   ansible_ssh_common_args: '-o ProxyCommand="ssh -W %h:%p -q hy-router"'
   ansible_host: 192.168.77.4
 endsnippet
+
+snippet inline_python
+- name: register change flag
+  register: openvpn_changed_config
+  command: /usr/bin/python3
+  args:
+    stdin: |
+      from pathlib import Path
+      old = Path("{{ dest_settings_file }}")
+      new = Path("{{ dest_settings_file }}.new")
+      if old.exists() and old.read_text() != new.read_text():
+        print('changed')
+        old.write_text(new.read_text())
+        new.unlink()
+      else:
+        print('same')
+  changed_when: openvpn_changed_config.stdout_lines[0] == 'changed
+- debug:
+  var: results
+endsnippet
