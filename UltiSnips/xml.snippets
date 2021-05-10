@@ -304,8 +304,20 @@ snippet act_server-action-with-menuitem
 	<field name="type">ir.actions.server</field>
 	<field name="model_id" ref="model_${2:model}" />
 	<field name="state">code</field>
-	11:
-	<field name="binding_model_id"></field>
+	<field name="binding_model_id" eval="False"></field>
+    <field name="code">
+    # Available variables:
+#  - env: Odoo Environment on which the action is triggered
+#  - model: Odoo Model of the record on which the action is triggered; is a void recordset
+#  - record: record on which the action is triggered; may be be void
+#  - records: recordset of all records on which the action is triggered in multi-mode; may be void
+#  - time, datetime, dateutil, timezone: useful Python libraries
+#  - log: log(message, level='info'): logging function to record debug information in ir.logging table
+#  - Warning: Warning Exception to use with raise
+# To return an action, assign: action = {...}
+
+    
+    </field>
 </record>
 <menuitem id="$1" parent="${5:parent_xml_id}" name="${4:label}" action="act_$1_server" />
 endsnippet

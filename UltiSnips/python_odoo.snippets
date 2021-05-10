@@ -262,23 +262,11 @@ return {
 }
 endsnippet
 
-snippet report "Code to open a report programmatically"
-result_binary, format = self.env['ir.actions.report.xml'].render_report(instance.ids, '${1:name_without_report}', data={})
-endsnippet
-
-snippet report "Code to open a report programmatically V11"
+snippet report_open_programmatically
 result_binary, format = self.env.ref("$1").render(${2:instance or instance.ids}, data={})
 endsnippet
 
-snippet report "Code to return a report as an action V9 - on button click"
-return self.env['report'].get_action(${1:instance_of_your_object}, '${2:report_name_without_starting_report}')
-
-#with ids:
-context = dict(dict(self.env.context) or {}, active_ids=ids)
-return self.pool['report'].get_action(self.env.cr, self.env.user.id, instance.ids, 'report_name', context=context)
-endsnippet
-
-snippet report "Code to return a report as an action V11"
+snippet report_as_action
 return self.env.ref("$1").report_action(${2:instances or instance.ids})
 endsnippet
 
@@ -595,7 +583,7 @@ with open('/tmp/data.txt', 'w') as f:
 	pprint({0}, stream=f)
 endsnippet
 
-snippet env "with api.Environment.manage"
+snippet env_manage "with api.Environment.manage"
 # try nicht unbedingt notwendig; bei __exit__ wird ein close aufgerufen
 from odoo import registry
 db_registry = registry(self.env.cr.dbname)
@@ -1064,7 +1052,7 @@ self._recompute_todo(self._fields['${1: field}'])
 self.recompute()
 endsnippet
 
-snippet env "env with no recompute"
+snippet env_no_recompute "env with no recompute"
 with recs.env.norecompute():
 	$0
 endsnippet
