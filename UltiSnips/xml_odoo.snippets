@@ -383,7 +383,7 @@ endsnippet
 snippet report-Excel
 <report id="${1:report_id}" 
 	model="${2:model}" 
-	name="${3:name}" 
+	name="${3:name}"  #iid of qweb view
 	string="${4:string}" 
     attachment="'$4' + time.strftime('%Y-%m-%d')"
 	report_type="excel" 
@@ -456,8 +456,7 @@ snippet report-Report-Action
 <report 
 	id="${1/\./_/g}_report_action" 
 	model="${2:model}"
-	name="${1:my.report.without.starting.report}" 
-	file="$1"
+	name="${1:id_qweb_view}" 
 	string="${5:a_title}" 
 	attachment="object.name + ' ' + time.strftime('%Y-%m-%d') + '.pdf'"
 	/>
@@ -478,7 +477,7 @@ endsnippet
 
 snippet sec-Group
 <record id="group_${1:name}" model="res.groups">
-	<field name="name">${1/\_/\./g}</field>
+	<field name="name">${1/_/\./g}</field>
     <field name="users" eval="[(4, ref('base.user_root'))]"/>
     <field name="category_id" ref="${2:category_id}"/>
 </record>

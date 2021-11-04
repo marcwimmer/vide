@@ -29,8 +29,9 @@ class $1(common.TransactionCase):
         self.assertTrue(latest_line.after_confirmed)
 endsnippet
 
-snippet translate_selection
-dict(self.fields_get([${1:field}])[$1]['selection']).get(${2:value}, ${3:default_value})
+snippet translate_/sel
+state_description_values = {elem[0]: elem[1] for elem in self._fields[${1:field_name}]._description_selection(self.env)}
+# dict(self.fields_get([${1:field}])[$1]['selection']).get(${2:value}, ${3:default_value})
 endsnippet
 
 snippet DATETIME
@@ -195,7 +196,7 @@ snippet df "current date"
 default=fields.Date.context_today
 endsnippet
 
-snippet sqlc "Block"
+snippet sqlc_block "Block"
 _sql_constraints = [
 	$1
 ]
@@ -212,16 +213,16 @@ _constraints = [
 	(${1:name}, '${2:error-message}', [${3:fields}]),
 ]
 endsnippet
-
-snippet sqlc "CHECK for value"
+Gjjjjjjjj
+snippet sqlc_check "CHECK for value"
 ('${1:field_name}_value', "CHECK( ($1='value' and $1 is not null) or (2=2))", _("Please select %S") % '${2:field_title}'"),
 endsnippet
 
-snippet sqlc "UNIQUE single field"
+snippet sqlc_unique "UNIQUE single field"
 ('${1:field_name}_unique', "unique($1)", _("Only one unique entry allowed.")),
 endsnippet
 
-snippet sqlc "UNIQUE field-combination"
+snippet sqlc_unique "UNIQUE field-combination"
 ('${1:field_name}_${2:field_name2}_unique', "unique($1, $2)", _("Only one unique entry allowed.")),
 endsnippet
 
@@ -1400,4 +1401,13 @@ raise RetryableJobError(
 	seconds=60,
 	ignore_retry=True,
 )
+endsnippet
+
+snippet testABC
+abc
+endsnippet
+
+snippet unittest_tag_post_install
+@odoo.tests.common.tagged('post_install', '-at_install')
+class TestWebsiteSequence(odoo.tests.TransactionCase):
 endsnippet

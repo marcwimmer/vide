@@ -376,31 +376,6 @@ snippet report "Xml Definition for XML/XSL Report"
         xsl="$4/$5.xsl"/>
 endsnippet
 
-#================================================
-#Report RML
-#================================================
-snippet report "RML"
-<report id="${1:report_id}" 
-        model="${2:model}" 
-        name="${3:name}"
-        string="${4:string}" 
-        rml="${5:module_dir}/reports/$3.xml" 
-endsnippet
-
-snippet rml "Report Definition with attachment"
-<report
-    auto="False"
-    id="${1:id}"
-    model="${2:model}"
-    name="$2"
-    rml="${3:module}/reports/${4:file}.rml"
-    string="${5:button_caption}"
-    attachment="(object.state in ('open','paid')) and ('INV'+(object.number or '').replace('/','')+'.pdf')"
-    attachment_use="True"
-    usage="default"
-    />
-endsnippet
-
 #=================================================
 #Report Webkit
 #================================================

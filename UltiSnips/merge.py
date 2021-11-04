@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+#https://github.com/erietz/ultisnips-vscode
 from pathlib import Path
 import sys
 import os
