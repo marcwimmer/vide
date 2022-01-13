@@ -1447,6 +1447,19 @@ snippet unittest_tag_post_install
 @odoo.tests.common.tagged('post_install', '-at_install')
 class TestWebsiteSequence(odoo.tests.TransactionCase):
 endsnippet
+
+snippet onchange
+@api.onchange(${fields})
+def onchange_${name}(self):
+	res = {'domain': {}}
+	res['domain']['product_uom_id'] = []
+	res['warning'] = {
+		'title': _('Model %s does not exist') % self.relation,
+		'message': _('Please specify a valid model for the object relation'),
+	}
+	return res
+endsnippet
+
 snippet pudb
 import pudb;pudb.set_trace()
 endsnippet
@@ -2185,3 +2198,6 @@ db.fine_one({...})
 db.update_one({search}, {"$set": {}}, upsert=False)
 endsnippet
 
+snippet has_file_access
+if os.access(path, os.W_OK)
+endsnippet

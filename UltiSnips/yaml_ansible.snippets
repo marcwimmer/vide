@@ -116,3 +116,24 @@ snippet pause
   pause:
     prompt: "pause check it"
 endsnippet
+
+snippet home-directory
+
+- name: get user home directory of {{ username}}
+  shell: >
+          getent passwd {{ username }}  | awk -F: '{ print $6 }'
+  changed_when: false
+  register: user_home
+- name: debug output
+  debug:
+    var: user_home.stdout
+
+endsnippet
+
+snippet pause_ask_continue
+- name: Continue ......
+  pause:
+    prompt: Please confirm .........
+  when: ...........
+
+endsnippet

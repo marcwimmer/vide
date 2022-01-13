@@ -735,3 +735,7 @@ db = mongoclient.get_database('cicd_sites')
 db.fine_one({...})
 db.update_one({search}, {"$set": {}}, upsert=False)
 endsnippet
+
+snippet has_file_access
+if os.access(path, os.W_OK)
+endsnippet
