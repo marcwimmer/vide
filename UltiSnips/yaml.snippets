@@ -434,3 +434,17 @@ snippet pause_ask_continue
   when: ...........
 
 endsnippet
+
+snippet if group exists
+- getent:
+    database: group
+    split: ':'
+- debug:
+    var: ansible_facts.getent_group
+
+- user:
+    name: "{{ username }}"
+    group: $1
+  when: "'$1' in getent_group"
+
+endsnippet
