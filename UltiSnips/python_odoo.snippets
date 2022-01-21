@@ -154,12 +154,15 @@ def _fields_view_get(self, view_id=None, view_type='form', toolbar=False, submen
 	return result
 endsnippet
 
-snippet fields "fields.selection: Method for delivering selection contents"
-'${1:field_name}': fields.selection(lambda *params: ${2:your_func}, string="${3:a_string}"),
-endsnippet
-
 snippet Fields "selection add"
 fields.Selection(selection_add=[('$1', '$2')])
+endsnippet
+
+snippet Fields "selection group_expand"
+fields.Selection(group_expand="_expand_states")
+def _expand_states(self, states, domain, order):
+	# return all possible states, in order
+	return [key for key, val in type(self).state.selection]
 endsnippet
 
 snippet Fields "compute"
