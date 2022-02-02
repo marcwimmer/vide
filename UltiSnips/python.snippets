@@ -1463,6 +1463,16 @@ def onchange_${name}(self):
 	return res
 endsnippet
 
+
+snippet onchange "calling onchange like odoo itself in V11"
+for onchange_method, changed_fields in onchanges.items():
+	if any(f not in vals for f in changed_fields):
+		invoice = self.new(vals)
+		getattr(invoice, onchange_method)()
+		for field in changed_fields:
+			if field not in vals and invoice[field]:
+				vals[field] = invoice._fields[field].convert_to_write(invoice[field], invoice)
+snippet
 snippet pudb
 import pudb;pudb.set_trace()
 endsnippet
