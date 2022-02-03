@@ -5,7 +5,7 @@ endsnippet
 
 
 snippet chpasswd
-RUN echo "${1:user}:${2:password}"|chpasswd 
+RUN echo "${1:user}:${2:password}"|chpasswd
 endsnippet
 
 snippet remove-apt
@@ -36,4 +36,10 @@ RUN apt-get update \
     && update-locale LANG=en_US.UTF-8
 ENV LANG en_US.UTF-8 
 ENV LC_ALL en_US.UTF-8
+endsnippet
+
+
+snippet create_system_user
+RUN useradd -rm /bin/bash -d ${2:dir}-g root -G sudo -u ${1:uid} ${0:username}
+USER ${0}
 endsnippet
