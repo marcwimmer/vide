@@ -1399,7 +1399,7 @@ dict(move._prepare_move_line_vals(), qty_done=quantity_done)
 endsnippet
 
 snippet retryable_error
-raise RetryableJobError(
+raise 6,(
 	"Observing: found undone preceding jobs",
 	seconds=60,
 	ignore_retry=True,
@@ -1439,4 +1439,11 @@ for onchange_method, changed_fields in onchanges.items():
 		for field in changed_fields:
 			if field not in vals and invoice[field]:
 				vals[field] = invoice._fields[field].convert_to_write(invoice[field], invoice)
+endsnippet
+
+snippet lock_wait
+try:
+	self.env.cr.execute("select id from cicd_release where id=%s for update nowait", (self.release_id.id,))
+except psycopg2.errors.LockNotAvailable:
+	raise RetryableJobError(f"Could not work exclusivley on release {self.release_id.id} - retrying in few seconds", ignore_retry=True, seconds=15)
 endsnippet
