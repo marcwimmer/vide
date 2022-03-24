@@ -1,23 +1,23 @@
 snippet country
 "id","country_id:id","name","code"
 state_us_1,us,"Alabama","AL"
-endsnippet 
+endsnippet
 
 snippet sec_security_with_header
-${3:model_id:id,group_id:id,id,name,perm_read,perm_write,perm_create,perm_unlink}
-model_${1/\./_/g},${2:group_id},access_${1/\./_/g}_${2/\./_/g},${1:model_dot_notated}_${2/\./_/g},${4:1,0,0,0}
+${3:model_id:id,group_id:id,id,perm_read,perm_write,perm_create,perm_unlink}
+model_${1/\./_/g},${2:group_id},access_${1/\./_/g}_${2/\./_/g},${4:1,0,0,0}
 $0
 endsnippet
 
 snippet sec_security_line
-model_${1/\./_/g},${2:group_id or empty},${1/\./_/g}_${2/\./_/g},${1:model_dot_notated} - ${2/\./_/g},${4:1,0,0,0}
+model_${1/\./_/g},${2:group_id or empty},${1/\./_/g}_${2/\./_/g},${4:1,0,0,0}
 $0
 endsnippet
 
 snippet sec_securty_reader_user_manager
-${4:module}model_${1/\./_/g},${2:group_id or empty}_manager,access_${1/\./_/g}_${2/\./_/g}_manager,${1:model_dot_notated} - ${2/\./_/g},1,1,1,1
-$4model_${1/\./_/g},$2_user,access_${4/\./_/g}_${2/\./_/g}_user,$1 - ${2/\./_/g},1,1,1,0
-$4model_${1/\./_/g},$2_reader,access_${4/\./_/g}_${2/\./_/g}_${1/\./_/g}${2/\./_/g}_reader,$1 - ${2/\./_/g},1,0,0,0
+${4:module}model_${1/\./_/g},${2:group_id or empty}_manager,access_${1/\./_/g}_${2/\./_/g}_manager,1,1,1,1
+$4model_${1/\./_/g},$2_user,access_${4/\./_/g}_${2/\./_/g}_user,1,1,1,0
+$4model_${1/\./_/g},$2_reader,access_${4/\./_/g}_${2/\./_/g}_${1/\./_/g}${2/\./_/g}_reader,1,0,0,0
 $0
 endsnippet
 

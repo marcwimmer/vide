@@ -27,7 +27,7 @@ snippet record
 </record>
 endsnippet
 
-snippet cronjob 
+snippet cronjob
 <record id="${1:ir_cronjobname_action}" model="ir.cron">
 	<field name="name">${1/\./_/g}</field>
 	<field name="interval_number">${3:5}</field>
@@ -133,7 +133,7 @@ snippet gantt
     </record>
 endsnippet
 
-snippet calendar 
+snippet calendar
     <record id="view_${1/\./_/g}_calendar" model="ir.ui.view">
         <field name="model">${1:model}</field>
         <field name="arch" type="xml">
@@ -224,7 +224,7 @@ example:
 <field name="name" string="Product Lots" filter_domain="['|','|',('name','ilike',self),('prefix','ilike',self),('ref','ilike',self)]"/>
 endsnippet
 
-snippet filter-Many2Field-with-filter-options 
+snippet filter-Many2Field-with-filter-options
 <field name="user_id">
      <filter name="my" domain="[('user_id','=',uid)]" help="My Tasks" />
      <filter name="unassigned" domain="[('user_id','=',False)]" help="Unassigned Tasks" />
@@ -305,7 +305,7 @@ snippet act_server-action-with-menuitem
 #  - Warning: Warning Exception to use with raise
 # To return an action, assign: action = {...}
 
-    
+
     </field>
 </record>
 <menuitem id="$1" parent="${5:parent_xml_id}" name="${4:label}" action="act_$1_server" />
@@ -381,13 +381,13 @@ endsnippet
 #================================================
 
 snippet report-Excel
-<report id="${1:report_id}" 
-	model="${2:model}" 
+<report id="${1:report_id}"
+	model="${2:model}"
 	name="${3:name}"  #iid of qweb view
-	string="${4:string}" 
+	string="${4:string}"
     attachment="'$4' + time.strftime('%Y-%m-%d')"
-	report_type="excel" 
-/> 
+	report_type="excel"
+/>
 endsnippet
 
 #================================================
@@ -397,12 +397,12 @@ snippet report-qweb-pdf
 <!-- works with V11 !-->
 <!-- url to debug: http://host/report/pdf/$4/<id> -->
 <!-- QWeb Reports -->
-<report 
+<report
 	id="$1"
 	model="$2"
 	string="$3"
 	report_type="qweb-pdf"
-	name="${4:name_with_leading_module_and_dot}" 
+	name="${4:name_with_leading_module_and_dot}"
 	${5:
 	print_report_name="(object.state in ('open','paid')) and ('INV'+(object.number or '').replace('/','')+'.pdf')"
 	}
@@ -453,11 +453,11 @@ endsnippet
 #Report
 #================================================
 snippet report-Report-Action
-<report 
-	id="${1/\./_/g}_report_action" 
+<report
+	id="${1/\./_/g}_report_action"
 	model="${2:model}"
-	name="${1:id_qweb_view}" 
-	string="${5:a_title}" 
+	name="${1:id_qweb_view}"
+	string="${5:a_title}"
 	attachment="object.name + ' ' + time.strftime('%Y-%m-%d') + '.pdf'"
 	/>
 endsnippet
@@ -489,51 +489,6 @@ snippet sec-Manager-and-user-security group
 </record>
 <record id="group_$1_user" model="res.groups">
 	<field name="name">$1 / User</field>
-</record>
-endsnippet
-
-snippet sec-Access Read
-<record model="ir.model.access" id="access_${1:module}_${2:model}_read">
-	<field name="name">access_$1_$2_read</field>
-		<field name="model_id" ref="$1.model_$2" />
-		<field name="group_id" ref="$0.group_$1_user" />
-		<field name="perm_read" eval="True" />
-		<field name="perm_write" eval="False" />
-		<field name="perm_create" eval="False" />
-		<field name="perm_unlink" eval="False" />
-</record>
-endsnippet
-
-snippet sec-Access Read/Write
-<record model="ir.model.access" id="access_${1:module}_${2:model}_manager">
-	<field name="name">access_$1_$2_manager</field>
-		<field name="model_id" ref="$1.model_$2" />
-		<field name="group_id" ref="$0.group_$1_manager" />
-		<field name="perm_read" eval="True" />
-		<field name="perm_write" eval="True" />
-		<field name="perm_create" eval="True" />
-		<field name="perm_unlink" eval="True" />
-</record>
-endsnippet
-
-snippet sec-Access-Read-Access-Read/Write
-<record model="ir.model.access" id="access_${1:module}_${2:model}_read">
-	<field name="name">access_$1_$2_read</field>
-		<field name="model_id" ref="$1.model_$2" />
-		<field name="group_id" ref="$0.group_$1_user" />
-		<field name="perm_read" eval="True" />
-		<field name="perm_write" eval="False" />
-		<field name="perm_create" eval="False" />
-		<field name="perm_unlink" eval="False" />
-</record>
-<record model="ir.model.access" id="access_${1:module}_${2:model}_manager">
-	<field name="name">access_$1_$2_manager</field>
-		<field name="model_id" ref="$1.model_$2" />
-		<field name="group_id" ref="$0.group_$1_manager" />
-		<field name="perm_read" eval="True" />
-		<field name="perm_write" eval="True" />
-		<field name="perm_create" eval="True" />
-		<field name="perm_unlink" eval="True" />
 </record>
 endsnippet
 
@@ -665,7 +620,7 @@ snippet delete
 $0
 endsnippet
 
-snippet function 
+snippet function
 <function model="${1:model}" name="${2:funcname}">
 	<value>param1</value>
 </function>
@@ -814,7 +769,7 @@ snippet email_template-record
 	<field name="email_to">${ctx['email_to']}</field>
 	<field name="subject">${4}</field>
 	<field name="body_html">${5}</field>
-</record> 
+</record>
 endsnippet
 
 snippet email_template-record qweb (needs email_template_qweb)
@@ -895,12 +850,12 @@ snippet button_box_toggle_bool_state
 endsnippet
 
 snippet button_box_execute_action_button
-<button class="oe_stat_button" type="action" name="sale.act_res_partner_2_sale_order" 
+<button class="oe_stat_button" type="action" name="sale.act_res_partner_2_sale_order"
 	attrs="{'invisible': [('customer', '=', False)]}"
 	icon="fa-usd">
 	<span class="o_stat_value"><field string="Sales" name="sale_order_count" widget="statinfo"/></span>
 	<span class="o_stat_text"> Products</span>
-</button>     
+</button>
 endsnippet
 
 snippet report "Pivot"
@@ -995,4 +950,9 @@ endsnippet
 
 snippet ribbon
 <widget name="web_ribbon" title="Complaint" bg_color="bg-danger" attrs="{'invisible': [('complaint', '=', False)]}"/>
+endsnippet
+
+
+snippet many2many_tags
+widget="many2many_tags" options="{'color_field': 'color'}"
 endsnippet

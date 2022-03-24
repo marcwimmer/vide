@@ -1483,6 +1483,29 @@ try:
 except psycopg2.errors.LockNotAvailable:
 	raise RetryableJobError(f"Could not work exclusivley on release {self.release_id.id} - retrying in few seconds", ignore_retry=True, seconds=15)
 endsnippet
+
+snippet download
+def _get_attachment(self):
+	atts = self.env['ir.attachment'].search([
+		('res_field', '=', 'content'),
+		('res_id', '=', self.id),
+		('res_model', '=', self._name)
+	])
+	return atts
+
+def download(self):
+	atts = self._get_attachment()
+	if not atts:
+		raise UserError("No file found.")
+	return {
+		'type': 'ir.actions.act_url',
+		'url': '/web/content/{}/{}?download=True'.format(
+			atts[0].id,
+			self.content_filename,
+		),
+		'target': 'self'
+	}
+endsnippet
 snippet pudb
 import pudb;pudb.set_trace()
 endsnippet
@@ -1541,7 +1564,7 @@ snippet ni
 raise Exception("not implemented")
 endsnippet
 
-snippet tempfile 
+snippet tempfile
 filename = tempfile.mktemp(suffix='.${1:}')
 $1
 endsnippet
@@ -1556,8 +1579,8 @@ snippet profile
 from functools import wraps
 PROF_DATA = {}
 PROF=True
-def removeNonAscii(s): 
-	if not s: 
+def removeNonAscii(s):
+	if not s:
 		return ""
 	return "".join(i for i in s if ord(i)<128)
 
@@ -1778,7 +1801,7 @@ snippet tz "make date not naiv"
 from dateutil import tz
 tz.gettz(...) # verwenden, ansonsten kommt bei Europe/Berlin nach pytz 2014.3 LMT raus (53 Minuten)
 arrow.get(d).replace(tzinfo=tz.gettz("Europe/Berlin"))
-# localize makes naiv to non naiv; date not changed: DONT USE REPLACE!!!! http://stackoverflow.com/questions/24359540/why-doesnt-pytz-localize-produce-a-datetime-object-with-tzinfo-matching-the-t 
+# localize makes naiv to non naiv; date not changed: DONT USE REPLACE!!!! http://stackoverflow.com/questions/24359540/why-doesnt-pytz-localize-produce-a-datetime-object-with-tzinfo-matching-the-t
 d1 = pytz.timezone('Europe/Berlin').localize(datetime.strptime(d1, "%Y-%m-%d %H:%M:%S")).astimezone(tz=pytz.utc)
 endsnippet
 
@@ -2231,4 +2254,17 @@ endsnippet
 
 snippet job-retry-error
 from odoo.addons.queue_job.exception import RetryableJobError
+endsnippet
+
+snippet rgetattr_rsetattr
+import functools
+
+def rsetattr(obj, attr, val):
+    pre, _, post = attr.rpartition('.')
+    return setattr(rgetattr(obj, pre) if pre else obj, post, val)
+
+def rgetattr(obj, attr, *args):
+    def _getattr(obj, attr):
+        return getattr(obj, attr, *args)
+    return functools.reduce(_getattr, [obj] + attr.split('.'))
 endsnippet

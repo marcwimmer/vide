@@ -1447,3 +1447,26 @@ try:
 except psycopg2.errors.LockNotAvailable:
 	raise RetryableJobError(f"Could not work exclusivley on release {self.release_id.id} - retrying in few seconds", ignore_retry=True, seconds=15)
 endsnippet
+
+snippet download
+def _get_attachment(self):
+	atts = self.env['ir.attachment'].search([
+		('res_field', '=', 'content'),
+		('res_id', '=', self.id),
+		('res_model', '=', self._name)
+	])
+	return atts
+
+def download(self):
+	atts = self._get_attachment()
+	if not atts:
+		raise UserError("No file found.")
+	return {
+		'type': 'ir.actions.act_url',
+		'url': '/web/content/{}/{}?download=True'.format(
+			atts[0].id,
+			self.content_filename,
+		),
+		'target': 'self'
+	}
+endsnippet
