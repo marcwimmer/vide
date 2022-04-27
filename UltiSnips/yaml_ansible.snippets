@@ -130,6 +130,17 @@ snippet home-directory
 
 endsnippet
 
+snippet shell
+- name: $1
+  shell:
+    cmd: |
+      ............
+      # careful with return codes; had strange case with syntaxed error
+      # if clause; set -e did not help
+  args:
+    executable: /bin/bash
+endsnippet
+
 snippet pause_ask_continue
 - name: Continue ......
   pause:

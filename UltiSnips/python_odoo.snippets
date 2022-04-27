@@ -69,7 +69,7 @@ snippet now "Fields.Datetime.now()"
 fields.Datetime.now()
 endsnippet
 
-snippet today 
+snippet today
 fields.Date.today()
 endsnippet
 
@@ -237,7 +237,7 @@ endsnippet
 
 snippet window_close "Close Window"
 {'type': 'ir.actions.act_window_close'}
-endsnippet 
+endsnippet
 
 snippet open_window "Open Window with options as comments"
 return {
@@ -281,27 +281,27 @@ endsnippet
 snippet xmlrpc "Script to Access odoo via xmlrpc"
 import inspect
 import os
-import xmlrpc
 import time
+import xmlrpc.client
 import subprocess
 import sys
 
 host = "http://localhost:8069"
 username = "admin"
-pwd = "${1:password}"
-db = "${2:db}"
+pwd = "admin"
+db = "admin"
 
 def login(username, password):
-	socket_obj = xmlrpclib.client.ServerProxy('%s/xmlrpc/common' % (host))
+	socket_obj = xmlrpc.client.ServerProxy(f'{host}/xmlrpc/common')
 	uid = socket_obj.login(db, username, password)
 	return uid
-uid = login(username, pwd)
 
 def exe(*params):
 	global uid
-	socket_obj = xmlrpclib.client.ServerProxy('%s/xmlrpc/object' % (host))
+	socket_obj = xmlrpc.client.ServerProxy(f'{host}/xmlrpc/object')
 	return socket_obj.execute(db, uid, pwd, *params)
 
+uid = login(username, pwd)
 values = exe("res.partner", "read", [100], ["name"])
 endsnippet
 
@@ -394,11 +394,11 @@ endsnippet
 
 snippet fr "Fields Reference"
 '${1}': fields.reference(string='${2}', selection = [(${3},${4}), (${5}, ${6})], size=128),
-endsnippet 
+endsnippet
 
 snippet fstate "Fields state"
 'state': fields.selection([
-			('draft', 'Draft'), 
+			('draft', 'Draft'),
 			('done', 'Done'),
 		], string='State'),
 endsnippet
@@ -566,7 +566,7 @@ import subprocess
 p = subprocess.Popen(['ls', '-l'])
 #p.communicate() #wait until done
 
-endsnippet 
+endsnippet
 
 snippet init  "V7"
 def __init__(self, pool, cr):
@@ -582,7 +582,7 @@ endsnippet
 
 
 snippet pprint
-from pprint import pprint 
+from pprint import pprint
 with open('/tmp/data.txt', 'w') as f:
 	pprint({0}, stream=f)
 endsnippet
@@ -609,7 +609,7 @@ code = base64.b64encode(io.read())
 
 endsnippet
 
-snippet copy 
+snippet copy
 def copy(self, default=None):
 	return super(${1:clazz}, self).copy(default=default)
 endsnippet
@@ -1197,7 +1197,7 @@ endsnippet
 
 snippet cr_after
 threaded_print = threading.Thread(target=self._print, args=())
-        
+
 db_registry = registry(dbname)
 with api.Environment.manage(), db_registry.cursor() as cr:
 	env = api.Environment(cr, SUPERUSER_ID, _context)
@@ -1376,7 +1376,7 @@ endsnippet
 
 snippet secure_filename
 from werkzeug.utils import secure_filename
-endsnippet 
+endsnippet
 
 snippet message_notify "V13"
 subtype_id = self.env.ref('helpdesk_notify_new_helpdesk.new_ticket').id
