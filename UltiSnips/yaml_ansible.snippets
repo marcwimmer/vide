@@ -64,6 +64,12 @@ endsnippet
 snippet task_run_locally
 - name: ...
   connection: local
+
+# tested 02.05.2022 works
+- name: clone locally and transfer
+  local_action:
+    module: ansible.builtin.shell
+    cmd: ...
 endsnippet
 
 snippet proxy_jump

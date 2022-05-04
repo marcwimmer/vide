@@ -57,7 +57,9 @@ raise Exception("not implemented")
 endsnippet
 
 snippet tempfile
-filename = tempfile.mktemp(suffix='.${1:}')
+file = tempfile.mktemp(suffix='.${1:}')
+# no create
+filepath = Path(tempfile._get_default_tempdir() / next(tempfile._get_candidate_names())
 $1
 endsnippet
 
