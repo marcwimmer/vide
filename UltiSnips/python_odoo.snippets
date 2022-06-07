@@ -1481,3 +1481,7 @@ l10n_gcoa.button_install()
 self.assertEqual(l10n_gcoa.state, 'installed')
 
 endsnippet
+
+snippet currency_compute
+price_unit = invline.invoice_id.currency_id.with_context(date=fields.Date.today()).compute(invline.price_subtotal, target_currency)
+endsnippet

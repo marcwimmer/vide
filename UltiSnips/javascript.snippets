@@ -153,7 +153,7 @@ var _t = core._t;
 var rpc = require("web.rpc");
 
 //Extend the AbstractAction and include our custom defined widget.
-var new_test_model_client = AbstractAction.extend({
+var $1 = AbstractAction.extend({
 	template: "......",
 	title: core._t("New Dialog"),
 	//This is where the widget is initialized
@@ -163,13 +163,18 @@ var new_test_model_client = AbstractAction.extend({
 	events: {
 		//Include events such as click, change, here
 	},
-	start: function () {
-        this._super.apply(this, arguments);
+	willStart: function () {
+        res = this._super.apply(this, arguments);
+		return newPromise(function(resolve) {
+			res.then(function() {
+				resolve();
+			});
+		});
 	},
 });
 //Add the custom defined widget to registry.
-core.action_registry.add('new_test_model_client', new_test_model_client);
-return new_test_model_client;
+core.action_registry.add('new_test_model_client', $1);
+return $1;
 
 
 

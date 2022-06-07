@@ -1513,6 +1513,21 @@ def download(self):
 		'target': 'self'
 	}
 endsnippet
+
+snippet testing_foundings
+super().setUpClass()
+cls.env = cls.env(context=dict(cls.env.context, tracking_disable=True))
+
+
+l10n_gcoa = self.env['ir.module.module'].search([('name', '=', 'l10n_generic_coa')])
+l10n_gcoa.button_install()
+self.assertEqual(l10n_gcoa.state, 'installed')
+
+endsnippet
+
+snippet currency_compute
+price_unit = invline.invoice_id.currency_id.compute(invline.price_subtotal, target_currency)
+endsnippet
 snippet pudb
 import pudb;pudb.set_trace()
 endsnippet
