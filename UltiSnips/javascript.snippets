@@ -72,7 +72,7 @@ endsnippet
 
 snippet user_menu "Adds a button to top right user menu"
 
-odoo.define("phonebox.start_call", function(require) { 
+odoo.define("phonebox.start_call", function(require) {
 
 	var systray = require('web.SystrayMenu');
 	var Widget = require('web.Widget');
@@ -144,7 +144,7 @@ odoo.define("phonebox.start_call", function(require) {
 });
 endsnippet
 
-snippet clientaction "13.0"
+snippet clientaction_define "13.0"
 // First of all, import the things we need here.
 var core = require('web.core');
 var AbstractAction = require('web.AbstractAction');
@@ -175,7 +175,7 @@ return new_test_model_client;
 
 endsnippet
 
-snippet clientaction "do client action"
+snippet clientaction_call "do client action"
 var web_client = require('web.web_client');
 web_client.do_action({
 	type:'ir.actions.client',
@@ -190,7 +190,7 @@ snippet query
 (new Model("calendar.contacts")).query(["partner_id"]).filter([["user_id", "=",self.dataset.context.uid]]).all().then(function(result) {
 endsnippet
 
-snippet kof 
+snippet kof
 self.$1 = ko.observable();
 $0
 endsnippet
@@ -212,7 +212,7 @@ pop.on('closed', self, function() {
 });
 pop.on('create_completed', self, function(id) {
 	alert('completed');
-}); 
+});
 endsnippet
 
 snippet widget "widget 13.0"
@@ -258,8 +258,8 @@ var Widget = require('web.Widget');
 var qweb = require("qweb");
 var Model = require('web.DataModel');
 var webclient = require('web.web_client');
-var Session = require('web.Session'); 
-var session = require('web.session'); 
+var Session = require('web.Session');
+var session = require('web.session');
 var WebClient = require('web.WebClient');
 var data = require('web.data');
 
@@ -273,8 +273,8 @@ var Widget = require('web.Widget');
 var qweb = require("web.core").qweb;
 var Model = require('web.DataModel');
 var webclient = require('web.web_client');
-var Session = require('web.Session'); 
-var session = require('web.session'); 
+var Session = require('web.Session');
+var session = require('web.session');
 var WebClient = require('web.WebClient');
 var data = require('web.data');
 
@@ -490,7 +490,7 @@ odoo.define("${1:mydialog}", function(require) {
         return dfd;
     };
     return dialog;
-    
+
 });
 endsnippet
 
@@ -523,10 +523,10 @@ function make_message(data) {
 chatManager.make_message = make_message;
 endsnippet
 
-snippet frontend_dialog 
+snippet frontend_dialog
 var Dialog = require('web.Dialog');
 Dialog.alert(this, "Hello, world!");
-endsnippet 
+endsnippet
 
 snippet cal_sidebar "Calendar Sidebar Filter Option"
 odoo.define("followup.calendar_extension", function(require) {

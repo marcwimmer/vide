@@ -22,6 +22,13 @@ def secureheaders():
 endsnippet
 
 
+snippet pylint-broad-exception
+# pylint: disable=broad-except
+endsnippet
+
+snippet pylint-protected-access
+# pylint: disable=protected-access
+endsnippet
 snippet apply
 df[${1:fieldname}] = df.apply(lambda row: ${2:row[0] ** 2},  axis=1)
 $0
@@ -1567,7 +1574,7 @@ endsnippet
 snippet tempfile
 file = tempfile.mktemp(suffix='.${1:}')
 # no create
-filepath = Path(tempfile._get_default_tempdir() / next(tempfile._get_candidate_names())
+filepath = Path(tempfile._get_default_tempdir()) / next(tempfile._get_candidate_names())
 $1
 endsnippet
 
@@ -2270,3 +2277,4 @@ def rgetattr(obj, attr, *args):
         return getattr(obj, attr, *args)
     return functools.reduce(_getattr, [obj] + attr.split('.'))
 endsnippet
+
