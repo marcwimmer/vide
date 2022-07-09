@@ -1485,3 +1485,15 @@ endsnippet
 snippet currency_compute
 price_unit = invline.invoice_id.currency_id.with_context(date=fields.Date.today()).compute(invline.price_subtotal, target_currency)
 endsnippet
+
+snippet odoo-tools
+from odoo.tools import (
+    float_is_zero,
+    float_compare,
+    safe_eval,
+    date_utils,
+    email_split,
+    email_escape_char,
+    email_re,
+)
+endsnippet

@@ -1526,7 +1526,51 @@ self.assertEqual(l10n_gcoa.state, 'installed')
 endsnippet
 
 snippet currency_compute
-price_unit = invline.invoice_id.currency_id.compute(invline.price_subtotal, target_currency)
+price_unit = invline.invoice_id.currency_id.with_context(date=fields.Date.today()).compute(invline.price_subtotal, target_currency)
+endsnippet
+
+snippet odoo-tools
+from odoo.tools import (
+    float_is_zero,
+    float_compare,
+    safe_eval,
+    date_utils,
+    email_split,
+    email_escape_char,
+    email_re,
+)
+endsnippet
+snippet click_completion_setup
+@click.option(
+    "-x",
+    "--execute",
+    is_flag=True,
+    help=("Execute the script to insert completion into users rc-file."),
+)
+def completion(execute):
+    shell = os.environ["SHELL"].split("/")[-1]
+    rc_file = Path(os.path.expanduser(f"~/.{shell}rc"))
+    line = f'eval "$(_ODOO_COMPLETE={shell}_source odoo)"'
+    if execute:
+        content = rc_file.read_text().splitlines()
+        if not list(
+            filter(
+                lambda x: line in x and not x.strip().startswith("#"),
+                content,
+            )
+        ):
+            content += [f"\n{line}"]
+            click.secho(
+                f"Inserted successfully\n{line}"
+                "\n\nPlease restart you shell."
+                )
+            rc_file.write_text('\n'.join(content))
+        else:
+            click.secho("Nothing done - already existed.")
+
+
+    click.secho("\n\n" f"Insert into {rc_file}\n\n" f"echo 'line' >> {rc_file}" "\n\n")
+
 endsnippet
 snippet pudb
 import pudb;pudb.set_trace()

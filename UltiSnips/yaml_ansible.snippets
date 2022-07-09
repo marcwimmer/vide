@@ -168,3 +168,13 @@ snippet if group exists
   when: "'$1' in getent_group"
 
 endsnippet
+
+snippet local_username
+- name: get the username running the deploy
+  become: false
+  local_action: command whoami
+  register: username_on_the_host
+
+- debug: var=username_on_the_host
+
+endsnippet
