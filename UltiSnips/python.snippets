@@ -1550,7 +1550,7 @@ snippet click_completion_setup
 def completion(execute):
     shell = os.environ["SHELL"].split("/")[-1]
     rc_file = Path(os.path.expanduser(f"~/.{shell}rc"))
-    line = f'eval "$(_ODOO_COMPLETE={shell}_source odoo)"'
+    line = f'eval "$(_${1:/\w+/\u$0/g}_COMPLETE={shell}_source ${1:exec_name})"'
     if execute:
         content = rc_file.read_text().splitlines()
         if not list(
