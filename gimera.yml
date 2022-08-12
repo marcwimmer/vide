@@ -1,0 +1,6 @@
+repos:
+- branch: main
+  path: UltiSnips
+  sha: f8bd6882a314c6b36624fe8144b2ec8a7b8bd66a
+  type: integrated
+  url: git@github.com:marcwimmer/UltiSnips.git
